@@ -8,7 +8,7 @@ methodology (plus a practical dose of ML and SQL).
 Think of it as a [quantguide.io](https://www.quantguide.io/questions)-style question bank,
 but aimed at *real research skills* rather than pure brainteasers — and 100% open source.
 
-Live idea: **quantprep.ai**.
+Live site: **quantprep.me**.
 
 ---
 

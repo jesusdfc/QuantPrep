@@ -2,6 +2,7 @@
   --bg: #ffffff;
   --bg-alt: #f7f8fa;
   --bg-zebra: #f3f4f6;
+  --sidebar-bg: #fafbfc;
   --border: #e5e7eb;
   --text: #111827;
   --muted: #6b7280;
@@ -36,22 +37,81 @@ body {
 
 .app {
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-/* ---------------- Top bar ---------------- */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 1.25rem;
-  border-bottom: 1px solid var(--border);
+/* ---------------- App shell (sidebar + main) ---------------- */
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+}
+
+.sidebar {
   position: sticky;
   top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid var(--border);
+  background: var(--sidebar-bg);
+}
+
+.sidebar-head {
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-tagline {
+  margin: 0.65rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.sidebar-foot {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.sidebar-domain {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--teal-dark);
+  letter-spacing: 0.02em;
+}
+
+.main-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.mobile-topbar {
+  display: none;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
   background: var(--bg);
-  z-index: 10;
+}
+
+.bottom-nav {
+  display: none;
+}
+
+.site-foot {
+  margin-top: auto;
+  padding: 1rem 1.25rem 1.25rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
 }
 
 .brand {
@@ -60,22 +120,18 @@ body {
   color: var(--accent);
   text-decoration: none;
   letter-spacing: -0.02em;
+  display: inline-block;
 }
 
 .brand-accent {
   color: var(--teal);
 }
 
-.nav {
-  display: flex;
-  gap: 0.25rem;
-}
-
 .nav-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.85rem;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
   border-radius: 8px;
   color: var(--muted);
   text-decoration: none;
@@ -96,9 +152,9 @@ body {
 .content {
   flex: 1;
   width: 100%;
-  max-width: 1040px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: 1.5rem 1.25rem 4rem;
+  padding: 1.75rem 1.5rem 2rem;
 }
 
 /* ---------------- Headings ---------------- */
@@ -200,6 +256,14 @@ body {
   color: var(--muted);
   border-bottom: 1px solid var(--border);
   font-size: 0.82rem;
+  background: #faf5ff;
+}
+
+.th-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #6d28d9;
 }
 
 .qtable tbody tr {
@@ -208,11 +272,11 @@ body {
 }
 
 .qtable tbody tr:nth-child(even) {
-  background: var(--bg-zebra);
+  background: #f8f7ff;
 }
 
 .qtable tbody tr:hover {
-  background: #eef2ff;
+  background: #ede9fe;
 }
 
 .qtable td {
@@ -692,15 +756,66 @@ body {
 }
 
 /* ---------------- Responsive ---------------- */
-@media (max-width: 720px) {
+@media (max-width: 768px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    padding-bottom: calc(4.25rem + env(safe-area-inset-bottom));
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobile-topbar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    justify-content: space-around;
+    gap: 0.25rem;
+    padding: 0.45rem 0.5rem calc(0.45rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+  }
+
+  .bottom-nav .nav-link {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.4rem 0.25rem;
+    font-size: 0.72rem;
+    text-align: center;
+  }
+
+  .bottom-nav .nav-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-foot {
+    display: none;
+  }
+
+  .content {
+    padding: 1.25rem 1rem 1.5rem;
+  }
+
   .topic-layout {
     grid-template-columns: 1fr;
   }
   .topic-progress-row {
     grid-template-columns: 120px 1fr 40px;
-  }
-  .nav-link span {
-    display: none;
   }
   .qtable td,
   .qtable th {

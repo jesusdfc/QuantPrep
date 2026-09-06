@@ -19,7 +19,7 @@ from urllib.parse import urlparse
 
 from quantprep_tools import paths
 
-USER_AGENT = "QuantPrepBot/0.1 (+https://quantprep.ai; personal study)"
+USER_AGENT = "QuantPrepBot/0.1 (+https://quantprep.me; personal study)"
 POLITE_DELAY_S = 1.0
 
 

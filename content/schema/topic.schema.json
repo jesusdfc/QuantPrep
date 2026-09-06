@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://quantprep.ai/schema/topic.schema.json",
+  "$id": "https://quantprep.me/schema/topic.schema.json",
   "title": "QuantPrep Topic manifest",
   "description": "topic.yaml — metadata for a topic folder.",
   "type": "object",

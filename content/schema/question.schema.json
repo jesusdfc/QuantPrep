@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://quantprep.ai/schema/question.schema.json",
+  "$id": "https://quantprep.me/schema/question.schema.json",
   "title": "QuantPrep Question",
   "description": "A single interview question. One YAML file per question.",
   "type": "object",

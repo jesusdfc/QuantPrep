@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, Heart, Lock, Search } from "lucide-react";
+import { CheckCircle2, Circle, Heart, Lock, Search, Sparkles, TrendingUp, Zap } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuestions } from "../shared/api";
@@ -93,9 +93,21 @@ export default function QuestionsPage() {
             <tr>
               <th className="col-fav" aria-label="favorite" />
               <th className="col-status" aria-label="status" />
-              <th>Name</th>
-              <th>Topic</th>
-              <th>Difficulty</th>
+              <th className="col-name">
+                <span className="th-label">
+                  <Zap size={14} /> Name
+                </span>
+              </th>
+              <th>
+                <span className="th-label">
+                  <Sparkles size={14} /> Topic
+                </span>
+              </th>
+              <th>
+                <span className="th-label">
+                  <TrendingUp size={14} /> Difficulty
+                </span>
+              </th>
             </tr>
           </thead>
           <tbody>

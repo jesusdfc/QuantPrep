@@ -17,11 +17,13 @@ export default defineConfig({
       manifest: {
         name: "QuantPrep",
         short_name: "QuantPrep",
-        description: "Study & practice for quant research interviews.",
+        description: "Study & practice for quant research interviews — quantprep.me",
         theme_color: "#0f172a",
         background_color: "#0f172a",
         display: "standalone",
         start_url: "/",
+        scope: "/",
+        id: "https://quantprep.me/",
         icons: [
           { src: "icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any maskable" },
         ],
