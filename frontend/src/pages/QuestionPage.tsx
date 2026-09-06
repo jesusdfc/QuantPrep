@@ -10,7 +10,7 @@ export default function QuestionPage() {
   const { id } = useParams<{ id: string }>();
   const { data: questions, isLoading } = useQuestions();
   const { data: progress } = useProgress();
-  const { favorite, grade, status } = useProgressActions();
+  const { favorite, status } = useProgressActions();
 
   const [revealedHints, setRevealedHints] = useState(0);
   const [showSolution, setShowSolution] = useState(false);
@@ -47,14 +47,27 @@ export default function QuestionPage() {
             <span className="subtopic">{question.subtopic}</span>
           </div>
         </div>
-        <button
-          type="button"
-          className={`icon-btn big ${p?.favorite ? "fav-on" : ""}`}
-          onClick={() => favorite.mutate(question.id)}
-          aria-label="toggle favorite"
-        >
-          <Heart size={22} fill={p?.favorite ? "currentColor" : "none"} />
-        </button>
+        <div className="q-actions">
+          <button
+            type="button"
+            className={`icon-btn big ${p?.status === "solved" ? "solved-on" : ""}`}
+            onClick={() => status.mutate({ id: question.id, status: "solved" })}
+            disabled={p?.status === "solved" || status.isPending}
+            aria-label={p?.status === "solved" ? "Solved" : "Mark as solved"}
+            title={p?.status === "solved" ? "Solved" : "Mark as solved"}
+          >
+            <Check size={22} />
+          </button>
+          <button
+            type="button"
+            className={`icon-btn big ${p?.favorite ? "fav-on" : ""}`}
+            onClick={() => favorite.mutate(question.id)}
+            aria-label="Toggle favorite"
+            title={p?.favorite ? "Remove from favorites" : "Add to favorites"}
+          >
+            <Heart size={22} fill={p?.favorite ? "currentColor" : "none"} />
+          </button>
+        </div>
       </header>
 
       <section className="q-prompt">
@@ -108,38 +121,6 @@ export default function QuestionPage() {
           </button>
         )}
       </section>
-
-      {showSolution && (
-        <section className="grade">
-          <h2>How well did you know it?</h2>
-          <div className="grade-buttons">
-            <button
-              type="button"
-              className="btn grade-again"
-              onClick={() => grade.mutate({ id: question.id, quality: 0 })}
-            >
-              Again
-            </button>
-            <button
-              type="button"
-              className="btn grade-good"
-              onClick={() => grade.mutate({ id: question.id, quality: 3 })}
-            >
-              Good
-            </button>
-            <button
-              type="button"
-              className="btn grade-easy"
-              onClick={() => grade.mutate({ id: question.id, quality: 5 })}
-            >
-              Easy
-            </button>
-          </div>
-          {p?.dueAt && (
-            <p className="muted">Next review: {new Date(p.dueAt).toLocaleDateString()}</p>
-          )}
-        </section>
-      )}
 
       <footer className="source">
         Source: {question.source.name}

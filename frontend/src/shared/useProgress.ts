@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "./AuthProvider";
-import { type QStatus, getAllProgress, review, setStatus, toggleFavorite } from "./progress";
+import { type QStatus, getAllProgress, setStatus, toggleFavorite } from "./progress";
 import { pushProgress } from "./progressSync";
 
 const KEY = ["progress"];
@@ -40,13 +40,5 @@ export function useProgressActions() {
     },
   });
 
-  const grade = useMutation({
-    mutationFn: ({ id, quality }: { id: string; quality: 0 | 3 | 5 }) => review(id, quality),
-    onSuccess: (progress) => {
-      sync(progress);
-      void invalidate();
-    },
-  });
-
-  return { favorite, status, grade };
+  return { favorite, status };
 }

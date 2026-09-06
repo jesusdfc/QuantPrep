@@ -97,30 +97,3 @@ export async function setStatus(id: string, status: QStatus): Promise<QProgress>
   const next = { ...p, status };
   return put(next);
 }
-
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-// Grade the recall quality (0=again, 3=good, 5=easy) and reschedule (SM-2 lite).
-export async function review(id: string, quality: 0 | 3 | 5): Promise<QProgress> {
-  const p = await getProgress(id);
-  let { reps, intervalDays, ease } = p;
-
-  if (quality < 3) {
-    reps = 0;
-    intervalDays = 1;
-  } else {
-    reps += 1;
-    intervalDays = reps === 1 ? 1 : reps === 2 ? 6 : Math.round(intervalDays * ease);
-    ease = Math.max(1.3, ease + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)));
-  }
-
-  const next: QProgress = {
-    ...p,
-    reps,
-    intervalDays,
-    ease,
-    status: "solved",
-    dueAt: Date.now() + intervalDays * DAY_MS,
-  };
-  return put(next);
-}

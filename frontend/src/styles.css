@@ -567,6 +567,20 @@ body {
   gap: 1rem;
 }
 
+.q-actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.q-actions .icon-btn.solved-on,
+.q-actions .icon-btn:first-child:hover {
+  color: var(--easy);
+}
+
+.q-actions .icon-btn:disabled {
+  cursor: default;
+}
+
 .q-header h1 {
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
@@ -605,8 +619,7 @@ body {
 }
 
 .hints h2,
-.solution h2,
-.grade h2 {
+.solution h2 {
   font-size: 1.05rem;
   display: flex;
   align-items: center;
@@ -658,30 +671,6 @@ body {
   background: #f0fdfa;
   padding: 0.5rem 0.8rem;
   border-radius: 8px;
-}
-
-.grade {
-  border-top: 1px solid var(--border);
-  padding-top: 1.25rem;
-}
-
-.grade-buttons {
-  display: flex;
-  gap: 0.6rem;
-  margin-bottom: 0.5rem;
-}
-
-.grade-again {
-  background: #fee2e2;
-  color: var(--hard);
-}
-.grade-good {
-  background: #dcfce7;
-  color: var(--easy);
-}
-.grade-easy {
-  background: #dbeafe;
-  color: #2563eb;
 }
 
 .source {
