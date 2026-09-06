@@ -1,7 +1,7 @@
-id: pf-math-0001
+id: pf-diversification-0001
 title: Two-Asset Portfolio Variance
 topic: portfolio-construction
-subtopic: math
+subtopic: diversification
 difficulty: easy
 tags: [portfolio-variance, diversification, correlation, covariance]
 locked: false
@@ -15,8 +15,11 @@ hints:
   - Plug in $w_1 = w_2 = 0.5$, $\sigma_1 = \sigma_2 = 0.2$.
 solution: |
   With $w_1 = w_2 = 0.5$ and $\sigma_1 = \sigma_2 = 0.2$:
-  $$\sigma_p^2 = 0.25(0.04) + 0.25(0.04) + 2(0.25)\rho(0.2)(0.2)
-    = 0.02 + 0.02\rho.$$
+  $$
+  \sigma_p^2 = 0.25(0.04) + 0.25(0.04) + 2(0.25)\rho(0.2)(0.2)
+    = 0.02 + 0.02\rho.
+  $$
+  
 
   - **(a) $\rho = +1$:** $\sigma_p^2 = 0.04 \Rightarrow \sigma_p = 20\%$. No diversification —
     volatility is just the weighted average.

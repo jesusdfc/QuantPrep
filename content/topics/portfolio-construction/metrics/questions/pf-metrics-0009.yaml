@@ -1,0 +1,34 @@
+id: pf-metrics-0009
+title: Calmar Ratio — Strengths and Weaknesses
+topic: portfolio-construction
+subtopic: metrics
+difficulty: medium
+tags: [calmar-ratio, drawdown, sharpe-ratio, estimation-stability, lookback-window]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  What are the advantages and drawbacks of the Calmar ratio relative to the Sharpe ratio? Why is
+  the standard 36-month window both a feature and a limitation?
+solution: |
+  **Advantages over Sharpe.**
+  - Uses **maximum drawdown** in the denominator rather than standard deviation, so it targets
+    the **worst realized loss** — the risk investors actually feel and that drives redemptions,
+    margin calls and leverage limits.
+  - Captures **path dependence, serial correlation and tail behaviour** that volatility misses;
+    harder to game by smoothing symmetric volatility.
+
+  **Drawbacks.**
+  - **Depends on a single extreme event** (the one worst peak-to-valley move). It is a
+    high-variance statistic: one path realization, so small changes in the sample can move it a
+    lot; it is **less statistically stable** than Sharpe, which averages over all observations.
+  - **Backward-looking and sample-dependent:** the max drawdown you observe depends on the window
+    and may understate the true tail if a crisis simply hasn't occurred yet.
+  - Ignores the **frequency/duration** of drawdowns and the shape of returns above the trough.
+
+  **The 36-month window.** A **feature** because fixing the horizon makes the metric comparable
+  across managers and "changes gradually," smoothing over- and under-performance. A **limitation**
+  because 36 months may exclude the worst historical drawdowns (regime/crisis outside the window)
+  and gives a short, noisy sample for estimating an extreme statistic. Related measures (MAR
+  ratio uses since-inception data; Sterling/Burke use average or multiple drawdowns) trade off
+  comparability against completeness.
+answer: "Calmar uses max drawdown instead of std, so it targets the worst realized loss and captures path/tail risk that Sharpe misses and is harder to smooth. But it hinges on one extreme event, making it high-variance, backward-looking and sample-dependent, and it ignores drawdown frequency/duration. The fixed 36-month window aids comparability and smoothness but can exclude worse historical drawdowns and gives a short, noisy sample for an extreme statistic."

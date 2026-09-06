@@ -1,0 +1,45 @@
+id: pf-diversification-0005
+title: Measuring and Improving Diversification
+topic: portfolio-construction
+subtopic: diversification
+difficulty: medium
+tags: [diversification-ratio, risk-contribution, correlation, effective-bets, crisis-correlation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  How do you measure and improve diversification? Discuss correlation vs risk-contribution
+  metrics, the diversification ratio, and what happens to diversification benefits in a market
+  crisis.
+hints:
+  - Diversification ratio = weighted average vol / portfolio vol.
+  - A concentrated risk contribution vector means poor diversification even if capital is spread.
+solution: |
+  **Correlation-based (naive) view.** "Hold uncorrelated assets." Useful intuition but
+  insufficient: pairwise correlation ignores weights and volatilities, and a low average
+  correlation can still hide one asset dominating total risk.
+
+  **Risk-contribution view.** Decompose $\sigma_p=\sum_i RC_i$, $RC_i=w_i(\Sigma w)_i/\sigma_p$.
+  A portfolio is well diversified when **risk contributions are spread**, not just capital.
+  A useful scalar is the effective number of bets, e.g. via the entropy/HHI of the normalized
+  $RC_i$ (or of the variance shares along principal components).
+
+  **Diversification ratio (Choueifaty).**
+  $$
+  DR = \frac{\sum_i w_i \sigma_i}{\sigma_p} = \frac{\text{weighted-average vol}}{\text{portfolio vol}}.
+  $$
+  
+  $DR\ge 1$; it equals 1 only when assets are perfectly correlated and rises as correlations
+  fall. The **most-diversified portfolio** maximizes $DR$. Related: effective number of assets
+  $= 1/\sum_i w_i^2$ (only captures capital concentration).
+
+  **Improving diversification.** Add genuinely low-/negatively-correlated return streams
+  (factors, alternatives, trend); allocate by **risk** (risk parity / HRP) rather than capital;
+  shrink the covariance matrix; use clustering so you are not doubling up on the same latent
+  factor; rebalance to keep risk shares stable.
+
+  **In a crisis.** Correlations spike toward 1 and volatilities jump, so the covariance matrix
+  collapses toward a single dominant factor. $DR\to 1$, risk concentrates, and diversification
+  benefits shrink **exactly when needed most**. This motivates stress-testing correlations,
+  holding true tail hedges (options, trend-following, cash/duration when it helps), and not
+  relying on calm-period correlations for risk budgeting.
+answer: "Go beyond pairwise correlation: decompose risk contributions RC_i = w_i(Σw)_i/σ_p and check they're spread (effective number of bets). The diversification ratio DR = (Σ w_iσ_i)/σ_p ≥ 1 measures diversification; maximize it for the most-diversified portfolio. Improve via low-correlation streams, risk-based allocation, shrinkage, clustering. In crises correlations→1, DR→1, and benefits collapse when most needed."

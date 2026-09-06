@@ -21,10 +21,16 @@ solution: |
 
   **From state 0** (fair coin, $p=\tfrac12$): with prob ½ we get H → go to state 1; with prob
   ½ we get T → stay in state 0:
-  $$E_0 = 1 + \tfrac12 E_1 + \tfrac12 E_0.$$
+  $$
+  E_0 = 1 + \tfrac12 E_1 + \tfrac12 E_0.
+  $$
+  
 
   **From state 1:** with prob ½ we get H → done; with prob ½ we get T → back to state 0:
-  $$E_1 = 1 + \tfrac12 (0) + \tfrac12 E_0.$$
+  $$
+  E_1 = 1 + \tfrac12 (0) + \tfrac12 E_0.
+  $$
+  
 
   Solve: from the first, $\tfrac12 E_0 = 1 + \tfrac12 E_1 \Rightarrow E_0 = 2 + E_1$.
   Substitute into $E_1 = 1 + \tfrac12 E_0 = 1 + \tfrac12(2 + E_1) = 2 + \tfrac12 E_1$, so
@@ -33,7 +39,10 @@ solution: |
   **Answer:** **6 flips** for a fair coin.
 
   **Biased coin, general $p$:** the standard result is
-  $$E_0 = \frac{1+p}{p^2}.$$
+  $$
+  E_0 = \frac{1+p}{p^2}.
+  $$
+  
   Check: $p=\tfrac12$ gives $(1.5)/(0.25) = 6$. ✓ (As $p\to0$ it blows up like $1/p^2$, as
   expected for a rare event.)
 answer: "6 flips for a fair coin (E0 = 2 + E1, E1 = 1 + ½E0 ⇒ E1=4, E0=6). For a biased coin, E = (1+p)/p²."

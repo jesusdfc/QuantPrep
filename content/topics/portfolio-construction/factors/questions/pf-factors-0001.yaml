@@ -16,8 +16,11 @@ hints:
 solution: |
   Run a time-series **factor regression** of the strategy's excess returns $r_t$ on the
   factor returns (e.g. Fama-French-Carhart):
-  $$r_t = \alpha + \beta_{\text{mkt}} \text{MKT}_t + \beta_{\text{smb}} \text{SMB}_t
-        + \beta_{\text{hml}} \text{HML}_t + \beta_{\text{mom}} \text{MOM}_t + \varepsilon_t.$$
+  $$
+  r_t = \alpha + \beta_{\text{mkt}} \text{MKT}_t + \beta_{\text{smb}} \text{SMB}_t
+        + \beta_{\text{hml}} \text{HML}_t + \beta_{\text{mom}} \text{MOM}_t + \varepsilon_t.
+  $$
+  
 
   What to examine:
   - **Intercept $\alpha$** — the return unexplained by the factors. Genuine alpha needs a

@@ -19,7 +19,10 @@ solution: |
   volatility), so the *effective* number of independent observations is far below $2{,}500$.
 
   For an AR(1)-like process with lag-1 autocorrelation $\rho$, a rough effective sample size is
-  $$n_{\text{eff}} \approx n\,\frac{1-\rho}{1+\rho}.$$
+  $$
+  n_{\text{eff}} \approx n\,\frac{1-\rho}{1+\rho}.
+  $$
+  
   With $\rho = 0.9$, $n_{\text{eff}} \approx 2500 \times \frac{0.1}{1.9} \approx 132$ — you
   have far less information than the raw count suggests, and naive standard errors are far
   too small (t-stats far too large).

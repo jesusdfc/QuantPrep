@@ -15,11 +15,17 @@ hints:
   - Convert everything to consistent units (e.g. annual, with T in years).
 solution: |
   For approximately i.i.d. normal returns, the estimated Sharpe has (Lo, 2002)
-  $$\operatorname{SE}(\widehat{SR}) \approx \sqrt{\frac{1 + \tfrac{1}{2}SR^2}{T}},$$
+  $$
+  \operatorname{SE}(\widehat{SR}) \approx \sqrt{\frac{1 + \tfrac{1}{2}SR^2}{T}},
+  $$
+  
   where $SR$ and $T$ are in the **same** time units. Using annual units with $SR = 1.8$ and
   $T = 3$ years:
-  $$\operatorname{SE} \approx \sqrt{\frac{1 + 0.5(1.8)^2}{3}} = \sqrt{\frac{1 + 1.62}{3}}
-    = \sqrt{0.873} \approx 0.93.$$
+  $$
+  \operatorname{SE} \approx \sqrt{\frac{1 + 0.5(1.8)^2}{3}} = \sqrt{\frac{1 + 1.62}{3}}
+    = \sqrt{0.873} \approx 0.93.
+  $$
+  
 
   So the t-stat for "true Sharpe $> 0$" is about $1.8 / 0.93 \approx 1.9$ — only borderline
   significant, with a roughly $95\%$ CI of about $1.8 \pm 1.96(0.93) \approx [-0.02, 3.6]$.

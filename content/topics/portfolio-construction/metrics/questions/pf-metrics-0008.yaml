@@ -1,0 +1,29 @@
+id: pf-metrics-0008
+title: Computing the Calmar Ratio
+topic: portfolio-construction
+subtopic: metrics
+difficulty: easy
+tags: [calmar-ratio, maximum-drawdown, annualized-return, return-to-drawdown]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Over the trailing 36 months a strategy delivered an annualized return of 18% and experienced a
+  maximum drawdown of 24%. Compute its Calmar ratio. If a second strategy returns 12% annualized
+  with a 10% max drawdown, which is better on a Calmar basis, and what does that tell you?
+hints:
+  - Calmar = annualized return / |maximum drawdown| (trailing 36 months).
+solution: |
+  **Calmar ratio** = annualized return divided by the absolute value of the maximum drawdown
+  (both over the trailing 36 months):
+
+  - Strategy A: $18\% / 24\% = 0.75$.
+  - Strategy B: $12\% / 10\% = 1.20$.
+
+  **Strategy B is better on a Calmar basis** ($1.20 > 0.75$): it earns more return per unit of
+  worst-case drawdown, even though its absolute return is lower. This reflects the Calmar ratio's
+  purpose — reward **return relative to the pain of the worst peak-to-valley loss** rather than
+  raw performance. It is popular for CTAs/hedge funds because drawdown is what investors actually
+  experience and what triggers redemptions. Caveat: it depends on a **single worst event** within
+  the window, so it is sensitive to the sample period and less statistically stable than
+  volatility-based ratios.
+answer: "Calmar = annualized return / |max drawdown|. A: 18/24 = 0.75; B: 12/10 = 1.20. B is better on Calmar — more return per unit of worst drawdown despite lower absolute return. Calmar rewards return relative to worst-case loss but hinges on one worst event, so it's period-sensitive."

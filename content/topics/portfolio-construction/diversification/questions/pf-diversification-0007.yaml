@@ -1,0 +1,46 @@
+id: pf-diversification-0007
+title: End-to-End — Build, Risk-Estimate and Validate a Portfolio
+topic: portfolio-construction
+subtopic: diversification
+difficulty: hard
+tags: [portfolio-construction, value-at-risk, backtesting, transaction-costs, options]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You have historical returns for $N$ assets. How would you construct a diversified portfolio,
+  estimate risk (e.g., 99% VaR over 10 days), and validate it? What changes if the portfolio
+  includes options or has high turnover?
+solution: |
+  **1. Construct.**
+  - Clean/align data (survivorship, corporate actions, stale prices), compute returns.
+  - Estimate a **robust covariance** (Ledoit–Wolf shrinkage or factor model); be skeptical of
+    $\mu$ — prefer estimation-light allocators (min-variance, risk parity, HRP) or anchor $\mu$
+    with Black–Litterman.
+  - Apply **constraints**: long-only or leverage cap, position limits, turnover/liquidity, cost
+    penalty. Result: target weights $w$.
+
+  **2. Estimate 99% / 10-day VaR.** Three standard routes:
+  - **Parametric (variance–covariance):** $\text{VaR}_{99\%} = z_{0.99}\,\sigma_p\sqrt{10}$ with
+    $\sigma_p=\sqrt{w^\top\Sigma w}$, $z_{0.99}\approx 2.33$ (assumes normal, thin tails —
+    understates risk). $\sqrt{10}$ scaling assumes i.i.d. returns.
+  - **Historical simulation:** apply $w$ to historical return vectors, take the 1st percentile
+    of the 10-day P&L distribution. No distributional assumption; limited by sample tail.
+  - **Monte Carlo:** simulate from a fitted (fat-tailed / copula) model. Also report **CVaR**
+    (expected shortfall) since VaR ignores tail shape and isn't sub-additive.
+
+  **3. Validate.**
+  - **Out-of-sample / walk-forward** backtest with realistic costs and rebalancing; avoid
+    look-ahead and survivorship bias.
+  - **VaR backtest / breach test** (Kupiec, Christoffersen): are ~1% of days breaches, and are
+    they independent (not clustered)?
+  - **Stress tests** with crisis correlations; sensitivity to estimation window and shrinkage.
+
+  **With options.** Returns are **non-linear** → delta-normal VaR is wrong. Use full
+  revaluation / delta–gamma, model vega and the vol surface, and Monte Carlo the risk factors;
+  tails and CVaR matter much more.
+
+  **With high turnover.** Gross returns overstate performance — model **transaction costs,
+  slippage, market impact and capacity**; add turnover penalties/no-trade bands; validate net of
+  costs. High turnover also shortens the effective holding period, so the $\sqrt{10}$ i.i.d.
+  scaling and stationarity assumptions deserve extra scrutiny.
+answer: "Construct with robust covariance (shrinkage/factor), skeptical μ, estimation-light allocators (min-var/risk parity/HRP) under real constraints. Estimate 99%/10-day VaR via parametric (z·σ_p·√10), historical simulation, or Monte Carlo, and report CVaR. Validate with walk-forward backtests net of costs plus VaR breach tests (Kupiec/Christoffersen) and stress tests. Options break linear VaR (use full/delta-gamma revaluation + vol surface); high turnover demands modelling costs/impact and net-of-cost validation."

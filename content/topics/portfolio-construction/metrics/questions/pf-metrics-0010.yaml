@@ -1,0 +1,33 @@
+id: pf-metrics-0010
+title: Information Ratio and Tracking Error
+topic: portfolio-construction
+subtopic: metrics
+difficulty: medium
+tags: [information-ratio, tracking-error, active-return, benchmark, sharpe-ratio]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A fund returned 11% while its benchmark returned 8%, with a tracking error (standard deviation
+  of the active return) of 5%. (a) Compute the information ratio. (b) How does the information
+  ratio differ from the Sharpe ratio? (c) What is considered a "good" information ratio?
+hints:
+  - Active return = portfolio return − benchmark return; IR = active return / tracking error.
+solution: |
+  **(a)** Active return $= 11\% - 8\% = 3\%$. Tracking error $= 5\%$.
+  $$
+  IR = \frac{R_p - R_b}{\text{TE}} = \frac{3\%}{5\%} = 0.6.
+  $$
+  
+
+  **(b)** Both are return-per-unit-of-risk ratios, but the **benchmark** differs:
+  - **Sharpe** = (portfolio return − **risk-free rate**) / total volatility. It attributes
+    **absolute** returns.
+  - **Information ratio** = (portfolio return − **risky benchmark**) / **tracking error** (the
+    std of the *active* return). It attributes **relative** (active) returns and measures skill
+    at beating a benchmark.
+
+  **(c)** As a rule of thumb, an annualized IR around **0.5 is good / top-quartile**, ~**0.75 is
+  very good**, and **1.0 is exceptional** and rarely sustained. So an IR of 0.6 is solid. Note
+  the IR ties directly to the Fundamental Law of Active Management, $IR \approx IC\sqrt{breadth}$:
+  skill per bet times the square root of the number of independent bets.
+answer: "Active return = 11−8 = 3%; IR = 3%/5% = 0.6. Sharpe uses the risk-free rate and total volatility (absolute performance); the IR uses a risky benchmark and tracking error (std of active return) to measure relative skill. ~0.5 is good/top-quartile, ~1.0 exceptional, so 0.6 is solid. IR ≈ IC·√breadth."

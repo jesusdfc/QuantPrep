@@ -4,7 +4,7 @@
 .DEFAULT_GOAL := help
 UV := uv run --project backend
 
-.PHONY: help validate content dev build lint test clean install
+.PHONY: help validate content dev build format lint typecheck test check clean install
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -16,6 +16,7 @@ install: ## Install backend + frontend dependencies
 
 validate: ## Validate all content against JSON Schema
 	$(UV) qp-validate
+	cd frontend && npm run validate:math
 
 content: validate ## Build static index (frontend/public/questions.json)
 	$(UV) qp-build
@@ -28,10 +29,22 @@ build: content ## Production build of the PWA
 
 lint: ## Lint backend and frontend
 	$(UV) ruff check backend/src backend/tests
+	$(UV) black --check backend/src backend/tests
 	cd frontend && npm run lint
+
+format: ## Format backend, frontend, and display math
+	$(UV) ruff check --fix backend/src backend/tests
+	$(UV) black backend/src backend/tests
+	cd frontend && npm run format
+	cd frontend && npm run format:math
+
+typecheck: ## Type-check the frontend
+	cd frontend && npm run typecheck
 
 test: ## Run backend tests
 	$(UV) pytest
+
+check: validate lint typecheck test ## Run all fast quality gates
 
 clean: ## Remove build artifacts
 	rm -f frontend/public/questions.json frontend/public/search-index.json frontend/public/topics.json

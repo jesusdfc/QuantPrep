@@ -15,13 +15,22 @@ hints:
   - For the total over $n$ bets, mean scales like $n$ and std like $\sqrt{n}$.
 solution: |
   Per bet, with $p = 0.55$:
-  $$\mu = p(1) + (1-p)(-1) = 2p - 1 = 0.10.$$
+  $$
+  \mu = p(1) + (1-p)(-1) = 2p - 1 = 0.10.
+  $$
+  
   The payoff $X \in \{-1, +1\}$ has $\mathbb{E}[X^2] = 1$, so
-  $$\operatorname{Var}(X) = 1 - \mu^2 = 1 - 0.01 = 0.99,\quad \sigma \approx 0.995.$$
+  $$
+  \operatorname{Var}(X) = 1 - \mu^2 = 1 - 0.01 = 0.99,\quad \sigma \approx 0.995.
+  $$
+  
 
   Over $n$ i.i.d. bets the total has mean $n\mu$ and std $\sigma\sqrt{n}$, so
-  $$\frac{\text{mean}}{\text{std}} = \frac{n\mu}{\sigma\sqrt{n}} = \frac{\mu}{\sigma}\sqrt{n}
-    \approx 0.10\sqrt{n}.$$
+  $$
+  \frac{\text{mean}}{\text{std}} = \frac{n\mu}{\sigma\sqrt{n}} = \frac{\mu}{\sigma}\sqrt{n}
+    \approx 0.10\sqrt{n}.
+  $$
+  
 
   The edge per bet is tiny relative to its noise ($\mu/\sigma \approx 0.10$), but it
   compounds as $\sqrt{n}$: you need **many independent bets** for the edge to dominate luck.

@@ -16,20 +16,29 @@ hints:
 solution: |
   **Discrete even-money bet.** Bet fraction $f$ of wealth; win $+f$ with prob $p$, lose $-f$
   with prob $q=1-p$. Kelly maximizes expected log growth:
-  $$g(f) = p\log(1+f) + q\log(1-f).$$
+  $$
+  g(f) = p\log(1+f) + q\log(1-f).
+  $$
+  
   Differentiate and set to zero:
-  $$g'(f) = \frac{p}{1+f} - \frac{q}{1-f} = 0 \;\Rightarrow\; f^\* = p - q = 2p - 1.$$
-  So bet the **edge**. (General odds $b$: $f^\* = \frac{bp - q}{b}$.) A 55% edge → bet 10%.
+  $$
+  g'(f) = \frac{p}{1+f} - \frac{q}{1-f} = 0 \;\Rightarrow\; f^{*} = p - q = 2p - 1.
+  $$
+  
+  So bet the **edge**. (General odds $b$: $f^{*} = \frac{bp - q}{b}$.) A 55% edge → bet 10%.
 
   **Continuous / Gaussian analogue.** For returns with mean $\mu$ and variance $\sigma^2$
   (over the risk-free rate), the growth-optimal leverage is
-  $$f^\* = \frac{\mu}{\sigma^2},$$
+  $$
+  f^{*} = \frac{\mu}{\sigma^2},
+  $$
+  
   and the resulting optimal growth rate is $\tfrac12 (\mu/\sigma)^2 = \tfrac12 SR^2$ — i.e.
   Kelly leverage ties directly to the **Sharpe ratio**.
 
   **Why half-Kelly.** Full Kelly maximizes long-run growth but has **brutal volatility and
   drawdowns**, and it assumes you **know** $p$/$\mu$/$\sigma$ exactly. In reality these are
   **estimated with error**, and overbetting is severely punished (growth falls off faster
-  above $f^\*$ than below). **Fractional Kelly** (e.g. half) sacrifices a little growth for a
+  above $f^{*}$ than below). **Fractional Kelly** (e.g. half) sacrifices a little growth for a
   large reduction in variance and drawdown, and is far more robust to estimation error.
 answer: "Even-money: maximize p·log(1+f)+q·log(1−f) ⇒ f* = p−q = 2p−1 (edge). Gaussian: f* = μ/σ², with optimal growth ½·SR². Half-Kelly is used because full Kelly has huge drawdowns and is fragile to estimation error in μ/σ."

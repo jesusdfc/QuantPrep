@@ -17,8 +17,5 @@ def main() -> int:
         return 1
 
     output = backend.config.frontend_public_dir.relative_to(backend.config.repository_root)
-    print(
-        f"✅ Built {result.questions} questions across {result.topics} topics "
-        f"-> {output}/"
-    )
+    print(f"✅ Built {result.questions} questions across {result.topics} topics " f"-> {output}/")
     return 0

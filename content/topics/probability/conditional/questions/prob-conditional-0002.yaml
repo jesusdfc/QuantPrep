@@ -19,10 +19,16 @@ solution: |
   $P(F\mid O^c)=1-0.6=0.4$.
 
   **Law of total probability:**
-  $$P(F) = P(F\mid O)P(O) + P(F\mid O^c)P(O^c) = 0.6(0.2) + 0.4(0.8) = 0.12 + 0.32 = 0.44.$$
+  $$
+  P(F) = P(F\mid O)P(O) + P(F\mid O^c)P(O^c) = 0.6(0.2) + 0.4(0.8) = 0.12 + 0.32 = 0.44.
+  $$
+  
 
   **Bayes:**
-  $$P(O\mid F) = \frac{P(F\mid O)P(O)}{P(F)} = \frac{0.12}{0.44} \approx 0.273.$$
+  $$
+  P(O\mid F) = \frac{P(F\mid O)P(O)}{P(F)} = \frac{0.12}{0.44} \approx 0.273.
+  $$
+  
 
   **Interpretation.** Even though the model is "60% accurate," only ~**27%** of flagged
   stocks actually outperform — barely above the 20% base rate. Because outperformers are

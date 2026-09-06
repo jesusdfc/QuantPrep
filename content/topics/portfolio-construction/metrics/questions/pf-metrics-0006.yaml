@@ -1,0 +1,34 @@
+id: pf-metrics-0006
+title: Computing Maximum Drawdown from an Equity Curve
+topic: portfolio-construction
+subtopic: metrics
+difficulty: easy
+tags: [drawdown, maximum-drawdown, equity-curve, peak-to-trough]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy's month-end equity (NAV) evolves as: 100, 120, 90, 110, 105, 130, 95. Compute the
+  maximum drawdown (as a percentage). At which point does it occur, and from which peak?
+hints:
+  - Track the running peak; drawdown at each point is (peak − NAV) / peak.
+  - The max drawdown is the largest such value over the whole path.
+solution: |
+  Track the **running peak** and the drawdown $= (\text{peak} - \text{NAV})/\text{peak}$ at each
+  step:
+
+  | NAV | Running peak | Drawdown |
+  |----:|-------------:|---------:|
+  | 100 | 100 | 0% |
+  | 120 | 120 | 0% |
+  | 90  | 120 | (120−90)/120 = **25.0%** |
+  | 110 | 120 | (120−110)/120 = 8.3% |
+  | 105 | 120 | (120−105)/120 = 12.5% |
+  | 130 | 130 | 0% |
+  | 95  | 130 | (130−95)/130 = **26.9%** |
+
+  The **maximum drawdown ≈ 26.9%**, occurring at the final point (NAV = 95) measured from the
+  peak of 130. Note there were two distinct drawdown episodes (from the peak of 120 and from the
+  peak of 130); MDD is the worst peak-to-trough decline over the entire history, here the second
+  one. Drawdown is **path-dependent** — it depends on the order of returns, not just their mean
+  and variance.
+answer: "Running peak → drawdowns: 25% from the peak of 120 (NAV 90), then 26.9% from the peak of 130 (NAV 95). Max drawdown ≈ 26.9% at the last point, measured from the 130 peak. Drawdown is path-dependent."

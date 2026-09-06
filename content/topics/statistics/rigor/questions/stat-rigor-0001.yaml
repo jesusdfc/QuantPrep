@@ -19,7 +19,10 @@ solution: |
 
   The best-of-1000 p-value of $0.001$ is meaningless without correcting for selection. The
   right quantity is the probability that the *minimum* of 1,000 uniforms is $\le 0.001$:
-  $$\mathbb{P}(\min \le 0.001) = 1 - (1 - 0.001)^{1000} \approx 1 - e^{-1} \approx 0.63.$$
+  $$
+  \mathbb{P}(\min \le 0.001) = 1 - (1 - 0.001)^{1000} \approx 1 - e^{-1} \approx 0.63.
+  $$
+  
 
   So seeing a best p-value around $0.001$ is roughly a coin-flip event even when **nothing
   works**. A Bonferroni-adjusted threshold would be $0.05/1000 = 5\times10^{-5}$. The single

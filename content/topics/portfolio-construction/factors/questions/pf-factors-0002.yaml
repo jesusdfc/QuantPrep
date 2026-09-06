@@ -16,7 +16,10 @@ hints:
 solution: |
   **Detect.** Regress the strategy's returns on a set of factor returns (market, size, value,
   momentum, quality, plus sector dummies):
-  $$r_t = \alpha + \sum_k \beta_k f_{k,t} + \varepsilon_t.$$
+  $$
+  r_t = \alpha + \sum_k \beta_k f_{k,t} + \varepsilon_t.
+  $$
+  
   Significant $\beta_k$ (e.g. a large positive value loading) means the "alpha" is partly
   **factor beta in disguise**. The intercept $\alpha$ is the residual return not explained by
   known factors; that is the part worth paying for.

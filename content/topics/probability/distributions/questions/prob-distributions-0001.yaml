@@ -18,8 +18,11 @@ solution: |
   success probability, so its expectation is $\frac{n}{n-(k-1)}$.
 
   By linearity of expectation, summing over $k = 1, \dots, n$:
-  $$\mathbb{E}[T] = \sum_{k=1}^{n} \frac{n}{n-k+1}
-    = n\sum_{j=1}^{n}\frac{1}{j} = n H_n,$$
+  $$
+  \mathbb{E}[T] = \sum_{k=1}^{n} \frac{n}{n-k+1}
+    = n\sum_{j=1}^{n}\frac{1}{j} = n H_n,
+  $$
+  
   where $H_n$ is the $n$-th harmonic number. Asymptotically $\mathbb{E}[T] \approx n\ln n + \gamma n$.
 
   For example, $n = 10 \Rightarrow 10 H_{10} \approx 29.3$ boxes.

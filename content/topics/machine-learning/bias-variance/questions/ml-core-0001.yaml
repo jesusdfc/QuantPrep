@@ -17,8 +17,11 @@ solution: |
   For a prediction $\hat f(x)$ of a target $y = f(x) + \varepsilon$ with
   $\operatorname{Var}(\varepsilon) = \sigma^2$, the expected squared test error at a point
   decomposes as
-  $$\mathbb{E}\big[(y - \hat f(x))^2\big] = \underbrace{(\,\mathbb{E}[\hat f(x)] - f(x))^2}_{\text{bias}^2}
-    + \underbrace{\operatorname{Var}(\hat f(x))}_{\text{variance}} + \sigma^2.$$
+  $$
+  \mathbb{E}\big[(y - \hat f(x))^2\big] = \underbrace{(\,\mathbb{E}[\hat f(x)] - f(x))^2}_{\text{bias}^2}
+    + \underbrace{\operatorname{Var}(\hat f(x))}_{\text{variance}} + \sigma^2.
+  $$
+  
 
   - **High-bias** (simple) models miss structure but are stable across samples.
   - **High-variance** (flexible) models fit noise and change a lot with new data.

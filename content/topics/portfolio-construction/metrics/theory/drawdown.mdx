@@ -1,0 +1,44 @@
+---
+id: pc-drawdown
+title: Drawdown and Maximum Drawdown
+topic: portfolio-construction
+subtopic: metrics
+order: 3
+summary: The decline from a historical peak in cumulative equity — its magnitude (max drawdown) and duration — as a path-dependent measure of downside risk.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Drawdown (economics)" (https://en.wikipedia.org/wiki/Drawdown_(economics)), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Drawdown (economics)", url: "https://en.wikipedia.org/wiki/Drawdown_(economics)" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Drawdown (economics)"](https://en.wikipedia.org/wiki/Drawdown_(economics)),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Drawdown and Maximum Drawdown
+
+The drawdown is the measure of the decline from a historical peak in some variable (typically
+the cumulative profit or total open equity of a financial trading strategy).
+
+Formally, if $X(t),\; t \ge 0$ is a stochastic process with $X(0)=0$, the drawdown at time $T$,
+denoted $D(T)$, is defined as
+
+$$
+D(T) = \max_{t \in (0,T)} X(t) - X(T).
+$$
+
+
+The maximum drawdown (MDD) up to time $T$ is the maximum of the drawdown over the history of the
+variable:
+
+$$
+\operatorname{MDD}(T) = \max_{\tau \in (0,T)} \left[\max_{t \in (0,\tau)} X(t) - X(\tau)\right].
+$$
+
+
+There are two main definitions of a drawdown: **how low it goes** (the magnitude — the worst
+peak-to-valley loss) and **how long it lasts** (the duration — the length of any peak-to-peak
+period, i.e. the time between new equity highs). In finance, the maximum drawdown is used as an
+indicator of risk in performance measures such as the Calmar ratio, the Sterling ratio and the
+Burke ratio.

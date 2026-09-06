@@ -1,0 +1,38 @@
+id: pf-diversification-0006
+title: Hierarchical Risk Parity vs Classical Mean-Variance
+topic: portfolio-construction
+subtopic: diversification
+difficulty: hard
+tags: [hierarchical-risk-parity, clustering, covariance-estimation, matrix-inversion, condition-number]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Describe Hierarchical Risk Parity (HRP) (or another robust method). Why is it preferred over
+  classical mean-variance when the covariance matrix is noisy or the number of assets is large?
+hints:
+  - MVO inverts $\Sigma$; HRP never does.
+  - Think about the condition number of a sample covariance matrix when $N$ approaches $T$.
+solution: |
+  **HRP (López de Prado) in three steps.**
+  1. **Tree clustering:** convert the correlation matrix to a distance metric and hierarchically
+     cluster assets, grouping those that behave similarly.
+  2. **Quasi-diagonalization:** reorder the covariance matrix so similar assets sit together
+     (large entries near the diagonal).
+  3. **Recursive bisection:** split the tree top-down, allocating risk between the two branches
+     inversely to their (cluster) variance, recursing until single assets remain.
+
+  **Why it beats MVO under noise / large $N$.**
+  - **No matrix inversion.** MVO uses $\Sigma^{-1}$. The sample $\Sigma$ becomes near-singular
+    and ill-conditioned as $N \to T$ (few observations per asset); tiny estimation errors get
+    amplified into wild, unstable weights. HRP allocates using the hierarchy and only relative
+    variances, so it sidesteps inversion entirely.
+  - **Respects structure.** MVO treats all assets as directly comparable and makes offsetting
+    bets across highly correlated names; HRP allocates *within* and *between* clusters, avoiding
+    doubling up on a single latent factor.
+  - **Stability & out-of-sample performance.** HRP weights are far less sensitive to small input
+    changes, giving lower turnover and typically better realized risk than MVO on noisy data.
+
+  **Caveats.** HRP is a heuristic (no optimality guarantee), depends on clustering/linkage
+  choices, and still ignores expected returns. Alternatives with similar robustness goals:
+  covariance **shrinkage** (Ledoit–Wolf) feeding min-variance, and Nested Clustered Optimization.
+answer: "HRP clusters assets by a correlation distance, quasi-diagonalizes the covariance matrix, and allocates risk via top-down recursive bisection (inverse-variance). It's preferred over MVO because it never inverts the ill-conditioned, noisy sample Σ (which explodes as N→T), respects the correlation hierarchy instead of making offsetting bets, and yields more stable, lower-turnover, better out-of-sample weights."

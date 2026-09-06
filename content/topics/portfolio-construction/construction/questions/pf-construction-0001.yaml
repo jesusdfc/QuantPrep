@@ -15,7 +15,10 @@ hints:
   - Solve for breadth given IR = 1 and IC = 0.05.
 solution: |
   The Fundamental Law (Grinold) approximates the achievable information ratio as
-  $$\text{IR} \approx \text{IC} \times \sqrt{\text{Breadth}},$$
+  $$
+  \text{IR} \approx \text{IC} \times \sqrt{\text{Breadth}},
+  $$
+  
   where:
   - **IC (information coefficient)** — the correlation between forecasts and realized
     outcomes; a measure of *skill per bet*. Real ICs are small (0.02–0.10).
@@ -23,7 +26,10 @@ solution: |
   - **IR** — risk-adjusted active return (active return / active risk).
 
   Solving for breadth with $\text{IR} = 1$ and $\text{IC} = 0.05$:
-  $$\sqrt{\text{Breadth}} = \frac{1}{0.05} = 20 \Rightarrow \text{Breadth} = 400.$$
+  $$
+  \sqrt{\text{Breadth}} = \frac{1}{0.05} = 20 \Rightarrow \text{Breadth} = 400.
+  $$
+  
 
   So a tiny per-bet skill becomes a strong IR of 1.0 if applied **independently** ~400 times
   a year. The lesson: a weak signal can be very valuable if it can be deployed broadly and

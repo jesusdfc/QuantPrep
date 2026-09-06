@@ -121,9 +121,7 @@ class ContentValidator:
                 f"{label}: subtopic folder '{folder_subtopic}' is not declared in topic.yaml"
             )
         if declared_value and declared_value != folder_subtopic:
-            errors.append(
-                f"{label}: subtopic '{declared_value}' != folder '{folder_subtopic}'"
-            )
+            errors.append(f"{label}: subtopic '{declared_value}' != folder '{folder_subtopic}'")
         return errors
 
     def _relative(self, path: Path) -> str:

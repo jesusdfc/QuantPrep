@@ -17,6 +17,8 @@ qp-validate = "quantprep_backend.cli.validate:main"
 
 [dependency-groups]
 dev = [
+    "black>=24.0",
+    "pre-commit>=3.7",
     "pytest>=8.0",
     "ruff>=0.1.0",
 ]
@@ -39,3 +41,7 @@ target-version = "py310"
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "UP"]
 ignore = ["E501"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]

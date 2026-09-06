@@ -76,4 +76,15 @@ cd frontend && npm install && npm run dev
 
 See `content/schema/` for the exact required fields. In short, a question needs:
 `id, title, topic, subtopic, difficulty, tags, source, prompt, solution` (plus optional
-`hints`, `answer`, `locked`). Run `make validate` before committing.
+`hints`, `answer`, `locked`). `make validate` checks both the schemas and every rendered
+Markdown/KaTeX expression.
+
+Install the repository hooks once after `make install`:
+
+```bash
+uv run --project backend pre-commit install --hook-type pre-commit --hook-type pre-push
+```
+
+Commits run content validation, Ruff, Black, pytest, Biome, and TypeScript. Pushes additionally
+run the frontend production build. Use `make check` to run all fast quality gates manually, or
+`make format` to apply the configured formatters.

@@ -25,13 +25,19 @@ solution: |
 
   **n independent equal strategies, equal-weighted.** Mean stays $\mu$; variance is
   $\sigma^2/n$; std $\sigma/\sqrt n$, so
-  $$S_{\text{combined}} = S\sqrt{n}.$$
+  $$
+  S_{\text{combined}} = S\sqrt{n}.
+  $$
+  
   Diversification across **independent** edges multiplies Sharpe by $\sqrt n$ — the
   quantitative core of the **Fundamental Law of Active Management** (IR ≈ IC·√breadth).
 
   **When correlation rises.** With average pairwise correlation $\rho$, the combined variance
   of the equal-weighted average is $\sigma^2\big(\tfrac1n + \tfrac{n-1}{n}\rho\big)$, so
-  $$S_{\text{combined}} = S\Big/\sqrt{\tfrac1n + \tfrac{n-1}{n}\rho}.$$
+  $$
+  S_{\text{combined}} = S\Big/\sqrt{\tfrac1n + \tfrac{n-1}{n}\rho}.
+  $$
+  
   As $n\to\infty$ this tends to $S/\sqrt{\rho}$ — a **ceiling** set by correlation. Adding
   more correlated strategies gives diminishing benefit; the value of breadth comes from
   **low correlation**, not sheer count.

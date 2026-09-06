@@ -1,0 +1,62 @@
+minimum_pre_commit_version: "3.7.0"
+default_install_hook_types: [pre-commit, pre-push]
+
+repos:
+  - repo: local
+    hooks:
+      - id: content-schema
+        name: content schema validation
+        entry: uv run --project backend qp-validate
+        language: system
+        pass_filenames: false
+        files: ^content/
+
+      - id: content-math
+        name: content Markdown and KaTeX validation
+        entry: npm --prefix frontend run validate:math
+        language: system
+        pass_filenames: false
+        files: ^(content/|frontend/(scripts/validate-content-math\.mjs|package(-lock)?\.json)$)
+
+      - id: backend-ruff
+        name: backend Ruff lint
+        entry: uv run --project backend ruff check backend/src backend/tests
+        language: system
+        pass_filenames: false
+        files: ^backend/.*\.py$
+
+      - id: backend-black
+        name: backend Black formatting
+        entry: uv run --project backend black --check backend/src backend/tests
+        language: system
+        pass_filenames: false
+        files: ^backend/.*\.py$
+
+      - id: backend-tests
+        name: backend tests
+        entry: uv run --project backend pytest
+        language: system
+        pass_filenames: false
+        files: ^backend/((src|tests)/.*\.py|pyproject\.toml|uv\.lock)$
+
+      - id: frontend-biome
+        name: frontend Biome lint and formatting
+        entry: npm --prefix frontend run lint
+        language: system
+        pass_filenames: false
+        files: ^frontend/(src|scripts)/.*\.(js|mjs|jsx|ts|tsx)$
+
+      - id: frontend-typecheck
+        name: frontend TypeScript
+        entry: npm --prefix frontend run typecheck
+        language: system
+        pass_filenames: false
+        files: ^frontend/(src/.*\.(ts|tsx)|tsconfig\.json|package(-lock)?\.json)$
+
+      - id: production-build
+        name: content and frontend production build
+        entry: make build
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]

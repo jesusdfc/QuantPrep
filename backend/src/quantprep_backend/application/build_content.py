@@ -37,9 +37,7 @@ class ContentIndexBuilder:
             )
 
             topic["lessons"] = [lesson.metadata for lesson in lessons]
-            topic["lessonBodies"] = {
-                str(lesson.metadata["id"]): lesson.body for lesson in lessons
-            }
+            topic["lessonBodies"] = {str(lesson.metadata["id"]): lesson.body for lesson in lessons}
 
             topic_questions = []
             for document in self._content.questions(topic_dir):

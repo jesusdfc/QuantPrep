@@ -1,0 +1,41 @@
+---
+id: pc-sortino-ratio
+title: The Sortino Ratio
+topic: portfolio-construction
+subtopic: metrics
+order: 2
+summary: A modification of the Sharpe ratio that penalizes only downside (below-target) volatility, using downside deviation instead of total standard deviation.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Sortino ratio" (https://en.wikipedia.org/wiki/Sortino_ratio), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Sortino ratio", url: "https://en.wikipedia.org/wiki/Sortino_ratio" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Sortino ratio"](https://en.wikipedia.org/wiki/Sortino_ratio),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# The Sortino Ratio
+
+The Sortino ratio measures the risk-adjusted return of an investment asset, portfolio, or
+strategy. It is a modification of the Sharpe ratio but penalizes only those returns falling
+below a user-specified target or required rate of return, while the Sharpe ratio penalizes both
+upside and downside variance equally.
+
+The ratio $S$ is calculated as
+
+$$
+S = \frac{R - T}{DR},
+$$
+
+
+where $R$ is the asset or portfolio average annual total return, $T$ is the target or required
+rate of return for the investment strategy under consideration (originally called the minimum
+acceptable return, MAR), and $DR$ is the target semi-deviation (the square root of target
+semi-variance), termed downside deviation.
+
+When return distributions are near symmetrical and the target return is close to the
+distribution median, the Sharpe and Sortino ratios produce similar results. As skewness
+increases and targets vary from the median, results can be expected to show dramatic
+differences.

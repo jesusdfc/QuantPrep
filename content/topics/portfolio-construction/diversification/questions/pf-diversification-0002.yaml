@@ -1,7 +1,7 @@
-id: pf-math-0002
+id: pf-diversification-0002
 title: Diversification and the Limit of Portfolio Variance
 topic: portfolio-construction
-subtopic: math
+subtopic: diversification
 difficulty: medium
 tags: [portfolio-variance, diversification, correlation, covariance, systematic-risk]
 locked: false
@@ -18,13 +18,22 @@ solution: |
   distinct assets $\bar c = \rho\sigma^2$.
 
   **Portfolio variance.**
-  $$\sigma_p^2 = \sum_i w_i^2 \sigma^2 + \sum_{i\neq j} w_i w_j \bar c
-  = n\cdot\frac{1}{n^2}\sigma^2 + n(n-1)\cdot\frac{1}{n^2}\rho\sigma^2.$$
+  $$
+  \sigma_p^2 = \sum_i w_i^2 \sigma^2 + \sum_{i\neq j} w_i w_j \bar c
+  = n\cdot\frac{1}{n^2}\sigma^2 + n(n-1)\cdot\frac{1}{n^2}\rho\sigma^2.
+  $$
+  
   Simplify:
-  $$\sigma_p^2 = \frac{\sigma^2}{n} + \frac{n-1}{n}\,\rho\sigma^2.$$
+  $$
+  \sigma_p^2 = \frac{\sigma^2}{n} + \frac{n-1}{n}\,\rho\sigma^2.
+  $$
+  
 
   **Limit as $n \to \infty$.**
-  $$\sigma_p^2 \;\longrightarrow\; \rho\sigma^2.$$
+  $$
+  \sigma_p^2 \;\longrightarrow\; \rho\sigma^2.
+  $$
+  
 
   **Interpretation.**
   - The first term $\sigma^2/n$ is **diversifiable (idiosyncratic)** risk — it vanishes as you

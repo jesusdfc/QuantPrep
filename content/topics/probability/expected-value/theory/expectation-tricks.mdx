@@ -23,6 +23,8 @@ $$
 \mathbb{E}\left[\sum_i X_i\right] = \sum_i \mathbb{E}[X_i].
 $$
 
+
+
 This is the single most useful identity. It lets you compute the expected number of
 "events" by summing indicator probabilities, even when the events are highly dependent.
 
@@ -38,6 +40,8 @@ $$
 \mathbb{E}[X] = \mathbb{E}\big[\,\mathbb{E}[X \mid Y]\,\big].
 $$
 
+
+
 For "expected time until..." problems, condition on the first step and set up a
 recurrence. Define states, write one equation per state, and solve the linear system.
 
@@ -52,6 +56,8 @@ $$
 \mathbb{E}[X] = \sum_{k=1}^{\infty} \mathbb{P}(X \ge k).
 $$
 
+
+
 For a non-negative continuous variable: $\mathbb{E}[X] = \int_0^\infty \mathbb{P}(X > t)\,dt$.
 This converts an awkward expectation into a sum/integral of survival probabilities — ideal
 for "maximum of..." and "time until..." questions.
@@ -61,6 +67,8 @@ for "maximum of..." and "time until..." questions.
 $$
 \operatorname{Var}(X) = \mathbb{E}\big[\operatorname{Var}(X \mid Y)\big] + \operatorname{Var}\big(\mathbb{E}[X \mid Y]\big).
 $$
+
+
 
 Read as **within-group** variance plus **between-group** variance. It appears constantly
 in mixture and hierarchical problems.

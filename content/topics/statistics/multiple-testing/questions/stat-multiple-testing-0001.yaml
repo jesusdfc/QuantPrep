@@ -23,7 +23,10 @@ solution: |
   **Benjamini–Hochberg (controls the FDR = expected fraction of discoveries that are false).**
   1. Sort the $m$ p-values ascending: $p_{(1)} \le \dots \le p_{(m)}$.
   2. Find the largest $k$ such that
-     $$p_{(k)} \le \frac{k}{m}\,q,$$
+     $$
+     p_{(k)} \le \frac{k}{m}\,q,
+     $$
+     
      where $q$ is the target FDR (e.g. 0.10).
   3. **Reject** (declare discoveries) all hypotheses with the $k$ smallest p-values.
 

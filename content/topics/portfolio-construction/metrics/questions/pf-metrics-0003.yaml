@@ -1,0 +1,34 @@
+id: pf-metrics-0003
+title: When a High Sharpe Ratio Is Misleading
+topic: portfolio-construction
+subtopic: metrics
+difficulty: medium
+tags: [sharpe-ratio, non-normality, tail-risk, autocorrelation, selection-bias]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A manager reports a Sharpe ratio of 4 over the past 8 months. Why should you be suspicious?
+  List the main limitations of the Sharpe ratio as a risk measure.
+hints:
+  - Standard deviation only captures risk fully for normal distributions.
+  - Think about strategies that look great until a rare event.
+solution: |
+  **Why suspicious.**
+  - **Short window / noisy estimate.** 8 months of data gives a very imprecise Sharpe; the
+    confidence interval is wide, and a lucky run can produce a huge point estimate.
+  - **Selection / multiple-testing bias.** If chosen from many candidate strategies or windows,
+    the maximum Sharpe is upward biased (data snooping).
+
+  **Structural limitations of the Sharpe ratio.**
+  - **Assumes volatility captures all risk.** For non-normal returns, standard deviation misses
+    skew and fat tails. Strategies that **sell tail risk** (short options, carry, providing
+    liquidity) show a high empirical Sharpe until a rare large loss — "picking up pennies in
+    front of a steamroller."
+  - **Ponzi/fraud** and smoothed/illiquid marks show artificially high Sharpe until they fail.
+  - **Autocorrelation** in returns (illiquid or smoothed NAVs) understates true volatility and
+    inflates Sharpe.
+  - **Symmetric penalty:** penalizes upside volatility as much as downside (motivating the
+    Sortino ratio).
+  - **Ignores drawdown path and leverage/financing**; scale-invariance hides tail and funding
+    risk. Complement with Sortino, max drawdown / Calmar, CVaR, and skew/kurtosis.
+answer: "A 4.0 Sharpe over just 8 months is a noisy, likely selection-biased estimate. The Sharpe ratio assumes std captures all risk, so it's fooled by non-normal returns: short-vol/tail-selling and smoothed or illiquid (autocorrelated) returns show high Sharpe until a rare loss, and it penalizes upside symmetrically and ignores drawdowns. Complement with Sortino, drawdown/Calmar, CVaR and higher moments."

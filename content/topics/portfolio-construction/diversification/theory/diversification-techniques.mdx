@@ -1,0 +1,59 @@
+---
+id: pc-diversification-techniques
+title: Diversification Techniques in Portfolio Construction
+topic: portfolio-construction
+subtopic: diversification
+order: 2
+summary: A practitioner map of diversification — across and within asset classes, factor-based, correlation-aware/risk-based allocation, alternatives, and practical overlays — plus the key caveats.
+license: original
+prerequisites: []
+resources:
+  - { name: "Markowitz (1952) — Portfolio Selection", url: "https://www.jstor.org/stable/2975974" }
+  - { name: "PyPortfolioOpt", url: "https://pyportfolioopt.readthedocs.io/" }
+  - { name: "Riskfolio-Lib", url: "https://riskfolio-lib.readthedocs.io/" }
+  - { name: "skfolio", url: "https://skfolio.org/" }
+  - { name: "ARPM Lab", url: "https://www.arpm.co/lab/" }
+---
+
+# Diversification Techniques in Portfolio Construction
+
+Diversification techniques in portfolio construction aim to reduce unsystematic (idiosyncratic)
+risk by combining assets whose returns are not perfectly correlated, so that losses in some
+holdings are offset by gains (or smaller losses) in others. The goal is **better risk-adjusted
+returns, not necessarily higher absolute returns**.
+
+## Core Techniques
+
+- **Across asset classes**: Stocks (equities), bonds (fixed income), cash/cash equivalents,
+  real assets (real estate/REITs, commodities, gold), and alternatives. Classic starting points
+  are 60/40 or 70/30 equity/bond mixes; the mix is driven by risk tolerance, horizon, and goals.
+- **Within asset classes**: By market capitalization (large/mid/small), style (value/growth),
+  sectors/industries, credit quality/duration (for bonds), and geography (domestic vs.
+  international / developed vs. emerging).
+- **Factor-based**: Exposure to distinct return drivers such as value, momentum, quality,
+  low-volatility, size. These often have lower correlations than pure asset-class buckets.
+- **Correlation-aware / risk-based allocation**:
+  - **Mean-variance optimization (Markowitz)**: Minimize portfolio variance for a target return
+    (or maximize Sharpe). Sensitive to estimation error in means and covariances.
+  - **Risk parity / equal risk contribution**: Allocate so each asset (or risk factor)
+    contributes equally to total portfolio risk rather than equal capital weights. Often
+    involves leverage.
+  - **Hierarchical Risk Parity (HRP) and related clustering methods**: Group similar assets via
+    hierarchical clustering then allocate risk across clusters; more robust when correlations
+    are unstable.
+  - **Maximum diversification**: Maximize the ratio of weighted average asset volatility to
+    portfolio volatility.
+  - **Black-Litterman and other Bayesian approaches**: Blend market-implied returns with
+    investor views to stabilize estimates.
+- **Alternatives and diversifiers**: Trend-following, global macro, market-neutral,
+  multi-strategy, commodities, or other low-correlation strategies that perform differently
+  across regimes.
+- **Practical overlays**: Rebalancing (periodic or threshold-based) to keep risk exposures
+  consistent; constraints (position limits, turnover, liquidity); cost-aware optimization; and
+  stress-testing / scenario analysis.
+
+## Key caveats
+
+- Correlations rise in crises (diversification benefits can vanish when needed most).
+- Estimation error is large with noisy returns data.
+- Over-diversification can dilute returns and increase costs.

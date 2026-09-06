@@ -1,0 +1,40 @@
+---
+id: pc-information-ratio
+title: The Information Ratio
+topic: portfolio-construction
+subtopic: metrics
+order: 5
+summary: Active return over tracking error — the Sharpe ratio's cousin that benchmarks against a risky index rather than the risk-free rate, used to gauge manager skill.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Information ratio" (https://en.wikipedia.org/wiki/Information_ratio), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Information ratio", url: "https://en.wikipedia.org/wiki/Information_ratio" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Information ratio"](https://en.wikipedia.org/wiki/Information_ratio),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# The Information Ratio
+
+The information ratio measures and compares the active return of an investment (e.g., a security
+or portfolio) compared to a benchmark index relative to the volatility of the active return
+(also known as active risk or benchmark tracking risk). It is defined as the active return (the
+difference between the returns of the investment and the returns of the benchmark) divided by the
+tracking error (the standard deviation of the active return).
+
+$$
+IR = \frac{E[R_p - R_b]}{\sigma} = \frac{\alpha}{\omega},
+$$
+
+
+where $R_p$ is the portfolio return, $R_b$ is the benchmark return, $\alpha = E[R_p - R_b]$ is
+the expected active return, and $\omega=\sigma$ is the standard deviation of the active return
+(the tracking error).
+
+The information ratio is similar to the Sharpe ratio, the main difference being that the Sharpe
+ratio uses a risk-free return as benchmark whereas the information ratio uses a risky index as
+benchmark. It is often used to gauge the skill of managers of mutual funds, hedge funds, etc.:
+the higher the information ratio, the higher the active return of the portfolio given the amount
+of risk taken.

@@ -1,0 +1,38 @@
+id: pf-metrics-0002
+title: Computing and Annualizing the Sharpe Ratio
+topic: portfolio-construction
+subtopic: metrics
+difficulty: easy
+tags: [sharpe-ratio, annualization, risk-free-rate, volatility]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy has a mean **daily** return of 0.05% with a daily return standard deviation of
+  0.8%. The risk-free rate is 0. (a) Compute the annualized Sharpe ratio (252 trading days).
+  (b) Why do we multiply by $\sqrt{252}$ rather than 252, and what assumption does that rely on?
+hints:
+  - Daily Sharpe = mean / std; annualize by $\sqrt{252}$.
+  - Mean scales with time; standard deviation scales with $\sqrt{\text{time}}$ under i.i.d.
+solution: |
+  **(a)** Daily Sharpe:
+  $$
+  SR_{\text{daily}} = \frac{0.0005}{0.008} = 0.0625.
+  $$
+  
+  Annualized:
+  $$
+  SR_{\text{ann}} = 0.0625 \times \sqrt{252} \approx 0.0625 \times 15.87 \approx 0.99.
+  $$
+  
+
+  **(b)** Over $n$ periods, under **i.i.d.** returns the mean scales linearly ($n\mu$) while the
+  standard deviation scales with $\sqrt{n}$ ($\sqrt{n}\,\sigma$). Hence
+  $$
+  SR_{\text{ann}} = \frac{n\mu}{\sqrt{n}\,\sigma} = \sqrt{n}\,\frac{\mu}{\sigma}.
+  $$
+  
+  The $\sqrt{252}$ factor therefore assumes returns are **i.i.d.** (serially uncorrelated,
+  identically distributed). If returns are **autocorrelated** — positive autocorrelation (trend)
+  inflates, negative (mean-reversion) deflates the true multi-period volatility — the naive
+  $\sqrt{252}$ scaling is biased, and a correction (e.g., Lo's) is needed.
+answer: "Daily SR = 0.0005/0.008 = 0.0625; annualized = 0.0625·√252 ≈ 0.99. We use √252 (not 252) because under i.i.d. returns the mean grows like n but the std grows like √n, so SR scales as √n. It assumes returns are i.i.d.; autocorrelation biases the √252 scaling."

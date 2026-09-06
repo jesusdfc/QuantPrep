@@ -16,18 +16,30 @@ hints:
 solution: |
   Portfolio volatility $\sigma_p(w) = \sqrt{w^\top \Sigma w}$ is homogeneous of degree 1 in
   $w$. The **marginal contribution to risk** of asset $i$ is
-  $$\text{MCR}_i = \frac{\partial \sigma_p}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma_p}.$$
+  $$
+  \text{MCR}_i = \frac{\partial \sigma_p}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma_p}.
+  $$
+  
 
-  The **(total) contribution to risk** is $\text{CR}_i = w_i \,\text{MCR}_i
-  = \frac{w_i(\Sigma w)_i}{\sigma_p}$.
+  The **(total) contribution to risk** is
+  $$
+  \text{CR}_i = w_i \,\text{MCR}_i = \frac{w_i(\Sigma w)_i}{\sigma_p}.
+  $$
+  
 
   By Euler's theorem for a degree-1 homogeneous function, these sum to the whole:
-  $$\sum_i \text{CR}_i = \sum_i w_i \frac{\partial \sigma_p}{\partial w_i}
-    = \frac{w^\top \Sigma w}{\sigma_p} = \sigma_p.$$
+  $$
+  \sum_i \text{CR}_i = \sum_i w_i \frac{\partial \sigma_p}{\partial w_i}
+    = \frac{w^\top \Sigma w}{\sigma_p} = \sigma_p.
+  $$
+  
   So risk contributions form an exact additive decomposition of total volatility.
 
   **Risk parity** is the weighting where every asset contributes **equally** to total risk:
-  $$\text{CR}_i = \frac{\sigma_p}{N}\ \text{ for all } i,\quad\text{i.e. } w_i(\Sigma w)_i \text{ equal across } i.$$
+  $$
+  \text{CR}_i = \frac{\sigma_p}{N}\ \text{ for all } i,\quad\text{i.e. } w_i(\Sigma w)_i \text{ equal across } i.
+  $$
+  
   Unlike equal-weighting (equal capital), risk parity equalizes *risk*, so low-vol assets
   receive more capital. It sidesteps the noisy expected-return estimates that destabilize MVO.
 answer: "MCRᵢ=(Σw)ᵢ/σₚ, CRᵢ=wᵢ(Σw)ᵢ/σₚ; they sum to σₚ by Euler; risk parity equalizes CRᵢ"

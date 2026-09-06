@@ -1,0 +1,40 @@
+id: pf-metrics-0004
+title: Sortino Ratio and Downside Deviation
+topic: portfolio-construction
+subtopic: metrics
+difficulty: medium
+tags: [sortino-ratio, downside-deviation, target-return, semi-variance]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy has the following five annual returns: $+12\%, -6\%, +20\%, -3\%, +8\%$. Using a
+  target (minimum acceptable) return of $T = 0\%$, compute the downside deviation and the
+  Sortino ratio. How does the calculation differ from the Sharpe ratio's denominator?
+hints:
+  - Downside deviation uses only returns below the target; treat above-target as 0 contribution.
+  - $DR = \sqrt{\frac{1}{n}\sum \min(r_i - T, 0)^2}$.
+solution: |
+  **Mean return.** $R = (12 - 6 + 20 - 3 + 8)/5 = 31/5 = 6.2\%$.
+
+  **Downside deviation** ($T=0$). Only the negative returns contribute; above-target
+  observations enter as 0:
+  $$
+  DR = \sqrt{\frac{1}{5}\big[0^2 + (-6)^2 + 0^2 + (-3)^2 + 0^2\big]}
+       = \sqrt{\frac{36 + 9}{5}} = \sqrt{9} = 3\%.
+  $$
+  
+  (Using $n=5$ in the denominator, i.e. dividing by the total count, per the target-semideviation
+  definition.)
+
+  **Sortino ratio.**
+  $$
+  S = \frac{R - T}{DR} = \frac{6.2 - 0}{3} \approx 2.07.
+  $$
+  
+
+  **Difference from Sharpe.** Sharpe's denominator is the **total** standard deviation, which
+  penalizes upside and downside volatility equally. Sortino replaces it with **downside
+  deviation**, which counts only shortfalls below the target $T$. So Sortino rewards strategies
+  whose volatility is mostly on the upside and is more appropriate for **asymmetric / skewed**
+  return distributions.
+answer: "Mean = 6.2%. Downside deviation (T=0, /n): DR = √[((6²+3²)/5)] = √9 = 3%. Sortino = (6.2−0)/3 ≈ 2.07. Unlike Sharpe (total std, penalizing up and down equally), Sortino uses only below-target returns, so it ignores upside volatility and suits skewed distributions."

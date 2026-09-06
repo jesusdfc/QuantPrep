@@ -1,7 +1,7 @@
-id: pf-performance-0001
+id: pf-metrics-0001
 title: The Fundamental Law of Active Management
 topic: portfolio-construction
-subtopic: performance
+subtopic: metrics
 difficulty: medium
 tags: [information-ratio, information-coefficient, breadth, active-management, transfer-coefficient]
 locked: false
@@ -15,7 +15,10 @@ hints:
   - Breadth is the number of independent bets per period.
 solution: |
   **The law.**
-  $$\text{IR} \approx \text{IC} \times \sqrt{\text{breadth}}.$$
+  $$
+  \text{IR} \approx \text{IC} \times \sqrt{\text{breadth}}.
+  $$
+  
   - **IR (Information Ratio):** active return per unit of active risk (tracking error) — the
     key measure of skill delivery.
   - **IC (Information Coefficient):** the correlation between forecasts and realized returns —
@@ -31,7 +34,10 @@ solution: |
   √n diversification result).
 
   **Transfer coefficient (refined law).**
-  $$\text{IR} \approx \text{TC} \times \text{IC} \times \sqrt{\text{breadth}}.$$
+  $$
+  \text{IR} \approx \text{TC} \times \text{IC} \times \sqrt{\text{breadth}}.
+  $$
+  
   The **TC** measures how fully your forecasts are **implemented** as actual positions after
   constraints, transaction costs, and risk limits (TC = correlation between ideal and actual
   active weights). Real-world frictions push TC below 1, so even a good signal loses IR if

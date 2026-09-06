@@ -28,7 +28,10 @@ solution: |
 
   **Effective sample size.** For an AR(1)-like correlation $\rho$ between adjacent
   observations, a rough approximation is
-  $$n_{\text{eff}} \approx n \,\frac{1-\rho}{1+\rho}.$$
+  $$
+  n_{\text{eff}} \approx n \,\frac{1-\rho}{1+\rho}.
+  $$
+  
   With strong positive autocorrelation, $n_{\text{eff}} \ll n$. Treating 2,500 overlapping
   daily observations as independent **understates standard errors** and **inflates t-stats**,
   manufacturing false significance.

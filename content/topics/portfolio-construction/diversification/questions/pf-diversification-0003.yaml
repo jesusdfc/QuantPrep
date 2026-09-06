@@ -1,0 +1,47 @@
+id: pf-diversification-0003
+title: Mean-Variance Optimization & the Efficient Frontier
+topic: portfolio-construction
+subtopic: diversification
+difficulty: medium
+tags: [mean-variance, efficient-frontier, estimation-error, shrinkage, markowitz]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Explain Modern Portfolio Theory / mean-variance optimization. Sketch the efficient frontier
+  for two assets and discuss why the optimizer often produces extreme/concentrated weights in
+  practice. How do you mitigate estimation error?
+hints:
+  - The unconstrained max-Sharpe weights are $w \propto \Sigma^{-1}\mu$.
+  - Think about what inverting a noisy covariance matrix does to small eigenvalues.
+solution: |
+  **MPT / mean-variance.** Markowitz frames portfolio choice as a trade-off between expected
+  return $\mu$ and variance $w^\top \Sigma w$. For a target return you minimize variance:
+  $$
+  \min_w \; w^\top \Sigma w \quad \text{s.t.}\quad w^\top \mu = \mu_{\text{target}},\; w^\top \mathbf{1}=1.
+  $$
+  
+  The set of minimum-variance portfolios for every target return traces the **efficient
+  frontier**; the tangency portfolio maximizes the Sharpe ratio, with (unconstrained) weights
+  $$
+  w^{*} \propto \Sigma^{-1}\mu.
+  $$
+  
+
+  **Two-asset frontier.** With volatilities $\sigma_1,\sigma_2$ and correlation $\rho$, varying
+  $w$ traces a hyperbola in $(\sigma_p, \mu_p)$ space. Lower $\rho$ bows the frontier further
+  left (more diversification benefit); at $\rho=-1$ a zero-variance combination exists.
+
+  **Why weights blow up.** The solution depends on $\Sigma^{-1}\mu$. Sample means are extremely
+  noisy (you need decades of data to estimate $\mu$ well), and $\Sigma$ has small eigenvalues
+  whose inverses are huge and unstable. The optimizer therefore takes large **long/short** bets
+  on near-collinear assets and tiny return differences — it "error-maximizes," treating noise as
+  signal. Results are unstable to small input changes.
+
+  **Mitigations.**
+  - **Constraints**: long-only, position caps, turnover/leverage limits — surprisingly effective.
+  - **Shrinkage of $\Sigma$** (Ledoit–Wolf) toward a structured target; shrink/deflate $\mu$.
+  - **Robust / resampled** optimization (Michaud), Bayesian **Black–Litterman** to anchor $\mu$.
+  - **Heuristics that ignore $\mu$**: minimum-variance, risk parity, HRP, equal-weight (1/N),
+    which often beat MVO out-of-sample precisely because they avoid estimating returns.
+  - **Regularization** (e.g., an $L_2$ penalty ≈ shrinkage; $L_1$ for sparsity).
+answer: "MVO minimizes variance for a target return (max-Sharpe weights ∝ Σ⁻¹μ). It concentrates because Σ⁻¹μ amplifies noisy means and small covariance eigenvalues, so it error-maximizes. Mitigate with constraints, covariance shrinkage (Ledoit–Wolf), Black–Litterman, resampling/robust methods, and estimation-light heuristics (min-var, risk parity, HRP, 1/N)."

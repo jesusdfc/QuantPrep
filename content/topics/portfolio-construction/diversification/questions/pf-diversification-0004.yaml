@@ -1,0 +1,45 @@
+id: pf-diversification-0004
+title: Risk Parity vs Equal-Weight vs Mean-Variance
+topic: portfolio-construction
+subtopic: diversification
+difficulty: medium
+tags: [risk-parity, equal-risk-contribution, euler-decomposition, leverage, sixty-forty]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  What is risk parity and how does it differ from equal-weight or mean-variance allocation?
+  Walk through equal risk contribution (ERC) for a simple portfolio. What are the pros/cons
+  versus a 60/40 portfolio?
+hints:
+  - Marginal risk contribution of asset $i$ is $\partial \sigma_p/\partial w_i = (\Sigma w)_i/\sigma_p$.
+  - Risk contribution is $RC_i = w_i (\Sigma w)_i / \sigma_p$; ERC sets all $RC_i$ equal.
+solution: |
+  **Definitions.**
+  - **Equal-weight (1/N):** equal *capital* per asset. Ignores risk and correlations.
+  - **Mean-variance:** optimize weights using $\mu$ and $\Sigma$ (needs return forecasts).
+  - **Risk parity / ERC:** equalize each asset's *risk contribution*, ignoring $\mu$.
+
+  **Euler decomposition of volatility.** Since $\sigma_p=\sqrt{w^\top\Sigma w}$ is homogeneous of
+  degree 1, $\sigma_p = \sum_i RC_i$ with
+  $$
+  RC_i = w_i\,\frac{(\Sigma w)_i}{\sigma_p}.
+  $$
+  
+  ERC solves $RC_i = \sigma_p/N$ for all $i$.
+
+  **Simple walk-through (2 assets).** With vols $\sigma_1,\sigma_2$ and correlation $\rho$, the
+  ERC weights are inversely proportional to volatility adjusted for correlation. In the special
+  case $\rho=0$, $w_i \propto 1/\sigma_i$: the low-vol asset gets more capital so that both
+  contribute equal risk. (For $N$ uncorrelated assets, $w_i \propto 1/\sigma_i$ exactly.)
+
+  **Pros vs 60/40.**
+  - 60/40 by *capital* is ~90% equity risk — not diversified in risk terms. Risk parity
+    balances risk contributions, typically giving smoother, more stable risk exposure.
+  - Doesn't require return forecasts (avoids MVO's estimation error).
+
+  **Cons.**
+  - To hit a target return, low-vol sleeves (bonds) are **levered** → financing, liquidity, and
+    tail risk; hurt by rising rates / bond-equity correlation shifts (e.g., 2022).
+  - Still needs a covariance estimate; vulnerable to correlation regime change.
+  - Ignores expected returns entirely, so it can overweight low-return assets.
+answer: "Risk parity equalizes each asset's risk contribution RC_i = w_i(Σw)_i/σ_p (Euler decomposition), unlike equal-weight (equal capital) or MVO (uses μ,Σ). For uncorrelated assets w_i ∝ 1/σ_i. Vs 60/40 it balances risk not capital and needs no return forecasts, but usually requires leverage on bonds and is exposed to correlation/rate regime shifts."

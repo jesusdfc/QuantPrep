@@ -1,0 +1,34 @@
+id: pf-metrics-0007
+title: Drawdown Magnitude vs Duration
+topic: portfolio-construction
+subtopic: metrics
+difficulty: medium
+tags: [drawdown, drawdown-duration, recovery, path-dependence, risk-measure]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Distinguish drawdown **magnitude** from drawdown **duration**. Why can two strategies with the
+  same volatility have very different maximum drawdowns? Why do investors care about drawdown as
+  a risk measure beyond standard deviation?
+solution: |
+  **Magnitude vs duration.**
+  - **Magnitude** (max drawdown): the worst peak-to-valley percentage loss.
+  - **Duration**: the length of a peak-to-peak period — the time between new equity highs (the
+    max drawdown *duration* is the longest such stretch). A strategy can have a modest-magnitude
+    drawdown that nevertheless takes years to recover, which is painful for investors.
+
+  **Same volatility, different MDD.** Standard deviation summarizes the *dispersion* of returns
+  but not their **ordering**. Drawdown is **path-dependent**: a run of correlated/consecutive
+  losses (negative autocorrelation of the equity curve, serial dependence, fat left tail)
+  produces a deep drawdown, while the same returns reshuffled might not. Two strategies with
+  identical mean and variance but different serial correlation / skew can have very different
+  MDDs.
+
+  **Why investors care.**
+  - **Behavioural / business risk:** large drawdowns trigger redemptions, margin calls, forced
+    deleveraging and career risk — the fund may not survive to recover.
+  - **Path matters for leverage and withdrawals:** compounding and cash flows make the sequence
+    of returns economically real, not just its distribution.
+  - **Captures tail/serial risk** that volatility misses. Drawdown feeds risk-adjusted measures
+    like the **Calmar**, **Sterling** and **Burke** ratios (return per unit of drawdown).
+answer: "Magnitude = worst peak-to-trough loss; duration = longest time between equity highs (time to recover). Equal-volatility strategies can differ in MDD because drawdown is path-dependent — it depends on the ordering/serial correlation and skew of returns, not just dispersion. Investors care because drawdowns drive redemptions, margin calls and survival, and capture tail/path risk that std ignores (feeding Calmar/Sterling/Burke)."

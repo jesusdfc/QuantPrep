@@ -22,12 +22,18 @@ solution: |
   **Volatility drag.** Wealth compounds multiplicatively: after returns $r_1,\dots,r_n$,
   $W_n = W_0 \prod (1+r_t)$. The relevant growth rate is the **geometric** mean, i.e. the
   average of $\log(1+r_t)$. Since $\log$ is **concave**, Jensen gives
-  $$\mathbb{E}[\log(1+r)] \le \log\big(1 + \mathbb{E}[r]\big).$$
+  $$
+  \mathbb{E}[\log(1+r)] \le \log\big(1 + \mathbb{E}[r]\big).
+  $$
+  
   So the **compound growth rate is below the arithmetic mean return** — and the gap grows with
   volatility.
 
   **Approximation.** With arithmetic mean $\mu$ and variance $\sigma^2$,
-  $$g \approx \mu - \tfrac{1}{2}\sigma^2.$$
+  $$
+  g \approx \mu - \tfrac{1}{2}\sigma^2.
+  $$
+  
   The $\tfrac12\sigma^2$ term is the **volatility drag**. Practical consequences: two
   strategies with the same arithmetic mean but different volatility have different long-run
   wealth; reducing volatility (diversification, sizing) can raise compound growth even without

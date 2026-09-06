@@ -15,7 +15,10 @@ hints:
   - MLE of the Bernoulli likelihood is equivalent to minimizing log-loss (cross-entropy).
 solution: |
   **Model.** With features $x$ and weights $\beta$, the linear score is $z = \beta^\top x$ and
-  $$p = \sigma(z) = \frac{1}{1+e^{-z}}, \qquad y \in \{0,1\}.$$
+  $$
+  p = \sigma(z) = \frac{1}{1+e^{-z}}, \qquad y \in \{0,1\}.
+  $$
+  
 
   **Loss (why MLE, not least squares).** Modeling $y \sim \text{Bernoulli}(p)$, the
   log-likelihood is $\sum_i [y_i \log p_i + (1-y_i)\log(1-p_i)]$. Maximizing it is equivalent
@@ -25,7 +28,10 @@ solution: |
   probabilities.
 
   **Gradient.** Remarkably clean:
-  $$\nabla_\beta \, \text{loss} = \sum_i (p_i - y_i)\, x_i,$$
+  $$
+  \nabla_\beta \, \text{loss} = \sum_i (p_i - y_i)\, x_i,
+  $$
+  
   i.e. the feature-weighted sum of residuals (predicted minus actual). Gradient descent
   updates $\beta \leftarrow \beta - \eta \sum_i (p_i - y_i)x_i$; add an L2 term $\lambda\beta$
   for ridge-penalized logistic regression.

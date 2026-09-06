@@ -1,0 +1,30 @@
+id: pf-metrics-0005
+title: Sortino vs Sharpe — When Do They Diverge?
+topic: portfolio-construction
+subtopic: metrics
+difficulty: easy
+tags: [sortino-ratio, sharpe-ratio, skewness, downside-risk]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Under what conditions do the Sharpe and Sortino ratios give (a) similar and (b) very different
+  rankings of two strategies? Give an example where relying on Sharpe alone would mislead you.
+solution: |
+  **(a) Similar.** When return distributions are **near-symmetric** and the target return is
+  close to the distribution's median, downside deviation is roughly proportional to total
+  standard deviation, so the two ratios rank strategies almost identically.
+
+  **(b) Different.** When returns are **skewed** or the target differs from the median:
+  - A **positively skewed** strategy (frequent small losses, occasional large gains) has much of
+    its volatility on the upside. Sharpe penalizes that upside; Sortino does not, so Sortino
+    ranks it higher.
+  - A **negatively skewed** strategy (steady small gains, rare large losses — e.g. short
+    volatility) has a flattering Sharpe because its day-to-day volatility is low, but its
+    downside deviation (and drawdowns) are large. Sortino penalizes it more heavily.
+
+  **Misleading example.** Compare (i) a short-put/carry strategy with smooth positive returns and
+  rare crashes vs (ii) a trend-follower with choppy but positively-skewed returns. Sharpe may
+  favour the short-vol strategy because its realized volatility is low, yet it carries severe
+  tail/downside risk. Sortino (and drawdown-based measures like Calmar) would flag the
+  asymmetry and rank the trend-follower more favourably on downside-risk terms.
+answer: "They agree when returns are roughly symmetric and the target is near the median. They diverge under skew: Sortino favours positively-skewed strategies (upside volatility not penalized) and punishes negatively-skewed short-vol strategies whose low std flatters Sharpe. Relying on Sharpe alone can make a rare-crash short-vol strategy look safer than it is."

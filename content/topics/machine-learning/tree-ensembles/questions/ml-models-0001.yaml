@@ -16,7 +16,10 @@ hints:
 solution: |
   Averaging $B$ estimators each with variance $\sigma^2$ and pairwise correlation $\rho$ has
   variance
-  $$\rho\,\sigma^2 + \frac{1-\rho}{B}\,\sigma^2.$$
+  $$
+  \rho\,\sigma^2 + \frac{1-\rho}{B}\,\sigma^2.
+  $$
+  
   As $B \to \infty$ the second term vanishes, leaving $\rho\sigma^2$. So the benefit of
   averaging is **capped by the correlation** between the trees, not just their number.
 

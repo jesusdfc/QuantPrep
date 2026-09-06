@@ -17,19 +17,31 @@ solution: |
   **Setup.** Portfolio volatility $\sigma_p = \sqrt{w^\top \Sigma w}$.
 
   **Marginal contribution to risk (MCR).** The sensitivity of portfolio vol to weight $i$:
-  $$\text{MCR}_i = \frac{\partial \sigma_p}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma_p}.$$
+  $$
+  \text{MCR}_i = \frac{\partial \sigma_p}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma_p}.
+  $$
+  
 
   **Total (component) contribution to risk (CTR).** Weight times marginal:
-  $$\text{CTR}_i = w_i \frac{(\Sigma w)_i}{\sigma_p}.$$
+  $$
+  \text{CTR}_i = w_i \frac{(\Sigma w)_i}{\sigma_p}.
+  $$
+  
 
   **They sum to total risk.** Since $\sigma_p$ is homogeneous of degree 1 in $w$, **Euler's
   theorem** gives
-  $$\sum_i \text{CTR}_i = \sum_i w_i \frac{(\Sigma w)_i}{\sigma_p}
-  = \frac{w^\top \Sigma w}{\sigma_p} = \sigma_p.$$
+  $$
+  \sum_i \text{CTR}_i = \sum_i w_i \frac{(\Sigma w)_i}{\sigma_p}
+  = \frac{w^\top \Sigma w}{\sigma_p} = \sigma_p.
+  $$
+  
   So each asset's CTR is its share of total volatility, and the shares add to 100%.
 
   **Risk parity.** Choose weights so **every asset contributes equally**:
-  $$\text{CTR}_i = \frac{\sigma_p}{N} \quad \text{for all } i.$$
+  $$
+  \text{CTR}_i = \frac{\sigma_p}{N} \quad \text{for all } i.
+  $$
+  
   Equivalently $w_i (\Sigma w)_i$ is equal across assets. This requires solving for weights
   (no closed form in general); for uncorrelated assets it reduces to **inverse-volatility**
   weighting.
