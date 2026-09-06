@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "./AuthProvider";
 import { type QStatus, getAllProgress, review, setStatus, toggleFavorite } from "./progress";
+import { pushProgress } from "./progressSync";
 
 const KEY = ["progress"];
 
@@ -13,21 +15,37 @@ export function useProgress() {
 
 export function useProgressActions() {
   const qc = useQueryClient();
+  const { user } = useAuth();
   const invalidate = () => qc.invalidateQueries({ queryKey: KEY });
+  const sync = (progress: Awaited<ReturnType<typeof toggleFavorite>>) => {
+    if (!user) return;
+    void pushProgress(user.id, progress).catch((error: unknown) => {
+      console.error("Progress upload failed; it will retry at the next sign-in.", error);
+    });
+  };
 
   const favorite = useMutation({
     mutationFn: (id: string) => toggleFavorite(id),
-    onSuccess: invalidate,
+    onSuccess: (progress) => {
+      sync(progress);
+      void invalidate();
+    },
   });
 
   const status = useMutation({
     mutationFn: ({ id, status }: { id: string; status: QStatus }) => setStatus(id, status),
-    onSuccess: invalidate,
+    onSuccess: (progress) => {
+      sync(progress);
+      void invalidate();
+    },
   });
 
   const grade = useMutation({
     mutationFn: ({ id, quality }: { id: string; quality: 0 | 3 | 5 }) => review(id, quality),
-    onSuccess: invalidate,
+    onSuccess: (progress) => {
+      sync(progress);
+      void invalidate();
+    },
   });
 
   return { favorite, status, grade };

@@ -45,12 +45,30 @@ QuantPrep/
 2. **Validate** against JSON Schema: `make validate`.
 3. **Build** a static index the frontend consumes: `make content`
    → emits `frontend/public/questions.json` (+ search index, topic manifests).
-4. **Run** the PWA: `make dev`. Progress / favorites / spaced-repetition live in
-   the browser (IndexedDB) — no backend required.
+4. **Run** the PWA: `make dev`. Anonymous progress lives in IndexedDB. Signed-in users
+   retain the same offline cache and synchronize it to Supabase.
 
-A FastAPI backend (for cross-device progress sync) can be added later following the
-same domain-driven conventions as the companion `qme_app_backend`; the frontend's data
-contract does not change.
+## Authentication and progress sync
+
+QuantPrep uses the official `@supabase/supabase-js` client for email/password sessions and
+PostgreSQL persistence. The database is protected with Row Level Security so users can only
+read and write their own question progress.
+
+1. Create a Supabase project.
+2. Run `supabase/migrations/202609070001_create_question_progress.sql` in the Supabase SQL
+   editor.
+3. In **Authentication → URL Configuration**, set:
+   - Site URL: `https://quantprep.me`
+   - Redirect URLs: `https://quantprep.me/auth/callback` and
+     `http://localhost:5173/auth/callback`
+4. Copy `frontend/.env.example` to `frontend/.env.local` and set the project URL and
+   publishable key.
+5. Add the same `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` variables to the
+   Cloudflare Worker build settings.
+
+Supabase's default email sender is development-only: it only sends to authorized project
+team addresses and is heavily rate-limited. Public email confirmation requires custom SMTP.
+The service-role key must never be placed in the frontend or committed.
 
 ## Quick start
 

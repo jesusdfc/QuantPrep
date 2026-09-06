@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../shared/AuthProvider";
 import { useQuestions } from "../shared/api";
 import type { TopicId } from "../shared/types";
 import { useProgress } from "../shared/useProgress";
 import { TOPIC_LABELS } from "../ui/badges";
 
 export default function DashboardPage() {
+  const { user } = useAuth();
   const { data: questions } = useQuestions();
   const { data: progress } = useProgress();
 
@@ -41,7 +43,11 @@ export default function DashboardPage() {
     <section>
       <div className="page-head">
         <h1>Dashboard</h1>
-        <p className="muted">Your progress lives on this device (IndexedDB).</p>
+        <p className="muted">
+          {user
+            ? `Progress is synchronized for ${user.email ?? "your account"}.`
+            : "Progress is saved on this device. Sign in to synchronize it."}
+        </p>
       </div>
 
       <div className="stat-cards">

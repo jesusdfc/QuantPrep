@@ -4,6 +4,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "katex/dist/katex.min.css";
 import App from "./App";
+import { AuthProvider } from "./shared/AuthProvider";
+import { ProgressSync } from "./shared/ProgressSync";
 import "./styles.css";
 
 const queryClient = new QueryClient();
@@ -12,9 +14,12 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <AuthProvider>
+        <ProgressSync />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );

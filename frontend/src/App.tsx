@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import AuthCallbackPage from "./pages/AuthCallbackPage";
+import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
 import LearnPage from "./pages/LearnPage";
 import QuestionPage from "./pages/QuestionPage";
@@ -16,6 +18,8 @@ export default function App() {
         <Route path="/learn" element={<LearnPage />} />
         <Route path="/learn/:topicId" element={<TopicPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="*" element={<Navigate to="/questions" replace />} />
       </Route>
     </Routes>

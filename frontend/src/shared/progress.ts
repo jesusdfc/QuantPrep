@@ -72,22 +72,30 @@ export async function getProgress(id: string): Promise<QProgress> {
   return row ?? defaults(id);
 }
 
-async function put(p: QProgress): Promise<void> {
-  await tx("readwrite", (s) => s.put({ ...p, updatedAt: Date.now() }));
+async function put(p: QProgress): Promise<QProgress> {
+  const next = { ...p, updatedAt: Date.now() };
+  await tx("readwrite", (s) => s.put(next));
+  return next;
+}
+
+export async function replaceLocalProgress(progress: QProgress): Promise<void> {
+  await tx("readwrite", (store) => store.put(progress));
+}
+
+export async function clearLocalProgress(): Promise<void> {
+  await tx("readwrite", (store) => store.clear());
 }
 
 export async function toggleFavorite(id: string): Promise<QProgress> {
   const p = await getProgress(id);
   const next = { ...p, favorite: !p.favorite };
-  await put(next);
-  return next;
+  return put(next);
 }
 
 export async function setStatus(id: string, status: QStatus): Promise<QProgress> {
   const p = await getProgress(id);
   const next = { ...p, status };
-  await put(next);
-  return next;
+  return put(next);
 }
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -114,6 +122,5 @@ export async function review(id: string, quality: 0 | 3 | 5): Promise<QProgress>
     status: "solved",
     dueAt: Date.now() + intervalDays * DAY_MS,
   };
-  await put(next);
-  return next;
+  return put(next);
 }
