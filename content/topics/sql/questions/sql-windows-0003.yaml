@@ -1,0 +1,40 @@
+id: sql-windows-0003
+title: Rolling 20-Day Average
+topic: sql
+subtopic: windows
+difficulty: medium
+tags: [window-functions, rolling, frame, moving-average]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `prices(symbol TEXT, dt DATE, close NUMERIC)`, compute a trailing 20-trading-day
+  moving average of `close` for each symbol (include the current day; produce a value from
+  the very first row using however many days are available).
+hints:
+  - Use AVG(close) OVER (...) with an explicit ROWS frame.
+  - The frame is 19 PRECEDING to CURRENT ROW for a 20-row window.
+solution: |
+  Specify an explicit row frame of the current row plus the previous 19:
+
+  ```sql
+  SELECT
+    symbol,
+    dt,
+    close,
+    AVG(close) OVER (
+      PARTITION BY symbol
+      ORDER BY dt
+      ROWS BETWEEN 19 PRECEDING AND CURRENT ROW
+    ) AS ma20
+  FROM prices
+  ORDER BY symbol, dt;
+  ```
+
+  Notes:
+  - `ROWS BETWEEN 19 PRECEDING AND CURRENT ROW` gives a 20-row window; early rows average
+    however many rows exist so far.
+  - Use `ROWS` (physical row count), not `RANGE`, unless you specifically want value-based
+    framing over the ORDER BY key.
+  - If you require a *full* 20 days before emitting a value, wrap it and null out rows where
+    the running count `< 20`.
+answer: "AVG(close) OVER (PARTITION BY symbol ORDER BY dt ROWS BETWEEN 19 PRECEDING AND CURRENT ROW)"

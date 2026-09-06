@@ -1,0 +1,33 @@
+id: prob-ev-0001
+title: Two Consecutive Heads
+topic: probability
+subtopic: expected-value
+difficulty: medium
+tags: [expectation, conditioning, markov-chain, stopping-time]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You flip a fair coin repeatedly until you see two **consecutive** heads.
+  What is the expected number of flips?
+hints:
+  - 'Define states by how many consecutive heads you have "banked" so far: 0 or 1.'
+  - Condition on the next flip and write one equation per state.
+solution: |
+  Let $E_0$ be the expected additional flips from a state with $0$ trailing heads,
+  and $E_1$ from a state with $1$ trailing head. We want $E_0$.
+
+  From state $0$, we flip once (cost $1$): with prob $1/2$ we get H and move to state $1$;
+  with prob $1/2$ we get T and stay in state $0$:
+  $$E_0 = 1 + \tfrac{1}{2}E_1 + \tfrac{1}{2}E_0.$$
+
+  From state $1$, we flip once: with prob $1/2$ we get H and finish; with prob $1/2$ we get
+  T and return to state $0$:
+  $$E_1 = 1 + \tfrac{1}{2}\cdot 0 + \tfrac{1}{2}E_0.$$
+
+  Substitute the second into the first:
+  $$E_0 = 1 + \tfrac{1}{2}\left(1 + \tfrac{1}{2}E_0\right) + \tfrac{1}{2}E_0
+        = \tfrac{3}{2} + \tfrac{3}{4}E_0.$$
+  So $\tfrac{1}{4}E_0 = \tfrac{3}{2}$, giving $E_0 = 6$.
+
+  (General fair-coin result for a run of $k$ heads: $2^{k+1} - 2$; here $k=2 \Rightarrow 6$.)
+answer: "6"

@@ -1,0 +1,28 @@
+id: stat-rigor-0001
+title: Best of 1,000 Strategies
+topic: statistics
+subtopic: rigor
+difficulty: medium
+tags: [multiple-testing, p-value, data-snooping, selection-bias]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You backtest 1,000 independent strategies, all of which are truly worthless (no edge),
+  and select the one with the best result. Its in-sample p-value is 0.001. How impressed
+  should you be? Roughly how many "significant at 5%" strategies do you expect to see?
+hints:
+  - The 0.001 was selected as the max over 1,000 tries — it is not a single pre-registered test.
+  - Under the null, p-values are uniform on [0,1].
+solution: |
+  Under the null, each strategy's p-value is Uniform$[0,1]$, so at the $5\%$ threshold you
+  expect $1000 \times 0.05 = 50$ "significant" strategies **purely by chance**.
+
+  The best-of-1000 p-value of $0.001$ is meaningless without correcting for selection. The
+  right quantity is the probability that the *minimum* of 1,000 uniforms is $\le 0.001$:
+  $$\mathbb{P}(\min \le 0.001) = 1 - (1 - 0.001)^{1000} \approx 1 - e^{-1} \approx 0.63.$$
+
+  So seeing a best p-value around $0.001$ is roughly a coin-flip event even when **nothing
+  works**. A Bonferroni-adjusted threshold would be $0.05/1000 = 5\times10^{-5}$. The single
+  best result from a large search is essentially uninformative — you must deflate for the
+  number of trials or use a genuine out-of-sample test.
+answer: "≈50 significant by chance; best p=0.001 is unremarkable (~63% chance under the null)"

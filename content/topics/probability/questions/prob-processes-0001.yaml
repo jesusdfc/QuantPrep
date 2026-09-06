@@ -1,0 +1,28 @@
+id: prob-processes-0001
+title: Gambler's Ruin
+topic: probability
+subtopic: processes
+difficulty: medium
+tags: [random-walk, markov-chain, absorbing-states, martingale]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You start with $\$i$ and bet $\$1$ on a fair coin each round (win $+1$, lose $-1$),
+  stopping when you hit $\$0$ (ruin) or $\$N$ (target). What is the probability you reach
+  $\$N$ before going broke? What changes if the game is unfair?
+hints:
+  - For the fair game, your wealth is a martingale — use the optional stopping theorem.
+  - For the biased case, set up the difference equation and solve the geometric recurrence.
+solution: |
+  **Fair game ($p = 1/2$).** Wealth $W_t$ is a martingale, so
+  $\mathbb{E}[W_\tau] = W_0 = i$ at the stopping time $\tau$. Since the walk is absorbed at
+  $0$ or $N$, $\mathbb{E}[W_\tau] = N\cdot \mathbb{P}(\text{reach }N)$. Therefore
+  $$\mathbb{P}(\text{reach }N) = \frac{i}{N}.$$
+
+  **Biased game.** Let $q = 1-p$ and $r = q/p$. The hitting probability satisfies a linear
+  recurrence with solution
+  $$\mathbb{P}(\text{reach }N) = \frac{1 - r^{\,i}}{1 - r^{\,N}}, \qquad r = \frac{q}{p}.$$
+  Even a small disadvantage ($p < 1/2$, so $r > 1$) makes reaching a distant $N$
+  exponentially unlikely. The trading lesson: a negative edge plus finite bankroll makes
+  ruin nearly certain over enough rounds, regardless of how you size bets.
+answer: "Fair: i/N. Biased: (1 − rⁱ)/(1 − rᴺ) with r = q/p"

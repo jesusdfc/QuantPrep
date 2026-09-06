@@ -1,0 +1,26 @@
+id: prob-distributions-0001
+title: Coupon Collector
+topic: probability
+subtopic: distributions
+difficulty: medium
+tags: [expectation, geometric, harmonic, linearity]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A cereal brand puts one of $n$ distinct toys in each box, uniformly at random and
+  independently. What is the expected number of boxes you must buy to collect all $n$ toys?
+hints:
+  - "Split the process into phases: the time to get the $k$-th *new* toy after having $k-1$."
+  - Each phase is geometric; use linearity of expectation.
+solution: |
+  Once you hold $k-1$ distinct toys, each new box shows a new toy with probability
+  $\frac{n-(k-1)}{n}$. The number of boxes to get the $k$-th new toy is geometric with that
+  success probability, so its expectation is $\frac{n}{n-(k-1)}$.
+
+  By linearity of expectation, summing over $k = 1, \dots, n$:
+  $$\mathbb{E}[T] = \sum_{k=1}^{n} \frac{n}{n-k+1}
+    = n\sum_{j=1}^{n}\frac{1}{j} = n H_n,$$
+  where $H_n$ is the $n$-th harmonic number. Asymptotically $\mathbb{E}[T] \approx n\ln n + \gamma n$.
+
+  For example, $n = 10 \Rightarrow 10 H_{10} \approx 29.3$ boxes.
+answer: "n·Hₙ (≈ n ln n)"

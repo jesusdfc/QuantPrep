@@ -1,0 +1,35 @@
+id: ml-leakage-0001
+title: Spot the Leakage
+topic: machine-learning
+subtopic: leakage
+difficulty: medium
+tags: [data-leakage, target-leakage, preprocessing, temporal-split]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A colleague reports 68% out-of-sample accuracy predicting next-day stock direction. Their
+  pipeline: (1) standardize every feature using the mean/std of the full dataset, (2) select
+  the top-20 features by correlation with the label on the full dataset, (3) use 5-fold
+  `train_test_split` with `shuffle=True`. List the leakage problems and how to fix each.
+hints:
+  - Which steps use information from the test rows before evaluation?
+  - Is a shuffled split valid for time-ordered data?
+solution: |
+  Three distinct leaks, all inflating the score:
+
+  1. **Preprocessing leakage.** Standardizing with the full-dataset mean/std lets test-set
+     statistics influence training. *Fix:* fit the scaler on the training fold only and apply
+     it to the validation/test fold.
+
+  2. **Feature-selection leakage.** Choosing the top-20 features by correlation with the
+     label on the *full* dataset uses the test labels to pick features. *Fix:* perform
+     selection inside each training fold (or in a nested CV), never on held-out data.
+
+  3. **Temporal leakage from shuffling.** `shuffle=True` mixes future and past, so the model
+     trains on data occurring after its validation points, and autocorrelation makes
+     validation points near-duplicates of training points. *Fix:* use walk-forward /
+     expanding-window splits with **purging and an embargo**.
+
+  Any one of these can turn a coin-flip signal into an impressive-looking 68%. The corrected
+  pipeline usually collapses back toward ~50%.
+answer: "Preprocessing on full data, feature selection on full data, and shuffled temporal split — all leak; fit inside training folds and use walk-forward CV"

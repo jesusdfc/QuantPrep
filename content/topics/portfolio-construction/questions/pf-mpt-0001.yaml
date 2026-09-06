@@ -1,0 +1,35 @@
+id: pf-mpt-0001
+title: When MVO Blows Up
+topic: portfolio-construction
+subtopic: mpt
+difficulty: hard
+tags: [mean-variance, estimation-error, robustness, covariance, shrinkage]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You run an unconstrained maximum-Sharpe (mean-variance) optimization on 50 assets. Nudging
+  one asset's estimated expected return from 8% to 8.5% causes the whole portfolio to change
+  drastically, with huge long/short positions. Why does this happen, and what would you do
+  about it?
+hints:
+  - The optimal weights are proportional to Σ⁻¹μ.
+  - Σ⁻¹ loads on the smallest, least-reliable eigenvalues of the covariance matrix.
+solution: |
+  Unconstrained tangency weights are $w \propto \Sigma^{-1}\mu$. Two forces make this
+  fragile:
+
+  1. **Ill-conditioned $\Sigma^{-1}$.** With 50 correlated assets, the covariance matrix has
+     several tiny eigenvalues that are poorly estimated. Inverting it puts huge weight on
+     those noisy directions, so small input changes create large weight swings.
+  2. **Error maximization.** The optimizer over-weights assets that *look* attractive, which
+     is exactly where estimation noise inflated $\mu$ or deflated variance. It systematically
+     bets on the luckiest estimates.
+
+  Hence a $0.5\%$ change in one $\mu$ can flip the portfolio, producing extreme, unstable
+  long/short positions.
+
+  **Remedies:** covariance **shrinkage** (Ledoit-Wolf); expected-return shrinkage / priors
+  (**Black-Litterman**); position and turnover **constraints** (which regularize); resampled
+  or robust optimization; or dropping $\mu$ entirely for **risk-based** allocations
+  (min-variance, risk parity), which are far more stable out-of-sample.
+answer: "Σ⁻¹ amplifies estimation error in noisy eigen-directions and the optimizer maximizes error; fix with shrinkage, constraints, Black-Litterman, or risk-based allocation"

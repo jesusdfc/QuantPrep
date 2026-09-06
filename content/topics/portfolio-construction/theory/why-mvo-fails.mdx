@@ -1,0 +1,53 @@
+---
+id: why-mvo-fails
+title: Why Mean-Variance Optimization Often Produces Terrible Portfolios
+topic: portfolio-construction
+order: 1
+summary: MVO is optimal given inputs, but the inputs are noisy — and optimization amplifies that noise. Here is why, and what practitioners do about it.
+prerequisites: []
+resources:
+  - { name: "CFA — Portfolio Risk and Return: Part II", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2" }
+---
+
+# Why Mean-Variance Optimization Often Produces Terrible Portfolios
+
+## The setup
+
+Markowitz mean-variance optimization (MVO) chooses weights $w$ to trade off return against
+risk. Portfolio variance is:
+
+$$
+\sigma_p^2 = w^\top \Sigma w,
+$$
+
+and the unconstrained maximum-Sharpe (tangency) weights are proportional to
+$\Sigma^{-1}\mu$. Given the *true* $\mu$ (expected returns) and $\Sigma$ (covariances),
+this is genuinely optimal.
+
+## The problem: garbage in, amplified garbage out
+
+You never know $\mu$ and $\Sigma$ — you estimate them, with substantial error. MVO then:
+
+- **Amplifies estimation error.** The $\Sigma^{-1}$ term loads heavily on the smallest
+  eigenvalues of the covariance matrix, which are the **least reliably estimated**
+  directions. Small input errors become large weight swings.
+- **Is an error-maximizer.** The optimizer preferentially bets on assets that *look* high
+  return / low risk — which is exactly what happens when noise inflates $\mu$ or deflates
+  variance. It systematically over-weights the luckiest estimates.
+- **Produces extreme, unstable weights.** Tiny changes in inputs (e.g. asset A's expected
+  return $8\% \to 8.5\%$) can flip the portfolio dramatically. Estimation error dominates.
+
+## What practitioners do
+
+- **Shrinkage** of the covariance matrix (Ledoit-Wolf) toward a structured target.
+- **Shrinkage / priors** on expected returns (e.g. Black-Litterman blends views with
+  equilibrium).
+- **Constraints:** long-only, position limits, turnover caps — these implicitly regularize.
+- **Robust or resampled** optimization; or stepping back to **risk-based** allocations
+  (equal weight, inverse-vol, risk parity) that ignore $\mu$ entirely.
+
+## The interview tell
+
+If asked "why not just run MVO?", the expected answer is about **estimation error and its
+amplification**, the instability of $\Sigma^{-1}$, and the fact that simpler heuristics
+often out-perform out-of-sample. That is a research-maturity signal.

@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://quantprep.ai/schema/question.schema.json",
+  "title": "QuantPrep Question",
+  "description": "A single interview question. One YAML file per question.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "topic",
+    "subtopic",
+    "difficulty",
+    "tags",
+    "source",
+    "prompt",
+    "solution"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Globally unique, stable, kebab-case id. Convention: <topicabbr>-<subtopicabbr>-<nnnn>.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "probability",
+        "statistics",
+        "machine-learning",
+        "portfolio-construction",
+        "research-methodology",
+        "sql"
+      ]
+    },
+    "subtopic": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "locked": {
+      "type": "boolean",
+      "description": "Reserved for future premium gating; the lock badge in the UI. Defaults to false.",
+      "default": false
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "license"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "'original' or the name of the permissively-licensed source."
+        },
+        "url": {
+          "type": ["string", "null"],
+          "format": "uri"
+        },
+        "license": {
+          "type": "string",
+          "description": "License of the source material.",
+          "enum": ["original", "MIT", "Apache-2.0", "CC-BY-4.0", "CC-BY-SA-4.0", "public-domain", "link-only"]
+        }
+      }
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Markdown + LaTeX ($...$ inline, $$...$$ block).",
+      "minLength": 10
+    },
+    "hints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Progressive hints, revealed one at a time."
+    },
+    "solution": {
+      "type": "string",
+      "description": "Full worked solution in Markdown + LaTeX.",
+      "minLength": 10
+    },
+    "answer": {
+      "type": ["string", "null"],
+      "description": "Optional short canonical answer enabling self-check."
+    }
+  }
+}

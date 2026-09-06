@@ -1,0 +1,30 @@
+id: pf-math-0001
+title: Two-Asset Portfolio Variance
+topic: portfolio-construction
+subtopic: math
+difficulty: easy
+tags: [portfolio-variance, diversification, correlation, covariance]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Two assets each have volatility 20%. You hold them equally weighted (50/50). Compute the
+  portfolio volatility if their correlation is (a) $+1$, (b) $0$, (c) $-1$. What does this
+  reveal about diversification?
+hints:
+  - $\sigma_p^2 = w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1 w_2 \rho \sigma_1\sigma_2$.
+  - Plug in $w_1 = w_2 = 0.5$, $\sigma_1 = \sigma_2 = 0.2$.
+solution: |
+  With $w_1 = w_2 = 0.5$ and $\sigma_1 = \sigma_2 = 0.2$:
+  $$\sigma_p^2 = 0.25(0.04) + 0.25(0.04) + 2(0.25)\rho(0.2)(0.2)
+    = 0.02 + 0.02\rho.$$
+
+  - **(a) $\rho = +1$:** $\sigma_p^2 = 0.04 \Rightarrow \sigma_p = 20\%$. No diversification —
+    volatility is just the weighted average.
+  - **(b) $\rho = 0$:** $\sigma_p^2 = 0.02 \Rightarrow \sigma_p \approx 14.1\%$. Diversification
+    cuts risk by a factor of $\sqrt{2}$.
+  - **(c) $\rho = -1$:** $\sigma_p^2 = 0 \Rightarrow \sigma_p = 0\%$. Perfectly hedged.
+
+  **Insight:** diversification benefit comes entirely from the cross term, i.e. from
+  correlation below 1. Combining assets never *increases* risk beyond the weighted average,
+  and lower correlation means more risk reduction for the same expected return.
+answer: "20%, ~14.1%, 0% — diversification benefit rises as correlation falls"

@@ -1,0 +1,31 @@
+id: ml-core-0001
+title: Bias–Variance in One Picture
+topic: machine-learning
+subtopic: core
+difficulty: easy
+tags: [bias-variance, overfitting, regularization, generalization]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Explain the bias–variance tradeoff and write the decomposition of expected squared error.
+  In a low signal-to-noise setting like financial returns, should you generally prefer
+  higher-bias or higher-variance models, and why?
+hints:
+  - Expected test error = bias² + variance + irreducible noise.
+  - What happens to variance when the true signal is tiny relative to noise?
+solution: |
+  For a prediction $\hat f(x)$ of a target $y = f(x) + \varepsilon$ with
+  $\operatorname{Var}(\varepsilon) = \sigma^2$, the expected squared test error at a point
+  decomposes as
+  $$\mathbb{E}\big[(y - \hat f(x))^2\big] = \underbrace{(\,\mathbb{E}[\hat f(x)] - f(x))^2}_{\text{bias}^2}
+    + \underbrace{\operatorname{Var}(\hat f(x))}_{\text{variance}} + \sigma^2.$$
+
+  - **High-bias** (simple) models miss structure but are stable across samples.
+  - **High-variance** (flexible) models fit noise and change a lot with new data.
+
+  In finance the **signal-to-noise ratio is very low** ($\sigma^2$ dominates). Flexible
+  models spend their capacity fitting noise, so their variance term explodes out-of-sample.
+  You should generally prefer **higher-bias, heavily regularized, simpler** models (and more
+  data / stronger priors). The irreducible noise $\sigma^2$ also caps how good *any* model
+  can be — a crucial expectation-setter for return prediction.
+answer: "Error = bias² + variance + irreducible noise; prefer higher-bias/regularized models in low-SNR finance settings"

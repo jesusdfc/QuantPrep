@@ -1,0 +1,29 @@
+id: ml-evaluation-0001
+title: ROC-AUC vs Precision-Recall
+topic: machine-learning
+subtopic: evaluation
+difficulty: medium
+tags: [roc-auc, precision-recall, class-imbalance, metrics]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You are detecting a rare event (1% positive rate). Your model has ROC-AUC 0.95, which
+  looks great. Why might precision still be terrible, and which metric should you report?
+hints:
+  - ROC uses the true-positive rate and false-positive rate; neither depends on the base rate.
+  - Precision depends heavily on the base rate through false positives.
+solution: |
+  ROC-AUC is built from TPR and FPR, both of which are computed *within* the actual-positive
+  and actual-negative groups. Neither depends on how many positives exist, so ROC-AUC can be
+  high even when positives are extremely rare.
+
+  Precision $= \frac{TP}{TP + FP}$ **does** depend on the base rate. With a $1\%$ positive
+  rate, the $99\%$ negatives generate many false positives even at a low FPR. For example, at
+  FPR $= 5\%$ on 10,000 cases: $\approx 100$ true positives are swamped by
+  $0.05 \times 9900 \approx 495$ false positives, giving precision $\approx 100/595 \approx 17\%$
+  despite excellent AUC.
+
+  For rare-event problems report the **precision-recall curve / PR-AUC** (and precision at a
+  chosen recall), which reflects the operational cost of false positives. This directly maps
+  to trading a rare signal, where acting on many false positives is expensive.
+answer: "ROC-AUC ignores base rate; under heavy imbalance report precision-recall / PR-AUC instead"

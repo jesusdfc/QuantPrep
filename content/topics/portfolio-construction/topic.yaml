@@ -1,0 +1,19 @@
+id: portfolio-construction
+name: Portfolio Construction & Factors
+order: 4
+weight: 0.15
+description: >
+  Portfolio mathematics, mean-variance optimization and its failure modes, risk
+  decomposition, factor models (CAPM, Fama-French, PCA), and practical construction
+  (risk parity, factor neutrality, transaction costs). Plus the Fundamental Law of
+  Active Management.
+subtopics:
+  - { id: math, name: Portfolio Mathematics }
+  - { id: mpt, name: Modern Portfolio Theory }
+  - { id: risk, name: Risk Decomposition }
+  - { id: factors, name: Factor Models }
+  - { id: construction, name: Practical Construction }
+resources:
+  - { name: "CFA — Portfolio Risk and Return: Part II", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2", license: "link-only" }
+  - { name: "CFA — Using Multifactor Models", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/using-multifactor-models", license: "link-only" }
+  - { name: "Quantopian lecture archive", url: "https://github.com/HuntFeng/quantopian_lectures", license: "link-only" }

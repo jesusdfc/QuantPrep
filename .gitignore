@@ -1,0 +1,54 @@
+# ---------------------------------------------------------------------------
+# QuantPrep .gitignore
+#
+# The public repo must stay legally clean. All raw inputs (books, PDFs,
+# scraped HTML/JSON) live under /data and are NEVER committed. Only curated,
+# original or permissively-licensed content under content/ is version-tracked.
+# ---------------------------------------------------------------------------
+
+# Raw ingestion inputs — NEVER commit copyrighted material
+/data/
+*.pdf
+*.epub
+*.mobi
+*.djvu
+
+# Build artifacts (generated from content/)
+build/
+frontend/public/questions.json
+frontend/public/search-index.json
+frontend/public/topics.json
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Node / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Local deploy (may hold account-specific settings / tokens)
+scripts/publish.sh
+scripts/.env
+
+# Logs
+logs/
+*.log

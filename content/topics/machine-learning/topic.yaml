@@ -1,0 +1,17 @@
+id: machine-learning
+name: Machine Learning
+order: 3
+weight: 0.20
+description: >
+  Statistical learning with a quant slant. Bias-variance, regularization, model
+  families, and evaluation — but with heavy emphasis on the traps that matter in
+  finance: data/target leakage, look-ahead bias, temporal splits, non-stationarity,
+  and why random k-fold CV is often inappropriate for time series.
+subtopics:
+  - { id: core, name: Core Concepts }
+  - { id: models, name: Model Families }
+  - { id: evaluation, name: Evaluation & Metrics }
+  - { id: leakage, name: Leakage & Temporal Validation }
+resources:
+  - { name: "ISLP — An Introduction to Statistical Learning (Python)", url: "https://www.statlearning.com/", license: "link-only" }
+  - { name: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course/", license: "link-only" }

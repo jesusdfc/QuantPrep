@@ -1,0 +1,19 @@
+id: probability
+name: Probability
+order: 1
+weight: 0.20
+description: >
+  Fundamentals through interview-grade problems: conditional probability, Bayes,
+  random variables, key distributions, expectation tricks, random walks, and
+  optimal stopping. The goal is fluency manipulating probabilities in your head.
+subtopics:
+  - { id: fundamentals, name: Fundamentals & Counting }
+  - { id: conditional, name: Conditional Probability & Bayes }
+  - { id: random-variables, name: Random Variables }
+  - { id: distributions, name: Distributions }
+  - { id: expected-value, name: Expectation & Conditional Expectation }
+  - { id: processes, name: "Random Walks, Markov Chains & Stopping" }
+resources:
+  - { name: "MIT 6.041 Probabilistic Systems Analysis", url: "https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/", license: "link-only" }
+  - { name: "ProbabilityCourse.com", url: "https://www.probabilitycourse.com/", license: "link-only" }
+  - { name: "Khan Academy — Probability", url: "https://www.khanacademy.org/math/statistics-probability/probability-library/basic-probability", license: "link-only" }

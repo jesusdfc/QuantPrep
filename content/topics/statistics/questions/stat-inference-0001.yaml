@@ -1,0 +1,29 @@
+id: stat-inference-0001
+title: Is a Sharpe of 1.8 Significantly Positive?
+topic: statistics
+subtopic: inference
+difficulty: hard
+tags: [sharpe-ratio, standard-error, confidence-interval, hypothesis-testing]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy has an annualized Sharpe ratio of 1.8 over 3 years of daily returns. How
+  confident are you that the *true* Sharpe is positive? Sketch the standard error of an
+  estimated Sharpe ratio (assume roughly i.i.d., normal returns).
+hints:
+  - For i.i.d. normal returns, $\operatorname{SE}(\widehat{SR}) \approx \sqrt{(1 + \tfrac{1}{2}SR^2)/T}$ in the same time units as SR.
+  - Convert everything to consistent units (e.g. annual, with T in years).
+solution: |
+  For approximately i.i.d. normal returns, the estimated Sharpe has (Lo, 2002)
+  $$\operatorname{SE}(\widehat{SR}) \approx \sqrt{\frac{1 + \tfrac{1}{2}SR^2}{T}},$$
+  where $SR$ and $T$ are in the **same** time units. Using annual units with $SR = 1.8$ and
+  $T = 3$ years:
+  $$\operatorname{SE} \approx \sqrt{\frac{1 + 0.5(1.8)^2}{3}} = \sqrt{\frac{1 + 1.62}{3}}
+    = \sqrt{0.873} \approx 0.93.$$
+
+  So the t-stat for "true Sharpe $> 0$" is about $1.8 / 0.93 \approx 1.9$ — only borderline
+  significant, with a roughly $95\%$ CI of about $1.8 \pm 1.96(0.93) \approx [-0.02, 3.6]$.
+  Three years is **not** much evidence. And this ignores fat tails, autocorrelation, and any
+  selection from trying many strategies — all of which widen the true uncertainty. A
+  headline Sharpe of 1.8 over a short window is far from a sure thing.
+answer: "t ≈ 1.9 — only borderline; 3 years of data gives a wide CI on the true Sharpe"

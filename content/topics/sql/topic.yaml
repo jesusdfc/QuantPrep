@@ -1,0 +1,16 @@
+id: sql
+name: SQL
+order: 6
+weight: 0.05
+description: >
+  Analytical SQL for quant/data work rather than DBA tasks. Joins and their effect on
+  row counts, aggregation, subqueries, and — most importantly — window functions and
+  date arithmetic for returns, rolling stats, rankings, and streaks.
+subtopics:
+  - { id: core, name: Core SQL }
+  - { id: joins, name: Joins }
+  - { id: aggregation, name: Aggregation & Subqueries }
+  - { id: windows, name: Window Functions }
+  - { id: dates, name: Dates & Time Series }
+resources:
+  - { name: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/", license: "link-only" }

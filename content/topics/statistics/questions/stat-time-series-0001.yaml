@@ -1,0 +1,30 @@
+id: stat-time-series-0001
+title: 2,500 Independent Observations?
+topic: statistics
+subtopic: time-series
+difficulty: medium
+tags: [autocorrelation, effective-sample-size, standard-error, independence]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You have 10 years of daily observations (~2,500 points) of a financial time series.
+  Can you treat them as 2,500 independent observations when computing a standard error?
+  What if the series is highly autocorrelated?
+hints:
+  - Standard-error formulas assume independence; autocorrelation breaks that.
+  - Think about "effective sample size" and what positive autocorrelation does to it.
+solution: |
+  Usually **no**. The standard formula $\text{SE} = \sigma/\sqrt{n}$ assumes i.i.d.
+  observations. Financial series are typically autocorrelated (in levels, and often in
+  volatility), so the *effective* number of independent observations is far below $2{,}500$.
+
+  For an AR(1)-like process with lag-1 autocorrelation $\rho$, a rough effective sample size is
+  $$n_{\text{eff}} \approx n\,\frac{1-\rho}{1+\rho}.$$
+  With $\rho = 0.9$, $n_{\text{eff}} \approx 2500 \times \frac{0.1}{1.9} \approx 132$ — you
+  have far less information than the raw count suggests, and naive standard errors are far
+  too small (t-stats far too large).
+
+  Fixes: use HAC/Newey-West standard errors, block bootstrap, or model the dependence
+  directly. Over-counting independent observations is a classic way to manufacture spurious
+  significance.
+answer: "No — autocorrelation shrinks the effective sample size; use HAC/Newey-West or block bootstrap"

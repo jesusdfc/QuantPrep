@@ -1,0 +1,36 @@
+id: sql-aggregation-0001
+title: Stocks Above Their Sector Average
+topic: sql
+subtopic: aggregation
+difficulty: medium
+tags: [aggregation, group-by, window-functions, partition-by]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `returns(symbol TEXT, sector TEXT, dt DATE, ret NUMERIC)`, for a single given date
+  find all symbols whose return exceeded the average return of their **own sector** that day.
+hints:
+  - You need each row compared to a per-sector aggregate for the same date.
+  - A window AVG partitioned by sector avoids a self-join.
+solution: |
+  A window aggregate computes the sector mean alongside each row without collapsing them:
+
+  ```sql
+  WITH d AS (
+    SELECT
+      symbol, sector, dt, ret,
+      AVG(ret) OVER (PARTITION BY sector) AS sector_avg
+    FROM returns
+    WHERE dt = DATE '2026-09-04'
+  )
+  SELECT symbol, sector, ret, sector_avg
+  FROM d
+  WHERE ret > sector_avg
+  ORDER BY sector, ret DESC;
+  ```
+
+  Why this over `GROUP BY`: a plain `GROUP BY sector` collapses to one row per sector, losing
+  the individual symbols. The window `AVG(ret) OVER (PARTITION BY sector)` attaches the
+  sector mean to *every* row, so you can filter row-by-row. (Filtering the window result
+  requires the CTE, since windows run after `WHERE`.)
+answer: "Use AVG(ret) OVER (PARTITION BY sector) in a CTE for the date, then filter ret > sector_avg"

@@ -1,0 +1,34 @@
+id: sql-windows-0002
+title: Daily Returns from Prices
+topic: sql
+subtopic: windows
+difficulty: easy
+tags: [window-functions, lag, returns, time-series]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `prices(symbol TEXT, dt DATE, close NUMERIC)`, compute the daily simple return for
+  each symbol on each date (return is NULL on a symbol's first day).
+hints:
+  - Use LAG(close) partitioned by symbol, ordered by date.
+  - Simple return = close / prev_close - 1.
+solution: |
+  `LAG` fetches the previous row's close within each symbol:
+
+  ```sql
+  SELECT
+    symbol,
+    dt,
+    close,
+    close / NULLIF(LAG(close) OVER (PARTITION BY symbol ORDER BY dt), 0) - 1 AS ret
+  FROM prices
+  ORDER BY symbol, dt;
+  ```
+
+  Notes:
+  - `PARTITION BY symbol ORDER BY dt` ensures the previous close is the same stock's prior
+    trading day, not another symbol's.
+  - `LAG` returns NULL for the first row of each partition, so `ret` is NULL on day one —
+    exactly what we want.
+  - `NULLIF(prev, 0)` guards against a divide-by-zero if a bad zero price sneaks in.
+answer: "close / LAG(close) OVER (PARTITION BY symbol ORDER BY dt) - 1"

@@ -1,0 +1,33 @@
+id: pf-construction-0001
+title: The Fundamental Law of Active Management
+topic: portfolio-construction
+subtopic: construction
+difficulty: medium
+tags: [information-ratio, information-coefficient, breadth, active-management]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  State the Fundamental Law of Active Management and explain each term intuitively. A manager
+  has a modest skill (IC = 0.05). How much breadth do they need to reach an information ratio
+  of 1.0? What does this imply about the value of a weak-but-broad signal?
+hints:
+  - IR ≈ IC × √Breadth.
+  - Solve for breadth given IR = 1 and IC = 0.05.
+solution: |
+  The Fundamental Law (Grinold) approximates the achievable information ratio as
+  $$\text{IR} \approx \text{IC} \times \sqrt{\text{Breadth}},$$
+  where:
+  - **IC (information coefficient)** — the correlation between forecasts and realized
+    outcomes; a measure of *skill per bet*. Real ICs are small (0.02–0.10).
+  - **Breadth** — the number of *independent* bets per year.
+  - **IR** — risk-adjusted active return (active return / active risk).
+
+  Solving for breadth with $\text{IR} = 1$ and $\text{IC} = 0.05$:
+  $$\sqrt{\text{Breadth}} = \frac{1}{0.05} = 20 \Rightarrow \text{Breadth} = 400.$$
+
+  So a tiny per-bet skill becomes a strong IR of 1.0 if applied **independently** ~400 times
+  a year. The lesson: a weak signal can be very valuable if it can be deployed broadly and
+  independently — but "breadth" means *independent* bets. Correlated positions (e.g. 400
+  tech stocks moving together) count as far fewer effective bets. A refinement adds the
+  **transfer coefficient** for real-world constraints: $\text{IR} \approx \text{TC}\cdot\text{IC}\cdot\sqrt{\text{Breadth}}$.
+answer: "IR ≈ IC·√Breadth; IC=0.05 needs Breadth≈400 for IR=1 — weak signals pay off if applied broadly and independently"

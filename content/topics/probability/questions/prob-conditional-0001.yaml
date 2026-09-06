@@ -1,0 +1,27 @@
+id: prob-conditional-0001
+title: The Base-Rate Trap
+topic: probability
+subtopic: conditional
+difficulty: easy
+tags: [bayes, conditional, base-rate]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A test for a rare condition has 99% sensitivity (true-positive rate) and 95% specificity
+  (true-negative rate). The condition affects 0.5% of the population. A randomly chosen
+  person tests positive. What is the probability they actually have the condition?
+hints:
+  - Use Bayes' theorem, or a natural-frequency table on 10,000 people.
+  - The false positives come from a huge healthy majority.
+solution: |
+  Take $10{,}000$ people. $0.5\%$, i.e. $50$, have the condition; $9{,}950$ do not.
+
+  - True positives: $50 \times 0.99 = 49.5$.
+  - False positives: $9{,}950 \times 0.05 = 497.5$.
+
+  $$\mathbb{P}(\text{condition}\mid +) = \frac{49.5}{49.5 + 497.5} = \frac{49.5}{547} \approx 0.0905.$$
+
+  Only about **9%**, despite a "99% accurate" test. When the base rate is tiny, false
+  positives from the large healthy group dominate — the base-rate fallacy. This is the same
+  logic as asking whether a "significant" backtest is a real edge given how rare true edges are.
+answer: "≈ 9% (0.0905)"

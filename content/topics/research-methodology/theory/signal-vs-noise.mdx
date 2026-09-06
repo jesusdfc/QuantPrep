@@ -1,0 +1,57 @@
+---
+id: signal-vs-noise
+title: Signal vs Noise — A Research Checklist
+topic: research-methodology
+order: 1
+summary: A repeatable end-to-end process for deciding whether an observed pattern is a real, tradeable signal or an artifact.
+prerequisites: []
+resources:
+  - { name: "The Probability of Backtest Overfitting", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
+---
+
+# Signal vs Noise — A Research Checklist
+
+The recurring question in a quant research interview is some variant of:
+*"You found a pattern. Is it real?"* A strong candidate answers with a **process**, not a
+p-value.
+
+## The pipeline you should think in
+
+```text
+Data → Universe → Feature construction → Labels → Train/test split →
+Model → Backtest → Transaction costs → Risk → Robustness →
+Out-of-sample → Live validation
+```
+
+Not:
+
+```text
+Data → model → Sharpe 2.4 🎉
+```
+
+## The checklist
+
+1. **Hypothesis.** Is there an economic reason this should work? A mechanism beats a
+   data-mined coincidence.
+2. **Biases.** Survivorship (does the universe include dead names?), look-ahead (was every
+   input available at decision time?), selection (how was the universe chosen?).
+3. **Leakage.** Could any information from $t+1$ enter a feature at $t$?
+4. **Multiple testing.** How many hypotheses did you try before this one? Deflate your
+   significance accordingly.
+5. **Out-of-sample.** Split by time; keep a final holdout you touch once.
+6. **Economic significance.** A tiny but "significant" edge may vanish after costs. A
+   p-value of 0.001 does **not** mean profitable.
+7. **Costs & capacity.** Does the edge survive realistic transaction costs and position
+   sizing?
+8. **Robustness.** Does it hold across time periods, universes, parameters, markets, data
+   vendors, and implementations? If it only works with one magic parameter, it is noise.
+9. **Portfolio view.** What factor exposures does the signal accidentally load on? Is the
+   "alpha" just repackaged market/size/value beta?
+10. **Conclusion.** State plainly whether the evidence *is* or *is not* sufficient — and be
+    comfortable concluding "not sufficient."
+
+## The mindset
+
+Deliberately try to **break your own result**: shuffle labels, insert placebo features,
+change windows. A finding that survives sabotage is far more credible than one that merely
+looks good once.

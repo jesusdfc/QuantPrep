@@ -1,0 +1,20 @@
+id: statistics
+name: Statistics & Statistical Rigor
+order: 2
+weight: 0.25
+description: >
+  The most heavily weighted section. Descriptive statistics, sampling and the CLT,
+  inference and hypothesis testing, regression, time-series statistics, and — most
+  importantly — statistical rigor: multiple testing, p-hacking, backtest overfitting,
+  and distinguishing real signal from artifact.
+subtopics:
+  - { id: descriptive, name: Descriptive Statistics }
+  - { id: sampling, name: "Sampling, CLT & Bootstrap" }
+  - { id: inference, name: Inference & Hypothesis Testing }
+  - { id: regression, name: Regression }
+  - { id: time-series, name: Time-Series Statistics }
+  - { id: rigor, name: Statistical Rigor }
+resources:
+  - { name: "MIT 18.650 Statistics for Applications", url: "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/", license: "link-only" }
+  - { name: "The Probability of Backtest Overfitting (Bailey et al.)", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253", license: "link-only" }
+  - { name: "Quantopian lecture archive", url: "https://github.com/etesys/quantopian_lectures", license: "link-only" }

@@ -1,0 +1,65 @@
+# Curated external resources for QuantPrep.
+#
+# LINK-ONLY POLICY: we link to these; we never copy their text into content/.
+# Author original material (or reuse permissively-licensed sources with attribution).
+
+preparation_weights:
+  # Suggested time allocation for a quant-research interview (see README).
+  statistics: 0.25
+  probability: 0.20
+  machine-learning: 0.20
+  portfolio-construction: 0.15
+  research-methodology: 0.15
+  sql: 0.05
+
+core_stack:
+  - { name: "Probability — MIT 6.041", url: "https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/" }
+  - { name: "Statistics — MIT 18.650", url: "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/" }
+  - { name: "ML — ISLP (Statistical Learning, Python)", url: "https://www.statlearning.com/" }
+  - { name: "Quant finance — Quantopian lectures", url: "https://github.com/etesys/quantopian_lectures" }
+  - { name: "Interview practice — QuantPit", url: "https://quantpit.net/tracks/" }
+  - { name: "SQL — LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
+
+by_topic:
+  probability:
+    - { name: "MIT 6.041 Probabilistic Systems Analysis", url: "https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/" }
+    - { name: "ProbabilityCourse.com", url: "https://www.probabilitycourse.com/" }
+    - { name: "Khan Academy — Probability", url: "https://www.khanacademy.org/math/statistics-probability/probability-library/basic-probability" }
+  statistics:
+    - { name: "MIT 18.650 Statistics for Applications", url: "https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/" }
+    - { name: "Quantopian lecture archive", url: "https://github.com/etesys/quantopian_lectures" }
+    - { name: "The Probability of Backtest Overfitting (SSRN)", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
+  machine-learning:
+    - { name: "ISLP — An Introduction to Statistical Learning (Python)", url: "https://www.statlearning.com/" }
+    - { name: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course/" }
+  portfolio-construction:
+    - { name: "CFA — Portfolio Risk and Return: Part II", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2" }
+    - { name: "CFA — Using Multifactor Models", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/using-multifactor-models" }
+    - { name: "CFA — Analysis of Active Portfolio Management", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/analysis-active-portfolio-management" }
+    - { name: "Quantopian lecture archive (portfolio)", url: "https://github.com/HuntFeng/quantopian_lectures" }
+  research-methodology:
+    - { name: "The Probability of Backtest Overfitting (SSRN)", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
+    - { name: "Marcos López de Prado — research & videos", url: "https://www.quantresearch.org/Videos.htm" }
+  sql:
+    - { name: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
+
+question_banks:
+  - { name: "QuantPit — Quant Researcher track", url: "https://quantpit.net/tracks/" }
+  - { name: "QuantVault", url: "https://quantvault.org/" }
+  - { name: "WallStreetQuants", url: "https://www.thewallstreetquants.com/" }
+  - { name: "Quantt — Quant Research Interview Questions", url: "https://www.quantt.co.uk/resources/quant-research-interview-questions" }
+
+# Open-source repos discovered via the GitHub API. 'license' notes reuse rights:
+# permissive licenses (MIT/Apache/CC-BY) allow reuse WITH attribution; 'none' means
+# all rights reserved -> LINK ONLY, never copy their content.
+open_source_repos:
+  - { name: "mikinty/Trading-Interview-Questions", url: "https://github.com/mikinty/Trading-Interview-Questions", license: "none", reuse: "link-only" }
+  - { name: "dwcoder/QuantitativePrimer", url: "https://github.com/dwcoder/QuantitativePrimer", license: "none", reuse: "link-only" }
+  - { name: "dingran/quant-notes", url: "https://github.com/dingran/quant-notes", license: "none", reuse: "link-only" }
+  - { name: "meagmohit/ml-quant-interview-prep", url: "https://github.com/meagmohit/ml-quant-interview-prep", license: "none", reuse: "link-only" }
+  - { name: "QuantBrainteasers/awesome-quant-interview-prep", url: "https://github.com/QuantBrainteasers/awesome-quant-interview-prep", license: "none", reuse: "link-only" }
+  - { name: "keanekwa/MathUwU (full-stack quant quiz app)", url: "https://github.com/keanekwa/MathUwU", license: "MIT", reuse: "code-with-attribution" }
+  - { name: "ctt062/quant-question-bank", url: "https://github.com/ctt062/quant-question-bank", license: "MIT", reuse: "with-attribution" }
+  - { name: "wuhuawei1996/quantitative_questions", url: "https://github.com/wuhuawei1996/quantitative_questions", license: "MIT", reuse: "with-attribution" }
+  - { name: "Aldridgexia/quant_interview", url: "https://github.com/Aldridgexia/quant_interview", license: "MIT", reuse: "with-attribution" }
+  - { name: "gmagkots/qr_python_challenges", url: "https://github.com/gmagkots/qr_python_challenges", license: "MIT", reuse: "with-attribution" }

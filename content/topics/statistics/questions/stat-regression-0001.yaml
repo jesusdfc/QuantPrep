@@ -1,0 +1,32 @@
+id: stat-regression-0001
+title: Spurious Regression
+topic: statistics
+subtopic: regression
+difficulty: hard
+tags: [spurious-regression, unit-root, stationarity, t-stat]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You regress one random walk on another, completely unrelated, random walk. You often find
+  a high $R^2$ and a large, "highly significant" t-statistic on the slope. Why? What is the
+  correct fix?
+hints:
+  - Both series are non-stationary (unit roots); their levels trend and wander.
+  - The OLS assumptions about the residuals are violated.
+solution: |
+  This is the **spurious regression** phenomenon (Granger-Newbold). Two independent random
+  walks each wander persistently. Over any finite sample they will *appear* to move together
+  or apart in a sustained way, producing a high $R^2$ and an inflated t-stat — even though
+  there is no relationship.
+
+  The mechanism: with unit-root (non-stationary) regressors, the residuals are themselves
+  highly autocorrelated / non-stationary, violating OLS assumptions. The usual standard
+  errors are badly understated, so t-stats are not $\mathcal{N}(0,1)$ under the null; they
+  diverge with sample size.
+
+  **Fixes:**
+  - Test for stationarity / unit roots first (e.g. ADF test).
+  - Regress on **differences** (returns) rather than levels, or
+  - If the series are genuinely **cointegrated**, use an error-correction model.
+  A large t-stat between two non-stationary level series is not evidence of a real relationship.
+answer: "Non-stationary regressors ⇒ autocorrelated residuals ⇒ inflated t-stats; difference the series or test for cointegration"

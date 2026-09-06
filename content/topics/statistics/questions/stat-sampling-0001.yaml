@@ -1,0 +1,30 @@
+id: stat-sampling-0001
+title: Bootstrap a Confidence Interval
+topic: statistics
+subtopic: sampling
+difficulty: easy
+tags: [bootstrap, resampling, confidence-interval, standard-error]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You have 500 observed daily returns and want a confidence interval for the mean return,
+  but you do not trust the normality assumption. Describe how to build a bootstrap
+  confidence interval, and note one pitfall when the data are a time series.
+hints:
+  - Resample with replacement, recompute the statistic many times, take percentiles.
+  - Plain i.i.d. bootstrap destroys time dependence.
+solution: |
+  **Percentile bootstrap for the mean:**
+  1. Draw a resample of size $n = 500$ from the observed returns **with replacement**.
+  2. Compute the mean of the resample.
+  3. Repeat $B$ times (e.g. $B = 10{,}000$), collecting the bootstrap distribution of the mean.
+  4. A $95\%$ CI is the $2.5$th and $97.5$th percentiles of those $B$ means.
+
+  This makes no normality assumption and directly approximates the sampling distribution of
+  the estimator.
+
+  **Time-series pitfall:** the ordinary i.i.d. bootstrap assumes exchangeable observations
+  and **destroys autocorrelation**, understating uncertainty for dependent data. Use a
+  **block bootstrap** (resample contiguous blocks) or a stationary bootstrap to preserve the
+  serial dependence structure.
+answer: "Resample with replacement B times, take percentiles of the statistic; use a block bootstrap for time series"

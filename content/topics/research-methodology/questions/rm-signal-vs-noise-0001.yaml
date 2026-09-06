@@ -1,0 +1,46 @@
+id: rm-signal-vs-noise-0001
+title: Design the Experiment — Volume Predicts Returns
+topic: research-methodology
+subtopic: signal-vs-noise
+difficulty: hard
+tags: [hypothesis-testing, experiment-design, leakage, robustness, case-study]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Hypothesis: "Stocks with unusually high trading volume today have higher expected returns
+  tomorrow." Design the full research study you would run to decide whether this is a real,
+  tradeable signal. Walk through the key steps and the traps at each one.
+hints:
+  - Define universe, feature, and label precisely and point-in-time.
+  - Decide the test, the split, and how you will control multiple testing and costs.
+solution: |
+  A defensible study, step by step:
+
+  1. **Mechanism.** Why might this hold? (e.g. attention/liquidity shocks.) A story guards
+     against pure data-mining.
+  2. **Universe.** A point-in-time, survivorship-bias-free set (e.g. liquid US equities),
+     with consistent inclusion rules.
+  3. **Feature.** Define "unusually high volume" explicitly and point-in-time, e.g. today's
+     volume vs a trailing median/z-score using only data up to today (no future bars).
+  4. **Label.** Precisely: next-day close-to-close return (or open-to-open to be tradeable),
+     aligned so the feature is known strictly before the label window.
+  5. **Leakage check.** Ensure nothing from $t+1$ enters the $t$ feature; use only
+     as-of-known data.
+  6. **Test.** Cross-sectional sort into quantiles or a panel regression of next-day return
+     on the volume feature, with returns winsorized; use robust/clustered standard errors.
+  7. **Multiple testing.** Pre-register the single hypothesis; if you tried variants, deflate
+     significance for the number of trials.
+  8. **Out-of-sample.** Split by time (walk-forward) with a final untouched holdout.
+  9. **Economic significance.** Is the spread large enough to matter, not just $p < 0.05$?
+  10. **Costs & capacity.** Net of realistic transaction costs and turnover — high-volume
+      names churn, so costs bite.
+  11. **Robustness.** Across sub-periods, sectors, size buckets, parameter choices, and
+      alternative feature definitions.
+  12. **Portfolio & risk.** Build quantile long-short positions; check accidental factor
+      exposures (size, liquidity, volatility) via a factor regression.
+  13. **Conclusion.** State whether the evidence *is* or *is not* sufficient — and be willing
+      to conclude "not sufficient."
+
+  The point is to demonstrate a disciplined pipeline and active attempts to break your own
+  result, not to reach a predetermined "yes".
+answer: "A disciplined pipeline: mechanism → point-in-time universe/feature/label → leakage check → test → multiple-testing control → walk-forward OOS → costs → robustness → factor check → honest conclusion"

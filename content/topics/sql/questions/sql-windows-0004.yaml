@@ -1,0 +1,47 @@
+id: sql-windows-0004
+title: Longest Positive Streak
+topic: sql
+subtopic: windows
+difficulty: hard
+tags: [window-functions, gaps-and-islands, streaks, row-number]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `returns(symbol TEXT, dt DATE, ret NUMERIC)`, find, for each symbol, the length of
+  its longest run of **consecutive** trading days with a positive return. This is the classic
+  "gaps and islands" problem.
+hints:
+  - Assign a group id that stays constant across a run of positive days.
+  - The difference of two ROW_NUMBER sequences is constant within a streak.
+solution: |
+  The "gaps and islands" trick: within each symbol, the difference between a global row
+  number and a row number computed only over positive days is constant for a contiguous
+  positive run.
+
+  ```sql
+  WITH seq AS (
+    SELECT
+      symbol, dt, ret,
+      ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY dt) AS rn_all,
+      ROW_NUMBER() OVER (PARTITION BY symbol, (ret > 0) ORDER BY dt) AS rn_pos
+    FROM returns
+  ),
+  islands AS (
+    SELECT symbol, dt, (rn_all - rn_pos) AS grp
+    FROM seq
+    WHERE ret > 0
+  )
+  SELECT symbol, MAX(streak) AS longest_positive_streak
+  FROM (
+    SELECT symbol, grp, COUNT(*) AS streak
+    FROM islands
+    GROUP BY symbol, grp
+  ) s
+  GROUP BY symbol
+  ORDER BY symbol;
+  ```
+
+  Each maximal positive run shares one `grp` value; counting rows per `(symbol, grp)` gives
+  streak lengths, and the max per symbol is the answer. Assumes one row per trading day per
+  symbol; if calendar gaps must break streaks, incorporate the date sequence explicitly.
+answer: "Gaps-and-islands: group positive days by (rn_all - rn_pos), COUNT per group, take the MAX per symbol"

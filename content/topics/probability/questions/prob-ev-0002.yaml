@@ -1,0 +1,29 @@
+id: prob-ev-0002
+title: Edge of a 55% Coin
+topic: probability
+subtopic: expected-value
+difficulty: easy
+tags: [expectation, betting, edge, variance]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy wins 55% of the time with a payoff of $+1$ on a win and $-1$ on a loss, and
+  bets are i.i.d. What is the expected profit per bet, and the standard deviation per bet?
+  Over $n$ i.i.d. bets, how does the "signal-to-noise" (mean / std of the total) scale?
+hints:
+  - Expected value is $p(+1) + (1-p)(-1)$.
+  - For the total over $n$ bets, mean scales like $n$ and std like $\sqrt{n}$.
+solution: |
+  Per bet, with $p = 0.55$:
+  $$\mu = p(1) + (1-p)(-1) = 2p - 1 = 0.10.$$
+  The payoff $X \in \{-1, +1\}$ has $\mathbb{E}[X^2] = 1$, so
+  $$\operatorname{Var}(X) = 1 - \mu^2 = 1 - 0.01 = 0.99,\quad \sigma \approx 0.995.$$
+
+  Over $n$ i.i.d. bets the total has mean $n\mu$ and std $\sigma\sqrt{n}$, so
+  $$\frac{\text{mean}}{\text{std}} = \frac{n\mu}{\sigma\sqrt{n}} = \frac{\mu}{\sigma}\sqrt{n}
+    \approx 0.10\sqrt{n}.$$
+
+  The edge per bet is tiny relative to its noise ($\mu/\sigma \approx 0.10$), but it
+  compounds as $\sqrt{n}$: you need **many independent bets** for the edge to dominate luck.
+  This is the intuition behind breadth in the Fundamental Law of Active Management.
+answer: "μ = 0.10 per bet; σ ≈ 0.995; SNR grows like 0.10·√n"
