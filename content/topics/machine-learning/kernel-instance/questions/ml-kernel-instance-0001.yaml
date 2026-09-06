@@ -1,0 +1,41 @@
+id: ml-kernel-instance-0001
+title: k-NN and the Curse of Dimensionality
+topic: machine-learning
+subtopic: kernel-instance
+difficulty: medium
+tags: [k-nn, curse-of-dimensionality, svm, distance-metrics, overfitting]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Explain how k-nearest-neighbors makes predictions and why it degrades badly in high
+  dimensions ("curse of dimensionality"). Contrast the role of the k parameter with the SVM's
+  margin as ways to control complexity.
+hints:
+  - In high dimensions, distances between points become nearly equal.
+  - Small k = low bias/high variance; large k = the opposite.
+solution: |
+  **How k-NN works.** To predict for a point, find its $k$ nearest neighbors under a distance
+  metric and average (regression) or vote (classification). It is non-parametric with no
+  training beyond storing data.
+
+  **Curse of dimensionality.** As dimension $d$ grows:
+  - Data becomes **sparse**; to capture a fixed fraction of the volume you need a
+    neighborhood spanning most of each feature's range, so "nearest" neighbors are actually
+    far.
+  - **Distance concentration:** the ratio of nearest to farthest distances $\to 1$, so
+    neighborhoods become uninformative and predictions unreliable.
+  - Irrelevant/correlated features add noise to the distance metric. In quant data with many
+    weakly-informative, correlated features and low SNR, k-NN is especially fragile.
+  *Mitigations:* dimensionality reduction (PCA), feature selection, learned/weighted metrics.
+
+  **Complexity control: k vs SVM margin.**
+  - **k in k-NN:** small $k$ → flexible, low bias, **high variance** (fits noise); large $k$ →
+    smoother, higher bias, lower variance. $k$ tunes the bias–variance tradeoff directly.
+  - **SVM margin:** the SVM maximizes the **margin** between classes, and the regularization
+    parameter $C$ trades margin width against training errors. A wider margin (small $C$) is
+    a simpler, more regularized decision boundary; kernels allow non-linear boundaries while
+    the margin still controls capacity.
+
+  Both expose an explicit knob for the bias–variance tradeoff — essential in low-SNR finance
+  where controlling variance matters more than chasing flexibility.
+answer: "k-NN averages/votes over the k closest points; in high dimensions data is sparse and distances concentrate (nearest ≈ farthest), so it degrades — use PCA/feature selection. k controls bias–variance (small k = high variance); the SVM's margin (via C) plays the analogous complexity-control role."

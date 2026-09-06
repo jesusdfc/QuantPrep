@@ -1,0 +1,41 @@
+id: rm-multiple-testing-0001
+title: One in a Thousand — Multiple Testing and False Discoveries
+topic: quantitative-research
+subtopic: multiple-testing
+difficulty: medium
+tags: [multiple-testing, data-snooping, p-values, false-discovery, family-wise-error]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You test 1,000 candidate signals and one comes back with p < 0.05. A teammate wants to
+  trade it. Quantify why you should be skeptical, and describe how you would decide whether
+  the discovery is real.
+hints:
+  - Under the null, how many false positives do you expect from 1,000 tests at α = 0.05?
+  - What does the single p-value need to be corrected for?
+solution: |
+  **Expected false positives.** If *all* 1,000 signals were pure noise, at α = 0.05 you
+  expect about $1000 \times 0.05 = 50$ "significant" results by chance alone. Finding *one*
+  with p < 0.05 is therefore **completely unsurprising under the null** — it is weak evidence
+  of anything.
+
+  **The real quantity.** A single p-value is only interpretable **conditional on one test**.
+  After searching 1,000, the relevant object is the family-wise error or the false discovery
+  rate.
+  - **Family-wise (Bonferroni):** require p < 0.05/1000 = 5e-5 to control the chance of *any*
+    false positive.
+  - **False Discovery Rate (Benjamini–Hochberg):** control the *expected fraction* of
+    discoveries that are false — less conservative and usually more appropriate when you
+    expect several true signals.
+
+  **How I'd decide.**
+  1. Correct for the number of trials actually run (including undocumented ones — "researcher
+     degrees of freedom").
+  2. Hold out an untouched **out-of-sample** period the signal has never seen.
+  3. Demand a **prior mechanism/economic story**, not just a small p-value.
+  4. For strategies, use **Deflated Sharpe / PBO**, which explicitly discount the best result
+     for the breadth of the search.
+  5. Require **economic** significance after costs, not merely statistical.
+
+  Absent these, "one signal out of 1,000 had p < 0.05" is a data-snooping artifact.
+answer: "At α=0.05, 1,000 null tests yield ~50 false positives, so one p<0.05 is expected by chance; correct for the number of trials (Bonferroni/FDR), demand out-of-sample confirmation, a mechanism, and economic significance (Deflated Sharpe/PBO)."

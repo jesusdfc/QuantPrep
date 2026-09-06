@@ -1,0 +1,39 @@
+id: rm-look-ahead-leakage-0002
+title: Preprocessing Leakage — Fitting the Scaler on All Data
+topic: quantitative-research
+subtopic: look-ahead-leakage
+difficulty: medium
+tags: [data-leakage, preprocessing, cross-validation, standardization, pipeline]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A colleague standardizes features with `scaler.fit(all_data)` and *then* splits into
+  train/test. Cross-validated accuracy looks strong, but live performance disappoints.
+  What went wrong, and how should the pipeline be structured instead?
+hints:
+  - What information does the scaler's mean/std encode, and where does it come from?
+  - Which steps must live strictly inside the training fold?
+solution: |
+  **What leaked.** Fitting the scaler on *all* data lets the training features "see" the
+  mean and standard deviation of the **test/future** distribution. Any statistic estimated
+  on the full dataset — scaling, imputation, feature selection, target encoding, PCA,
+  winsorization thresholds — leaks future information into training and **inflates
+  validation scores**. Live, you have no access to future data, so the edge evaporates.
+
+  **The rule.** Every data-dependent transformation must be **fit on the training fold only**
+  and merely *applied* to validation/test. In scikit-learn, wrap steps in a `Pipeline` and
+  fit the pipeline inside each CV fold:
+
+  ```python
+  pipe = Pipeline([("scale", StandardScaler()), ("model", Ridge())])
+  scores = cross_val_score(pipe, X, y, cv=tscv)  # scaler re-fit per fold
+  ```
+
+  **For time series, go further.** Use a forward-chaining split (e.g. `TimeSeriesSplit`),
+  and estimate all normalizations from **past data only** (expanding or trailing windows),
+  never centered or full-sample statistics. Combined with purging/embargo around the split
+  boundary, this removes both preprocessing leakage and look-ahead.
+
+  **Tell-tale sign.** A gap between cross-validated and live performance that shrinks once
+  preprocessing is moved inside the fold is strong evidence the original leaked.
+answer: "Fitting the scaler on all data leaks test-distribution statistics into training; fit every data-dependent transform inside the training fold (use a Pipeline + TimeSeriesSplit with past-only statistics)."

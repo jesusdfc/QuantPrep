@@ -9,7 +9,7 @@ preparation_weights:
   probability: 0.20
   machine-learning: 0.20
   portfolio-construction: 0.15
-  research-methodology: 0.15
+  quantitative-research: 0.15
   sql: 0.05
 
 core_stack:
@@ -37,11 +37,21 @@ by_topic:
     - { name: "CFA — Using Multifactor Models", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/using-multifactor-models" }
     - { name: "CFA — Analysis of Active Portfolio Management", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/analysis-active-portfolio-management" }
     - { name: "Quantopian lecture archive (portfolio)", url: "https://github.com/HuntFeng/quantopian_lectures" }
-  research-methodology:
+  quantitative-research:
     - { name: "The Probability of Backtest Overfitting (SSRN)", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
     - { name: "Marcos López de Prado — research & videos", url: "https://www.quantresearch.org/Videos.htm" }
   sql:
     - { name: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
+
+# Permissively-licensed sources whose text MAY be reused verbatim in content/theory
+# WITH attribution (and ShareAlike where noted). Each lesson that reuses one records
+# its `license` + `attribution` in the MDX front-matter.
+permissive_theory_sources:
+  - { name: "Wikipedia", url: "https://en.wikipedia.org/", license: "CC-BY-SA-4.0", reuse: "verbatim-with-attribution-sharealike" }
+  - { name: "Google Machine Learning Crash Course", url: "https://developers.google.com/machine-learning/crash-course/", license: "CC-BY-4.0", reuse: "verbatim-with-attribution" }
+  - { name: "OpenIntro Statistics", url: "https://www.openintro.org/book/os/", license: "CC-BY-SA-4.0", reuse: "verbatim-with-attribution-sharealike" }
+  - { name: "scikit-learn documentation", url: "https://scikit-learn.org/stable/", license: "BSD-3-Clause", reuse: "with-attribution" }
+  - { name: "PostgreSQL documentation", url: "https://www.postgresql.org/docs/", license: "PostgreSQL", reuse: "with-attribution" }
 
 question_banks:
   - { name: "QuantPit — Quant Researcher track", url: "https://quantpit.net/tracks/" }

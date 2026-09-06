@@ -1,0 +1,62 @@
+id: sql-subqueries-0001
+title: Stocks That Beat Their Sector Average
+topic: sql
+subtopic: subqueries
+difficulty: medium
+tags: [correlated-subquery, cte, group-by, join, aggregation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `returns(symbol, sector, ret)` for a single date, write a query to find every stock
+  whose return exceeded the average return of its own sector. Show both a correlated-subquery
+  and a join-to-aggregate approach, and say which scales better.
+hints:
+  - The sector average is a per-group aggregate you compare each row against.
+  - A window function can also do this in one pass.
+solution: |
+  **Approach 1 — correlated subquery.** For each row, recompute its sector's average:
+
+  ```sql
+  SELECT r.symbol, r.sector, r.ret
+  FROM returns r
+  WHERE r.ret > (
+    SELECT AVG(r2.ret)
+    FROM returns r2
+    WHERE r2.sector = r.sector
+  );
+  ```
+
+  Clear, but the subquery may be evaluated per row (often once per sector by the optimizer);
+  can be slow on large tables.
+
+  **Approach 2 — join to a pre-aggregated CTE.** Compute each sector's average once, then join:
+
+  ```sql
+  WITH sector_avg AS (
+    SELECT sector, AVG(ret) AS avg_ret
+    FROM returns
+    GROUP BY sector
+  )
+  SELECT r.symbol, r.sector, r.ret
+  FROM returns r
+  JOIN sector_avg s ON s.sector = r.sector
+  WHERE r.ret > s.avg_ret;
+  ```
+
+  **Approach 3 — window function (cleanest, one pass).**
+
+  ```sql
+  SELECT symbol, sector, ret
+  FROM (
+    SELECT symbol, sector, ret,
+           AVG(ret) OVER (PARTITION BY sector) AS avg_ret
+    FROM returns
+  ) q
+  WHERE ret > avg_ret;
+  ```
+
+  **Which scales better.** The **CTE-join** and **window** approaches compute each sector
+  average **once** and generally outperform the correlated subquery on large data. The window
+  version avoids an extra join and is usually the most efficient and readable. (Note: strict
+  `>` excludes ties at exactly the average — use `>=` if you want to include them.)
+answer: "Compare each row to its sector average. Correlated subquery: WHERE ret > (SELECT AVG(ret) ... WHERE sector = r.sector). Better-scaling: pre-aggregate sector averages in a CTE and join, or use AVG(ret) OVER (PARTITION BY sector) in one pass (most efficient/readable)."

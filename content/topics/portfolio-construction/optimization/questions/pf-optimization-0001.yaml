@@ -1,0 +1,41 @@
+id: pf-optimization-0001
+title: Why Mean-Variance Optimization Misbehaves
+topic: portfolio-construction
+subtopic: optimization
+difficulty: hard
+tags: [mean-variance, estimation-error, error-maximization, shrinkage, robustness]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Classical mean-variance optimization often produces extreme, unstable portfolios that
+  perform poorly out-of-sample. Explain why, and describe the main remedies. Why is it
+  sometimes called an "error-maximizer"?
+hints:
+  - Inputs (expected returns, covariances) are estimated with large errors.
+  - The optimizer allocates aggressively to assets with the most favorable *estimated* inputs.
+solution: |
+  **The core problem: estimation error.** MVO takes expected returns $\mu$ and covariance
+  $\Sigma$ as if known, but both are **estimated with large error** — especially $\mu$, which
+  needs very long samples to pin down. The optimizer then treats noise as signal.
+
+  **"Error maximizer."** MVO gives the **largest** weights to assets with the highest
+  *estimated* return and lowest *estimated* variance/correlation — which are often the assets
+  whose inputs are most **overstated by estimation error**. It systematically loads on the
+  errors, so small input changes cause large, unstable swings in weights, extreme long/short
+  positions, and poor out-of-sample results. Sensitivity is worst when assets are highly
+  correlated (near-singular $\Sigma$).
+
+  **Remedies.**
+  - **Shrinkage / better covariance:** Ledoit–Wolf shrinkage, factor-model covariances, RMT
+    cleaning to stabilize $\Sigma$.
+  - **Shrink/limit expected returns:** Bayesian priors, **Black–Litterman** (blend equilibrium
+    returns with views), or drop $\mu$ entirely (minimum-variance / risk-based portfolios).
+  - **Constraints & regularization:** no-short or position limits, turnover penalties, L1/L2
+    on weights — these act like priors and tame extremes.
+  - **Resampling:** average optimal weights over bootstrapped inputs.
+  - **Simplicity:** equal-weight or risk-parity portfolios often beat "optimized" ones
+    out-of-sample precisely because they ignore noisy $\mu$.
+
+  The lesson: optimization amplifies input error, so robustness of the **inputs** matters more
+  than the elegance of the optimizer.
+answer: "MVO treats noisy μ and Σ as exact and overweights assets whose favorable inputs are most inflated by estimation error ('error maximizer'), giving extreme, unstable, poor out-of-sample weights. Remedies: shrinkage/factor/RMT covariance, Black–Litterman or dropping μ (min-variance/risk parity), constraints/turnover penalties, resampling, and simplicity."

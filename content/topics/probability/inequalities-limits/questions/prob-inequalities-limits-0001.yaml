@@ -1,0 +1,36 @@
+id: prob-inequalities-limits-0001
+title: Jensen's Inequality and Volatility Drag
+topic: probability
+subtopic: inequalities-limits
+difficulty: medium
+tags: [jensen-inequality, geometric-mean, volatility-drag, compounding, expectation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  State Jensen's inequality. Then use it to explain "volatility drag": why the compound
+  (geometric) growth rate of a volatile strategy is lower than its average (arithmetic)
+  return, and give the standard approximation.
+hints:
+  - For a concave function φ, E[φ(X)] ≤ φ(E[X]).
+  - The log of wealth is concave; compounding multiplies gross returns.
+solution: |
+  **Jensen's inequality.** For a **convex** function $\varphi$,
+  $\mathbb{E}[\varphi(X)] \ge \varphi(\mathbb{E}[X])$; for a **concave** $\varphi$ the
+  inequality reverses: $\mathbb{E}[\varphi(X)] \le \varphi(\mathbb{E}[X])$. Equality holds
+  only if $X$ is constant or $\varphi$ is linear.
+
+  **Volatility drag.** Wealth compounds multiplicatively: after returns $r_1,\dots,r_n$,
+  $W_n = W_0 \prod (1+r_t)$. The relevant growth rate is the **geometric** mean, i.e. the
+  average of $\log(1+r_t)$. Since $\log$ is **concave**, Jensen gives
+  $$\mathbb{E}[\log(1+r)] \le \log\big(1 + \mathbb{E}[r]\big).$$
+  So the **compound growth rate is below the arithmetic mean return** — and the gap grows with
+  volatility.
+
+  **Approximation.** With arithmetic mean $\mu$ and variance $\sigma^2$,
+  $$g \approx \mu - \tfrac{1}{2}\sigma^2.$$
+  The $\tfrac12\sigma^2$ term is the **volatility drag**. Practical consequences: two
+  strategies with the same arithmetic mean but different volatility have different long-run
+  wealth; reducing volatility (diversification, sizing) can raise compound growth even without
+  raising average return. It also underpins the log-optimal (Kelly) objective of maximizing
+  $\mathbb{E}[\log(1+r)]$.
+answer: "Jensen: E[φ(X)] ≤ φ(E[X]) for concave φ. Since log(1+r) is concave, geometric growth E[log(1+r)] ≤ log(1+E[r]); compound growth ≈ μ − ½σ², with ½σ² the volatility drag that grows with volatility."

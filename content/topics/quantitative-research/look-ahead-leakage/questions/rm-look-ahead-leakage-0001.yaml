@@ -1,0 +1,42 @@
+id: rm-look-ahead-leakage-0001
+title: The Revised GDP Trap — Point-in-Time Data
+topic: quantitative-research
+subtopic: look-ahead-leakage
+difficulty: hard
+tags: [look-ahead-bias, point-in-time, data-revisions, leakage, macro]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You backtest a strategy that, on 15 March 2015, trades on the latest available value of
+  Q1 GDP. Your database stores a single GDP figure per quarter. The result looks great.
+  Explain the subtle bias you may have introduced, and how you would fix and then verify
+  the fix.
+hints:
+  - Official macro series are revised for months (sometimes years) after first release.
+  - The question is not "which quarter is this number for?" but "was this exact value
+    knowable at the decision timestamp?"
+solution: |
+  **The trap.** Most macro series (GDP, payrolls, etc.) are released with a lag and then
+  **revised** repeatedly. A database that keeps only the *final revised* value silently
+  back-fills the future: on 15 March 2015 the true Q1 GDP was not even released yet, and the
+  value you eventually see was revised long after. Trading on it embeds information that was
+  **not available at the decision timestamp** — classic look-ahead bias, even though the
+  number is "for" a past quarter.
+
+  **The right question.** Not "is this a Q1 value?" but **"was this exact value observable,
+  as of the decision time, on a real-world clock?"**
+
+  **Fix.** Use a **point-in-time (vintage) database** that records, for each date, *what was
+  known then* — including release timestamps and each revision vintage. Align every feature
+  to the value as-of the decision timestamp, and respect publication lags (e.g. a value
+  "for" Q1 only becomes usable after its actual release date).
+
+  **Verify the fix.**
+  - Re-run with vintage data and compare performance; a large drop is a red flag that the
+    original relied on revisions.
+  - Build an explicit as-of join and unit-test that no feature timestamp precedes its
+    release date.
+  - Sanity check specific dates by hand against known release calendars.
+  - If a vintage DB is unavailable, approximate by lagging each series by its typical
+    publication delay — conservative, but removes the worst of the leak.
+answer: "Storing only revised macro values back-fills information that wasn't public at the decision time; fix with point-in-time/vintage data aligned to release dates, and verify by re-running and asserting feature timestamps never precede release timestamps."

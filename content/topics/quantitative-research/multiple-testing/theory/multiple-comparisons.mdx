@@ -1,0 +1,46 @@
+---
+id: qr-multiple-testing
+title: The Multiple Comparisons Problem
+topic: quantitative-research
+subtopic: multiple-testing
+order: 1
+summary: Why running many statistical tests on one dataset inflates the chance of at least one false positive, and how the family-wise error rate quantifies it.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Multiple comparisons problem" (https://en.wikipedia.org/wiki/Multiple_comparisons_problem), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Multiple comparisons problem", url: "https://en.wikipedia.org/wiki/Multiple_comparisons_problem" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Multiple comparisons problem"](https://en.wikipedia.org/wiki/Multiple_comparisons_problem),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# The Multiple Comparisons Problem
+
+Multiple comparisons, multiplicity or multiple testing problem occurs when many statistical
+tests are performed on the same dataset. Each test has its own chance of a Type I error
+(false positive), so the overall probability of making at least one false positive increases
+as the number of tests grows. In statistics, this occurs when one simultaneously considers a
+set of statistical inferences or estimates a subset of selected parameters based on observed
+values.
+
+The probability of false positives is measured through the family-wise error rate (FWER).
+The larger the number of inferences made in a series of tests, the more likely erroneous
+inferences become. Several statistical techniques have been developed to compensate for the
+number of inferences being made — for example, by requiring a stricter significance
+threshold for individual comparisons.
+
+## A concrete example
+
+For example, if one test is performed at the 5% level and the corresponding null hypothesis
+is true, there is only a 5% risk of incorrectly rejecting the null hypothesis. However, if
+100 tests are each conducted at the 5% level and all corresponding null hypotheses are true,
+the expected number of incorrect rejections (also known as false positives or Type I errors)
+is 5. If the tests are statistically independent from each other (i.e. are performed on
+independent samples), the probability of at least one incorrect rejection is approximately
+99.4%.
+
+Our confidence that a result will generalize to independent data should generally be weaker
+if it is observed as part of an analysis that involves multiple comparisons, rather than an
+analysis that involves only a single comparison.

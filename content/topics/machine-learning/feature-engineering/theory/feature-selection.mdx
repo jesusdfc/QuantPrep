@@ -1,0 +1,34 @@
+---
+id: ml-feature-selection
+title: Feature Selection & Importance
+topic: machine-learning
+subtopic: feature-engineering
+order: 1
+summary: Selecting a subset of relevant features to simplify models, shorten training, avoid the curse of dimensionality, and improve generalization.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Feature selection" (https://en.wikipedia.org/wiki/Feature_selection), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Feature selection", url: "https://en.wikipedia.org/wiki/Feature_selection" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Feature selection"](https://en.wikipedia.org/wiki/Feature_selection),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Feature Selection & Importance
+
+In machine learning, feature selection is the process of selecting a subset of relevant
+features (variables, predictors) for use in model construction. Feature selection techniques
+are used for several reasons:
+
+- simplification of models to make them easier to interpret,
+- shorter training times,
+- to avoid the curse of dimensionality,
+- improve the compatibility of the data with a certain learning model class,
+- to encode inherent symmetries present in the input space.
+
+The central premise when using feature selection is that data sometimes contains features that
+are redundant or irrelevant, and can thus be removed without incurring much loss of
+information. Redundant and irrelevant are two distinct notions, since one relevant feature may
+be redundant in the presence of another relevant feature with which it is strongly correlated.

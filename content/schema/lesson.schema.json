@@ -5,7 +5,7 @@
   "description": "YAML front-matter of a theory lesson (.mdx). Body is Markdown/MDX + LaTeX.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "title", "topic", "order"],
+  "required": ["id", "title", "topic", "subtopic", "order"],
   "properties": {
     "id": {
       "type": "string",
@@ -23,9 +23,13 @@
         "statistics",
         "machine-learning",
         "portfolio-construction",
-        "research-methodology",
+        "quantitative-research",
         "sql"
       ]
+    },
+    "subtopic": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
     },
     "order": {
       "type": "integer",
@@ -34,6 +38,15 @@
     "summary": {
       "type": "string",
       "maxLength": 400
+    },
+    "license": {
+      "type": "string",
+      "description": "License of the lesson body. 'original' for authored text, otherwise the permissive license of the reused source.",
+      "enum": ["original", "MIT", "Apache-2.0", "CC-BY-4.0", "CC-BY-SA-4.0", "public-domain"]
+    },
+    "attribution": {
+      "type": "string",
+      "description": "Required credit line + source URL when the body reuses permissively-licensed material."
     },
     "prerequisites": {
       "type": "array",

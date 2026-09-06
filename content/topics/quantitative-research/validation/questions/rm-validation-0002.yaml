@@ -1,0 +1,38 @@
+id: rm-validation-0002
+title: When Out-of-Sample Quietly Becomes In-Sample
+topic: quantitative-research
+subtopic: validation
+difficulty: medium
+tags: [out-of-sample, data-snooping, overfitting, holdout, discipline]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A researcher iterates: test on the holdout, tweak the model, test again, tweak again —
+  over dozens of rounds — until the holdout Sharpe looks great. Why is the final holdout
+  result untrustworthy, and how should a holdout be governed?
+hints:
+  - What role does the holdout play once you use it to make modeling decisions?
+  - How many effective "trials" have been run against that holdout?
+solution: |
+  **The problem.** The value of a holdout is that the model has **never seen it**. The moment
+  you use holdout performance to *choose* the next tweak, the holdout is feeding information
+  back into the model — it has effectively become part of the **training/validation** set.
+  After dozens of iterations you have run dozens of trials against it, so you are **selecting
+  on holdout noise**: the final Sharpe is an overfit maximum, not an unbiased estimate.
+
+  **Consequences.** Reported out-of-sample performance is optimistically biased by an amount
+  that grows with the number of peeks; it will not replicate live.
+
+  **How to govern a holdout.**
+  - **Lock it away.** Decide the evaluation protocol *before* touching it and touch it
+    **once**, at the very end.
+  - Do all model selection on a separate **validation** set (or via nested/walk-forward CV)
+    that you are allowed to reuse.
+  - **Count and disclose** the number of configurations tried; apply Deflated Sharpe / PBO.
+  - Prefer a **forward/live paper-trading** period as the ultimate untouched test — genuinely
+    new data the researcher could not have optimized against.
+  - Consider a differential-privacy-style "reusable holdout" only with strict query budgets.
+
+  The discipline is cultural as much as technical: treat every look at the holdout as
+  spending a scarce, non-renewable resource.
+answer: "Reusing the holdout to guide tweaks turns it into training data — you select on its noise, so the final result overfits and won't replicate. Lock the holdout, select on separate validation/CV, count trials (Deflated Sharpe/PBO), and confirm with a forward/live period."

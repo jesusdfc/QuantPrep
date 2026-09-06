@@ -1,0 +1,49 @@
+---
+id: sql-correlated-subquery
+title: Subqueries & CTEs — Correlated Subqueries
+topic: sql
+subtopic: subqueries
+order: 1
+summary: A subquery that references values from the outer query, and why it may be re-evaluated once per outer row — with major performance implications.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Correlated subquery" (https://en.wikipedia.org/wiki/Correlated_subquery), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Correlated subquery", url: "https://en.wikipedia.org/wiki/Correlated_subquery" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Correlated subquery"](https://en.wikipedia.org/wiki/Correlated_subquery),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Subqueries & CTEs — Correlated Subqueries
+
+In a SQL database query, a correlated subquery (also known as a synchronized subquery) is a
+subquery (a query nested inside another query) that uses values from the outer query. This can
+have major impact on performance because the correlated subquery might get recomputed every
+time for each row of the outer query is processed. A correlated subquery can contain another
+correlated subquery.
+
+## Example — above-average salary per department
+
+```sql
+SELECT employee_number, name
+  FROM employees emp
+ WHERE salary > (
+       SELECT AVG(salary)
+         FROM employees
+        WHERE department = emp.department);
+```
+
+In the above nested query the inner query has to be re-executed for each employee. (A
+sufficiently smart implementation may cache the inner query's result on a department-by-
+department basis, but even in the best case the inner query must be executed once per
+department.)
+
+## Computation
+
+A commonly used computational method for a correlated subquery is to rewrite it into an
+equivalent flat query (a process known as flattening or unnesting). A general computational
+approach is to directly execute the nested loop by iterating all tuples of the correlated
+columns from the outer query block and executing the subquery as many times as the number of
+outer-loop tuples.

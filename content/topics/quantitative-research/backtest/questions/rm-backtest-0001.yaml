@@ -1,0 +1,38 @@
+id: rm-backtest-0001
+title: Why a Backtest Wins but Live Loses
+topic: quantitative-research
+subtopic: backtest
+difficulty: medium
+tags: [backtest, transaction-costs, look-ahead, capacity, implementation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A strategy shows a strong backtest but loses money live. List the most common reasons, and
+  which ones you can catch before deploying capital.
+hints:
+  - "Group causes into: data/methodology flaws, market frictions, and non-stationarity."
+  - Which are detectable in-sample and which only reveal themselves live?
+solution: |
+  Common reasons a backtest beats live performance:
+
+  **Data / methodology flaws (detectable beforehand):**
+  - **Look-ahead bias** — using data not available at decision time.
+  - **Survivorship bias** — universe excludes dead names.
+  - **Overfitting / selection** — best of many trials; no honest out-of-sample.
+  - **Leakage** in features or labels.
+
+  **Frictions the backtest ignored (partly detectable):**
+  - **Transaction costs, slippage, market impact** — especially for high-turnover or
+    illiquid names.
+  - **Capacity** — the edge shrinks as size grows.
+  - **Shorting constraints, borrow costs, fees.**
+
+  **Non-stationarity (hard to catch beforehand):**
+  - **Regime change / alpha decay** — the relationship weakens or reverses.
+  - **Crowding** — others trade the same signal, competing away the edge.
+
+  You can catch the first two groups with disciplined methodology (point-in-time data,
+  walk-forward OOS, realistic cost and capacity models, deflated significance). The
+  non-stationarity group is why live/paper validation and ongoing monitoring remain
+  essential even after a clean backtest.
+answer: "Look-ahead/survivorship/overfitting/leakage (catch via clean methodology), costs/capacity/shorting (model realistically), and regime change/crowding (monitor live)"

@@ -1,0 +1,44 @@
+id: rm-validation-0001
+title: Why Random k-Fold CV Fails on Time Series
+topic: quantitative-research
+subtopic: validation
+difficulty: medium
+tags: [cross-validation, walk-forward, purging, embargo, time-series, leakage]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Explain why shuffled k-fold cross-validation is inappropriate for a financial time-series
+  model, and describe how walk-forward validation with purging and embargo fixes the
+  problems.
+hints:
+  - Shuffling puts future observations in the training fold and past ones in the test fold.
+  - Overlapping labels and autocorrelation break the independence CV assumes.
+solution: |
+  **Why k-fold breaks.**
+  1. **Look-ahead.** Random folds place **future** rows in training and **past** rows in
+     test, so the model is trained on information from after the prediction date.
+  2. **Serial correlation / overlapping labels.** Returns are autocorrelated and labels
+     often span multiple bars (e.g. a 5-day forward return). Adjacent train and test rows
+     then **share information**, so test folds are not independent and scores are optimistic.
+  3. **Non-stationarity.** Shuffling hides regime structure; the model is implicitly told the
+     future distribution.
+
+  **Walk-forward (forward-chaining).** Always train on the past and test on the *subsequent*
+  period, rolling forward:
+
+  ```text
+  train[....]        test[..]
+        train[......]        test[..]
+              train[........]        test[..]
+  ```
+
+  This mirrors live deployment: at each step you only use data available up to that point.
+
+  **Purging and embargo (López de Prado).**
+  - **Purge:** drop training observations whose **label windows overlap** the test period,
+    removing leakage from overlapping horizons.
+  - **Embargo:** additionally exclude a small buffer of training rows **immediately after**
+    the test period to kill residual autocorrelation spillover.
+
+  Together these give an honest estimate of out-of-sample performance under realistic timing.
+answer: "Random k-fold leaks the future (future rows train, past rows test) and violates independence via autocorrelated/overlapping labels; use walk-forward (train past → test future) with purging of overlapping-label rows and an embargo buffer."

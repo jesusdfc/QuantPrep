@@ -1,0 +1,39 @@
+id: rm-multiple-testing-0002
+title: Bonferroni vs FDR vs Deflated Sharpe
+topic: quantitative-research
+subtopic: multiple-testing
+difficulty: hard
+tags: [bonferroni, false-discovery-rate, deflated-sharpe, backtest-overfitting, multiple-testing]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Compare Bonferroni correction, the Benjamini–Hochberg False Discovery Rate, and the
+  Deflated Sharpe Ratio as tools for guarding against multiple-testing in strategy research.
+  When is each appropriate, and what does each actually control?
+hints:
+  - Family-wise error rate vs expected false-discovery proportion.
+  - What extra information does the Deflated Sharpe use beyond a raw p-value?
+solution: |
+  **Bonferroni — controls the Family-Wise Error Rate (FWER).** Reject only if
+  $p < \alpha/m$ for $m$ tests. It bounds the probability of **even one** false positive.
+  Very conservative: with many tests it kills power and you miss true signals. Appropriate
+  when a single false discovery is very costly and $m$ is modest.
+
+  **Benjamini–Hochberg — controls the False Discovery Rate (FDR).** Orders p-values and
+  rejects the largest $k$ such that $p_{(k)} \le \frac{k}{m}\alpha$. It controls the
+  **expected proportion of discoveries that are false**, trading a few false positives for
+  much more power. Appropriate when you expect several genuine signals among many tests and
+  can tolerate a known false-discovery fraction.
+
+  **Deflated Sharpe Ratio (DSR) — designed for strategy backtests.** It adjusts the observed
+  Sharpe for (a) the **number of trials** actually run, (b) the **variance of the trial
+  Sharpes**, and (c) **non-normality** (skew/kurtosis) and sample length. It answers: "given
+  that I selected the best of many backtests, is this Sharpe still significantly greater than
+  zero?" Related tools: Probability of Backtest Overfitting (PBO) via CSCV, and Minimum
+  Track Record Length.
+
+  **Bottom line.** Bonferroni/FDR are generic p-value corrections; DSR/PBO are
+  finance-specific and use the *distribution of the search itself*. In practice: keep an
+  honest count of trials, prefer FDR when hunting many signals, and report a Deflated Sharpe
+  (and PBO) for any selected strategy.
+answer: "Bonferroni controls FWER (any false positive; conservative); BH-FDR controls the expected false-discovery proportion (more power); Deflated Sharpe/PBO discount the selected backtest for the number and variance of trials plus non-normality — the finance-specific choice."

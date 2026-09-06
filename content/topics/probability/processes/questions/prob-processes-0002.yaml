@@ -1,0 +1,35 @@
+id: prob-processes-0002
+title: Gambler's Ruin and Risk of Ruin
+topic: probability
+subtopic: processes
+difficulty: medium
+tags: [gamblers-ruin, random-walk, markov, risk-of-ruin, difference-equations]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You start with $i$ dollars and bet $1 per round, winning with probability p and losing with
+  probability q = 1 − p. You stop at 0 (ruin) or at N (target). Derive the probability of
+  reaching N before ruin, and interpret the fair-game case.
+hints:
+  - Let P_i be the win probability from state i; condition on the first bet.
+  - Solve the resulting linear difference equation with boundary conditions P_0 = 0, P_N = 1.
+solution: |
+  Let $P_i$ = probability of reaching $N$ before $0$, starting from $i$. Condition on the
+  first bet:
+  $$P_i = p\,P_{i+1} + q\,P_{i-1}, \qquad P_0 = 0,\; P_N = 1.$$
+
+  **Fair game ($p = q = \tfrac12$).** The recurrence becomes $P_i = \tfrac12(P_{i+1}+P_{i-1})$,
+  i.e. $P_i$ is linear in $i$. With the boundaries,
+  $$P_i = \frac{i}{N}.$$
+  Your chance of hitting the target equals your fraction of the way there — betting more per
+  round or aiming higher changes the odds proportionally, and expected profit is zero.
+
+  **Biased game ($p \ne q$).** Let $r = q/p$. Solving the difference equation,
+  $$P_i = \frac{1 - r^{\,i}}{1 - r^{\,N}}.$$
+
+  **Interpretation / risk of ruin.** Even with an edge ($p > \tfrac12$, so $r < 1$), ruin is
+  possible; as $N \to \infty$ the probability of *never* being ruined from stake $i$ is
+  $1 - r^{\,i}$, which is $<1$. With **no** edge or a negative edge ($r \ge 1$), ruin is
+  effectively certain over a long enough horizon. This is why **bet sizing** (see Kelly) and
+  bankroll limits matter as much as having a positive expectation.
+answer: "P_i solves P_i = pP_{i+1}+qP_{i−1} with P_0=0, P_N=1. Fair game: P_i = i/N. Biased (r=q/p): P_i = (1−r^i)/(1−r^N). Even with an edge, ruin has positive probability, so bet sizing matters."

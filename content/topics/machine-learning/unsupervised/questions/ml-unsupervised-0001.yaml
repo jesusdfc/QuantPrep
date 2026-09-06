@@ -1,0 +1,41 @@
+id: ml-unsupervised-0001
+title: PCA on a Return Covariance Matrix
+topic: machine-learning
+subtopic: unsupervised
+difficulty: medium
+tags: [pca, eigenvectors, covariance, dimensionality-reduction, factors]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You run PCA on the covariance matrix of returns for a basket of stocks. What do the
+  eigenvectors and eigenvalues represent, what does the first principal component usually
+  capture in equities, and what are the main pitfalls of using PCA factors?
+hints:
+  - PCA diagonalizes the covariance matrix into orthogonal directions of variance.
+  - Think about what a portfolio loading equally across all names represents.
+solution: |
+  **What PCA gives.** PCA eigendecomposes the covariance matrix
+  $\Sigma = V \Lambda V^\top$. Each **eigenvector** is a portfolio (a direction in return
+  space); its **eigenvalue** is the variance explained along that direction. Components are
+  **orthogonal** and ordered by variance, so a few can summarize most of the covariance
+  structure — a statistical factor model.
+
+  **First component in equities.** PC1 typically loads with the same sign across most names
+  and captures the **market/systematic factor** — the dominant common source of variance.
+  Later components often correspond to broad **sector/style** contrasts (long some groups,
+  short others).
+
+  **Pitfalls.**
+  - **Estimation error.** With $N$ assets and limited history, $\Sigma$ is noisy; small
+    eigenvalues (and their eigenvectors) are especially unstable. Random Matrix Theory shows
+    many small eigenvalues are indistinguishable from noise → clean/shrink $\Sigma$.
+  - **Instability / interpretability.** Eigenvectors can rotate over time and are hard to
+    interpret economically; sign/order can flip between windows.
+  - **Variance ≠ alpha.** PCA finds directions of **variance**, not of **return**; the
+    high-variance components are risk factors, not necessarily profitable signals.
+  - **Non-stationarity.** The covariance structure drifts, so PCA factors must be
+    re-estimated and monitored.
+
+  Used carefully (with shrinkage and out-of-sample checks), PCA is valuable for risk modeling
+  and dimensionality reduction, but PCA "factors" should not be assumed to predict returns.
+answer: "Eigenvectors are orthogonal portfolios; eigenvalues are the variance they explain. PC1 in equities is usually the market factor, later PCs sector/style contrasts. Pitfalls: noisy/unstable small eigenvalues (use shrinkage/RMT), rotation/interpretability, variance ≠ return, and non-stationarity."

@@ -5,7 +5,7 @@ export type TopicId =
   | "statistics"
   | "machine-learning"
   | "portfolio-construction"
-  | "research-methodology"
+  | "quantitative-research"
   | "sql";
 
 export interface QuestionSource {
@@ -44,8 +44,11 @@ export interface LessonMeta {
   id: string;
   title: string;
   topic: TopicId;
+  subtopic: string;
   order: number;
   summary?: string;
+  license?: string;
+  attribution?: string;
   prerequisites?: string[];
   resources?: Resource[];
 }

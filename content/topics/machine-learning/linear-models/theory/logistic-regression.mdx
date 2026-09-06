@@ -1,0 +1,37 @@
+---
+id: ml-logistic-regression
+title: Linear & Logistic Regression
+topic: machine-learning
+subtopic: linear-models
+order: 1
+summary: Modeling the log-odds of an event as a linear combination of predictors, mapped to a probability via the logistic function.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Logistic regression" (https://en.wikipedia.org/wiki/Logistic_regression), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Logistic regression", url: "https://en.wikipedia.org/wiki/Logistic_regression" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Logistic regression"](https://en.wikipedia.org/wiki/Logistic_regression),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Linear & Logistic Regression
+
+In statistics, a logistic model (or logit model) is a statistical model that models the
+log-odds of an event as a linear combination of one or more independent variables. In
+regression analysis, logistic regression (or logit regression) estimates the parameters of a
+logistic model (the coefficients in the linear or non linear combinations). In binary logistic
+regression there is a single binary dependent variable, coded by an indicator variable, where
+the two values are labeled "0" and "1", while the independent variables can each be a binary
+variable or a continuous variable (any real value). The corresponding probability of the value
+labeled "1" can vary between 0 and 1, hence the labeling; the function that converts log-odds
+to probability is the logistic function, hence the name.
+
+Binary variables are widely used in statistics to model the probability of a certain class or
+event taking place, such as the probability of a team winning, of a patient being healthy,
+etc., and the logistic model has been the most commonly used model for binary regression since
+about 1970. The logistic regression model itself simply models probability of output in terms
+of input and does not perform statistical classification (it is not a classifier), though it
+can be used to make a classifier, for instance by choosing a cutoff value and classifying
+inputs with probability greater than the cutoff as one class, below the cutoff as the other.

@@ -1,0 +1,36 @@
+id: stat-time-series-0002
+title: Stationarity, Unit Roots and Cointegration
+topic: statistics
+subtopic: time-series
+difficulty: medium
+tags: [stationarity, unit-root, cointegration, adf, pairs-trading]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Define (weak) stationarity and explain why it matters for modeling. What is a unit root,
+  and how does cointegration make a pairs trade statistically sound even when both legs are
+  non-stationary?
+hints:
+  - Stationarity = stable mean/variance/autocovariance over time.
+  - A linear combination of two I(1) series can be I(0).
+solution: |
+  **Weak stationarity.** A series is weakly (covariance) stationary if its **mean and
+  variance are constant** and its **autocovariance depends only on the lag**, not on time.
+  Most inference and forecasting tools assume stationarity; applied to non-stationary data
+  they give misleading estimates (e.g. spurious regressions) and unstable forecasts.
+
+  **Unit root.** A series with a unit root (integrated of order 1, **I(1)**, like a random
+  walk) is non-stationary: shocks are permanent and the variance grows without bound.
+  Differencing an I(1) series yields a stationary I(0) series. Test with **ADF** (null:
+  unit root) and **KPSS** (null: stationary) — using both guards against low power.
+
+  **Cointegration and pairs trading.** Two price series can each be I(1) (non-stationary) yet
+  a **linear combination** $y_t - \beta x_t$ is **I(0) stationary** — they are *cointegrated*
+  and share a common stochastic trend. That stationary spread is **mean-reverting**, which is
+  exactly what a pairs trade exploits: go long the cheap leg / short the rich leg when the
+  spread deviates, betting it reverts to its long-run mean.
+
+  **Caveats.** Cointegration relationships can **break** (regime change, structural break), so
+  monitor the spread's stationarity out-of-sample, re-estimate $\beta$, and set risk limits —
+  a formerly cointegrated pair that de-cointegrates can produce large, trending losses.
+answer: "Weak stationarity = constant mean/variance and lag-only autocovariance (needed for valid inference/forecasts). A unit root (I(1)) series is non-stationary; test via ADF/KPSS. Cointegration means a linear combo of two I(1) series is stationary/mean-reverting — the basis of pairs trading — but the relationship can break, so monitor it."

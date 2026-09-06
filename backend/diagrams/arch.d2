@@ -1,0 +1,47 @@
+direction: right
+
+content: "Authored content\nMDX + YAML" {
+  shape: page
+}
+
+cli: "CLI adapters"
+
+container: "BackendContainer\ncomposition root"
+
+application: "Application" {
+  validator: "ContentValidator"
+  build: "BuildContent"
+  indexer: "ContentIndexBuilder"
+}
+
+infrastructure: "Infrastructure" {
+  repository: "FileContentRepository"
+  schemas: "SchemaRepository"
+  writer: "JsonArtifactWriter"
+  frontmatter: "Front-matter parser"
+}
+
+frontend: "Frontend artifacts\nquestions.json\ntopics.json\nsearch-index.json" {
+  shape: page
+}
+
+research: "Local research corpus\n/data (gitignored)" {
+  shape: page
+}
+
+ingestion: "Manual ingestion\nPDF + web"
+
+cli -> container
+container -> application.validator
+container -> application.build
+application.build -> application.validator: "validate first"
+application.build -> application.indexer
+application.validator -> infrastructure.repository
+application.validator -> infrastructure.schemas
+application.indexer -> infrastructure.repository
+application.indexer -> infrastructure.writer
+infrastructure.repository -> infrastructure.frontmatter
+infrastructure.repository -> content
+infrastructure.schemas -> content
+infrastructure.writer -> frontend
+ingestion -> research

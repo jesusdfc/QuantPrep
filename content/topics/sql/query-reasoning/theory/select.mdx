@@ -1,0 +1,37 @@
+---
+id: sql-select
+title: Logical Query Processing — SELECT
+topic: sql
+subtopic: query-reasoning
+order: 1
+summary: SELECT specifies a result set declaratively, not how to compute it; the database's query optimizer chooses the execution plan.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Select (SQL)" (https://en.wikipedia.org/wiki/Select_(SQL)), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Select (SQL)", url: "https://en.wikipedia.org/wiki/Select_(SQL)" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Select (SQL)"](https://en.wikipedia.org/wiki/Select_(SQL)),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Logical Query Processing — SELECT
+
+A SELECT statement retrieves zero or more rows from one or more database tables or database
+views. In most applications, `SELECT` is the most commonly used data manipulation language
+(DML) command. As SQL is a declarative programming language, `SELECT` queries specify a result
+set, but do not specify how to calculate it. The database translates the query into a "query
+plan" which may vary between executions, database versions and database software. This
+functionality is called the "query optimizer" as it is responsible for finding the best
+possible execution plan for the query, within applicable constraints.
+
+The SELECT statement has many optional clauses:
+
+- `SELECT` list is the list of columns or SQL expressions to be returned by the query. This is
+  approximately the relational algebra projection operation.
+- `FROM` specifies the source tables (and joins) for the query.
+- `WHERE` filters rows before grouping.
+- `GROUP BY` groups rows sharing a property so aggregate functions can be applied.
+- `HAVING` filters groups produced by `GROUP BY`.
+- `ORDER BY` sorts the result rows.

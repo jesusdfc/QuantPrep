@@ -1,0 +1,38 @@
+id: pf-math-0002
+title: Diversification and the Limit of Portfolio Variance
+topic: portfolio-construction
+subtopic: math
+difficulty: medium
+tags: [portfolio-variance, diversification, correlation, covariance, systematic-risk]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  For an equal-weighted portfolio of n assets each with variance σ² and average pairwise
+  correlation ρ, derive the portfolio variance and its limit as n → ∞. What does this say
+  about diversifiable vs undiversifiable risk?
+hints:
+  - Split w'Σw into the diagonal (variance) and off-diagonal (covariance) terms.
+  - There are n variance terms and n(n−1) covariance terms.
+solution: |
+  **Setup.** Equal weights $w_i = 1/n$; each variance $\sigma^2$; average covariance between
+  distinct assets $\bar c = \rho\sigma^2$.
+
+  **Portfolio variance.**
+  $$\sigma_p^2 = \sum_i w_i^2 \sigma^2 + \sum_{i\neq j} w_i w_j \bar c
+  = n\cdot\frac{1}{n^2}\sigma^2 + n(n-1)\cdot\frac{1}{n^2}\rho\sigma^2.$$
+  Simplify:
+  $$\sigma_p^2 = \frac{\sigma^2}{n} + \frac{n-1}{n}\,\rho\sigma^2.$$
+
+  **Limit as $n \to \infty$.**
+  $$\sigma_p^2 \;\longrightarrow\; \rho\sigma^2.$$
+
+  **Interpretation.**
+  - The first term $\sigma^2/n$ is **diversifiable (idiosyncratic)** risk — it vanishes as you
+    add assets.
+  - The second term $\rho\sigma^2$ is **undiversifiable (systematic)** risk — the correlation
+    floor you cannot remove by adding more names.
+  - Diversification helps only up to the level set by **average correlation**. If $\rho = 0$,
+    risk $\to 0$ (pure idiosyncratic); if $\rho > 0$, you hit a floor. In crises correlations
+    spike toward 1, so $\rho\sigma^2$ rises and diversification "fails exactly when you need
+    it." This mirrors the Sharpe-diversification result $S\sqrt{n} \to S/\sqrt{\rho}$.
+answer: "σ_p² = σ²/n + (n−1)/n·ρσ² → ρσ² as n→∞. The σ²/n term is diversifiable idiosyncratic risk; ρσ² is undiversifiable systematic risk. Diversification only reduces risk to the floor set by average correlation, which spikes in crises."

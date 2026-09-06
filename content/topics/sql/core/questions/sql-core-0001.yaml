@@ -1,0 +1,45 @@
+id: sql-core-0001
+title: NULL Semantics and Three-Valued Logic
+topic: sql
+subtopic: core
+difficulty: easy
+tags: ["null", three-valued-logic, coalesce, not-in, filtering]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Explain how SQL treats NULL in comparisons and aggregates. Why does
+  `WHERE price <> 100` sometimes drop rows you expect to keep, and why can
+  `NOT IN (subquery)` return no rows unexpectedly? Show the safe patterns.
+hints:
+  - NULL means "unknown"; comparisons with NULL yield UNKNOWN, not TRUE/FALSE.
+  - Aggregates skip NULLs, but COUNT(*) does not.
+solution: |
+  SQL uses **three-valued logic**: TRUE, FALSE, and **UNKNOWN**. Any comparison with NULL
+  (`= NULL`, `<> NULL`, `> NULL`) evaluates to **UNKNOWN**, and `WHERE` keeps only rows that
+  are **TRUE**.
+
+  **`WHERE price <> 100` drops NULLs.** Rows where `price IS NULL` yield `NULL <> 100` =
+  UNKNOWN → excluded, even though an unknown price is arguably "not 100." Capture them
+  explicitly:
+
+  ```sql
+  WHERE price <> 100 OR price IS NULL
+  ```
+
+  **`NOT IN (subquery)` can return nothing.** If the subquery returns even one NULL,
+  `x NOT IN (..., NULL)` becomes `x <> ... AND x <> NULL`, and the `x <> NULL` = UNKNOWN
+  poisons the whole condition to UNKNOWN → no rows. Safe alternatives:
+
+  ```sql
+  -- Preferred: NOT EXISTS is NULL-safe
+  SELECT * FROM a WHERE NOT EXISTS (
+    SELECT 1 FROM b WHERE b.id = a.id
+  );
+  -- Or filter NULLs out of the IN list
+  ... WHERE x NOT IN (SELECT id FROM b WHERE id IS NOT NULL);
+  ```
+
+  **Aggregates.** `SUM/AVG/MIN/MAX/COUNT(col)` **ignore NULLs**; `COUNT(*)` counts rows
+  including NULLs. So `AVG(col)` divides by the count of non-NULLs — different from
+  `SUM(col)/COUNT(*)`. Use `COALESCE(col, 0)` when you want NULLs treated as a value.
+answer: "NULL = unknown; comparisons yield UNKNOWN and WHERE keeps only TRUE, so `<> 100` drops NULL rows (add `OR price IS NULL`), and `NOT IN` with a NULL in the list returns nothing (use NOT EXISTS or filter NULLs). Aggregates skip NULLs; COUNT(*) doesn't."

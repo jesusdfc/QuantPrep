@@ -1,0 +1,38 @@
+id: ml-evaluation-0002
+title: Precision/Recall vs ROC-AUC Under Class Imbalance
+topic: machine-learning
+subtopic: evaluation
+difficulty: medium
+tags: [roc-auc, precision-recall, class-imbalance, metrics, calibration]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You build a classifier to flag rare large-loss days (base rate 2%). Why can ROC-AUC look
+  great while the model is useless in practice, and when is the precision–recall curve more
+  informative? Note the role of probability calibration.
+hints:
+  - ROC uses the false-positive rate, whose denominator is the large negative class.
+  - Precision's denominator is the (small) number of positive predictions.
+solution: |
+  **Why ROC-AUC can mislead under imbalance.** ROC plots true-positive rate vs
+  **false-positive rate** = FP / (FP + TN). With 98% negatives, the TN count is huge, so even
+  many false positives barely move the FPR — ROC-AUC can look excellent while, among the days
+  you actually flag, almost none are real large-loss days.
+
+  **Precision–recall is more informative here.** Precision = TP / (TP + FP) has the number of
+  **positive predictions** in its denominator, so it directly reflects "when I raise an alarm,
+  how often am I right?" On rare-event problems, the PR curve (and average precision / PR-AUC)
+  exposes the false-positive burden that ROC hides. The PR baseline equals the base rate
+  (2%), making improvements interpretable.
+
+  **Practical choices.**
+  - Report **PR-AUC / precision at the operating recall** you can act on, not just ROC-AUC.
+  - Pick the **threshold** from the cost of false alarms vs missed losses, not the default
+    0.5.
+  - Consider metrics tied to the decision (e.g. cost-weighted loss).
+
+  **Calibration.** For sizing/risk, you need the predicted probabilities to be **calibrated**
+  (a "5% chance" really occurs ~5% of the time). AUC is threshold- and calibration-invariant,
+  so a high AUC says nothing about calibration; check a reliability diagram and apply
+  Platt/isotonic calibration if you will act on the probabilities.
+answer: "Under 2% base rate, ROC-AUC looks good because the huge TN count keeps FPR low despite many false positives; precision (TP/(TP+FP)) and PR-AUC reveal the false-alarm burden. Choose thresholds by cost, and calibrate probabilities (AUC is calibration-invariant) if you size on them."

@@ -1,0 +1,42 @@
+id: rm-non-stationarity-0001
+title: Regime Change and Concept Drift
+topic: quantitative-research
+subtopic: non-stationarity
+difficulty: medium
+tags: [non-stationarity, concept-drift, regime-change, robustness, decay]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A factor with a strong in-sample t-stat delivers negative returns out-of-sample. Give the
+  non-stationarity explanations for this, and describe how you would detect and adapt to a
+  changing relationship rather than assuming it is fixed.
+hints:
+  - The data-generating process itself can change (concept drift), not just your estimate.
+  - Alpha decay, crowding, and structural breaks are distinct mechanisms.
+solution: |
+  **Why in-sample success can flip out-of-sample (non-stationarity flavours).**
+  - **Structural break / regime change.** The relationship held under one regime (rates,
+    volatility, liquidity) and changed when the regime did.
+  - **Alpha decay & crowding.** Once discovered and traded, an edge is arbitraged away; the
+    sign can even invert as latecomers get run over.
+  - **Concept drift.** The joint distribution $P(y \mid X)$ evolves, so a model fit on old
+    data is miscalibrated for new data.
+  - (Rule out the non-drift alternatives too: overfitting/multiple testing and look-ahead can
+    masquerade as "decay.")
+
+  **Detection.**
+  - Track **rolling** performance and coefficients; watch for trend/level shifts and rising
+    dispersion.
+  - Formal **structural-break tests** (Chow, CUSUM) and drift detectors (e.g. monitoring the
+    error distribution).
+  - Compare performance **across regimes** (high/low vol, rate up/down) rather than pooling.
+
+  **Adaptation.**
+  - Use **walk-forward re-estimation** with rolling/expanding windows so parameters track the
+    present.
+  - Prefer **stable, economically-motivated** features over fragile fitted ones; regularize.
+  - Add **regime conditioning** or ensemble across regimes; size positions by recent
+    reliability.
+  - Set **decay/kill rules**: retire a signal when live performance degrades beyond a
+    pre-set threshold rather than hoping it "mean-reverts."
+answer: "Structural breaks, alpha decay/crowding, and concept drift can flip an in-sample edge (after ruling out overfitting/leakage); detect via rolling stats, break tests and per-regime analysis, and adapt with walk-forward re-estimation, robust economic features, regime conditioning, and decay/kill rules."

@@ -1,0 +1,35 @@
+id: rm-biases-0002
+title: Survivorship Bias in the S&P 500 Universe
+topic: quantitative-research
+subtopic: biases
+difficulty: medium
+tags: [survivorship-bias, universe-selection, point-in-time, backtest]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You backtest a strategy on the *current* S&P 500 constituents using data from 2000 to
+  today. Explain why the results are biased, in which direction, and how to construct the
+  universe correctly.
+hints:
+  - Which companies are guaranteed to be in "today's" index? Which are guaranteed absent?
+  - Think about delistings, bankruptcies, and index deletions.
+solution: |
+  **The bias.** Today's constituents are, by definition, the firms that **survived and
+  stayed large enough to remain in the index**. Firms that went bankrupt, were delisted, or
+  were dropped after poor performance are **excluded** from your 2000-onwards sample. You are
+  studying only the winners.
+
+  **Direction.** This **inflates** returns and understates risk: you never hold the losers
+  that cratered, so drawdowns, tail risk, and failure rates all look artificially benign.
+  Strategies that "buy the dip" or tilt toward distressed names look especially — and
+  falsely — good.
+
+  **Correct construction.** Use a **point-in-time universe**: for each rebalance date,
+  include exactly the constituents that were in the index *on that date*, using historical
+  index membership with add/delete dates. Keep delisted names with their delisting returns
+  (bankruptcy → large negative), so the survivor set at each point in history is faithful.
+
+  **Verify.** Compare survivorship-free vs current-constituent backtests; a big gap
+  quantifies the bias. Check that the number of names and their identities change over time,
+  and that known blow-ups (e.g. failed financials in 2008) actually appear in the sample.
+answer: "Using current constituents keeps only survivors, inflating returns and hiding tail risk; build a point-in-time universe with historical membership and delisting returns, and quantify the bias by comparison."

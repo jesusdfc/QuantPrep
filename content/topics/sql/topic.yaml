@@ -7,10 +7,12 @@ description: >
   row counts, aggregation, subqueries, and — most importantly — window functions and
   date arithmetic for returns, rolling stats, rankings, and streaks.
 subtopics:
-  - { id: core, name: Core SQL }
-  - { id: joins, name: Joins }
-  - { id: aggregation, name: Aggregation & Subqueries }
+  - { id: core, name: "Core SQL (SELECT, WHERE, CASE, NULL)" }
+  - { id: joins, name: "Joins & Row Multiplication" }
+  - { id: aggregation, name: "Aggregation (GROUP BY / HAVING)" }
+  - { id: subqueries, name: "Subqueries & CTEs" }
   - { id: windows, name: Window Functions }
-  - { id: dates, name: Dates & Time Series }
+  - { id: dates, name: "Dates & Rolling Windows" }
+  - { id: query-reasoning, name: "Logical Query Processing" }
 resources:
   - { name: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/", license: "link-only" }

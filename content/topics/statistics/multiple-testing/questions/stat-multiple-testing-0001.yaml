@@ -1,0 +1,37 @@
+id: stat-multiple-testing-0001
+title: The Factor Zoo and the False Discovery Rate
+topic: statistics
+subtopic: multiple-testing
+difficulty: hard
+tags: [multiple-testing, false-discovery-rate, benjamini-hochberg, factor-zoo, p-values]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Hundreds of "anomalies" have been published in the asset-pricing literature. Using the
+  language of multiple testing, explain why many are likely false, and show how the
+  Benjamini–Hochberg procedure decides which discoveries to keep.
+hints:
+  - Publication favors significant results, and thousands of factors have been tried.
+  - BH orders p-values and compares each to a rank-scaled threshold.
+solution: |
+  **Why many anomalies are false.** With thousands of factors tested (published and
+  unpublished) and journals favoring significant findings (**publication bias**), the pool of
+  "significant" results is heavily contaminated by **false positives**. At $\alpha = 0.05$,
+  even pure noise yields 5% spurious hits, and selecting/publishing the winners inflates this
+  further. A conventional t > 2 hurdle is therefore too lax.
+
+  **Benjamini–Hochberg (controls the FDR = expected fraction of discoveries that are false).**
+  1. Sort the $m$ p-values ascending: $p_{(1)} \le \dots \le p_{(m)}$.
+  2. Find the largest $k$ such that
+     $$p_{(k)} \le \frac{k}{m}\,q,$$
+     where $q$ is the target FDR (e.g. 0.10).
+  3. **Reject** (declare discoveries) all hypotheses with the $k$ smallest p-values.
+
+  Unlike **Bonferroni** ($p < \alpha/m$), which controls the chance of *any* false positive
+  and is very conservative, BH controls the *proportion* of false discoveries and retains far
+  more power — appropriate when you believe several factors are genuinely real.
+
+  **Finance-specific.** Harvey–Liu–Zhu apply exactly this multiple-testing lens to the factor
+  zoo, recommending higher t-hurdles (~3), and strategy research adds **Deflated Sharpe** and
+  **PBO** to discount the search itself.
+answer: "Thousands of tested factors plus publication bias mean the significant pool is full of false positives. BH sorts p-values and rejects the largest k with p_(k) ≤ (k/m)q, controlling the expected false-discovery fraction with more power than Bonferroni; finance adds higher t-hurdles and Deflated Sharpe/PBO."

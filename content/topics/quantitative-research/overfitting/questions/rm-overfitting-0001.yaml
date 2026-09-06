@@ -1,0 +1,33 @@
+id: rm-overfitting-0001
+title: In-Sample Star, Out-of-Sample Dud
+topic: quantitative-research
+subtopic: overfitting
+difficulty: medium
+tags: [overfitting, backtest-overfitting, out-of-sample, multiple-testing]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A factor has a high t-stat in-sample but negative performance out-of-sample. Give the
+  likely explanations, and describe how you would have detected the risk *before* trading it.
+hints:
+  - Was the in-sample result selected from many trials?
+  - Think about parameter tuning, regime change, and the difference between fitting and forecasting.
+solution: |
+  Likely explanations:
+  1. **Overfitting / selection.** The factor (or its parameters) was chosen because it looked
+     best in-sample among many candidates. The high t-stat reflects fitting noise, not signal —
+     classic backtest overfitting.
+  2. **Multiple testing not accounted for.** Many specifications were tried; the winner's
+     apparent significance is not deflated for the search.
+  3. **Non-stationarity / regime change.** A real in-sample relationship decayed or reversed
+     (crowding, structural change).
+  4. **Leakage** inflating the in-sample fit that cannot persist live.
+
+  **Detecting the risk beforehand:**
+  - Reserve a true **holdout** touched only once.
+  - Use **walk-forward** evaluation and report the degradation from in- to out-of-sample.
+  - Estimate the **Probability of Backtest Overfitting** (e.g. CSCV) and the **deflated
+    Sharpe ratio**, which correct for the number of trials.
+  - Stress the result: shuffled labels, placebo factors, alternative windows/universes. A
+    fragile edge is a warning sign.
+answer: "Overfitting/selection, unaccounted multiple testing, regime change, or leakage; detect with holdout, walk-forward, PBO, and deflated Sharpe"

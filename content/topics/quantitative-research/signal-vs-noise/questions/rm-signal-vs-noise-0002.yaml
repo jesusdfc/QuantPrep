@@ -1,0 +1,48 @@
+id: rm-signal-vs-noise-0002
+title: Sharpe 1.5 — Real Edge or Luck?
+topic: quantitative-research
+subtopic: signal-vs-noise
+difficulty: hard
+tags: [sharpe-ratio, signal-vs-noise, inference, robustness, case-study]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A backtest reports a Sharpe ratio of 1.5. Lay out how you would decide whether this
+  reflects a genuine edge or luck — covering statistical, economic, and robustness angles.
+hints:
+  - The standard error of a Sharpe depends on the number of independent periods.
+  - A single historical Sharpe is weak evidence; think about how it was produced.
+solution: |
+  Treat the number as a claim to be stress-tested, not a result.
+
+  **1. Statistical — could this Sharpe arise by chance?**
+  - For $T$ years, the standard error of an annualized Sharpe is roughly
+    $\mathrm{SE}(\widehat{SR}) \approx \sqrt{(1 + \tfrac{1}{2}SR^2)/T}$ (more with fat tails/
+    autocorrelation). Over 3 years, SR = 1.5 is **not** clearly distinguishable from 0; over
+    20 years it is far stronger. **Sample length dominates.**
+  - How many strategies were tried to find this one? Apply **Deflated Sharpe / PBO**.
+
+  **2. Economic — is it real money?**
+  - Net of spread, fees, and **market impact**? What **turnover** and **capacity**?
+  - Is the return just compensation for **known factor risk** (beta, size, value, momentum)?
+    Regress it out and see what alpha remains.
+
+  **3. Robustness — is it fragile?**
+  - Stable across **sub-periods, regimes, universes, and parameter choices**?
+  - Survives a small perturbation of the rules, or does it collapse (a sign of overfitting)?
+
+  **4. Out-of-sample / forward.**
+  - Untouched holdout, then **paper/live** — the only data that couldn't be optimized against.
+
+  ```text
+                 Sharpe = 1.5
+        ┌────────────┼────────────┐
+   statistical    economic     robustness
+   (SE, #trials) (costs, cap,  (periods, regimes,
+                  factor alpha) params) → OOS → live
+  ```
+
+  **Conclusion.** A lone historical Sharpe is weak evidence. Confidence comes from a long
+  effective sample, few trials, surviving costs, orthogonality to known risks, robustness,
+  and — above all — out-of-sample/live confirmation.
+answer: "A single backtest Sharpe is weak evidence: check its standard error given effective sample length and number of trials (Deflated Sharpe/PBO), net-of-cost economics and capacity, orthogonality to known factors, robustness across periods/regimes/params, then confirm out-of-sample and live."

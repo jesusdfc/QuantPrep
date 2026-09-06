@@ -1,0 +1,55 @@
+---
+id: qr-data-leakage
+title: Data Leakage (Look-Ahead Bias)
+topic: quantitative-research
+subtopic: look-ahead-leakage
+order: 1
+summary: Using information during training that would not be available at prediction time — the feature and training-example leakage modes that inflate backtest performance.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Leakage (machine learning)" (https://en.wikipedia.org/wiki/Leakage_(machine_learning)), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Leakage (machine learning)", url: "https://en.wikipedia.org/wiki/Leakage_(machine_learning)" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Leakage (machine learning)"](https://en.wikipedia.org/wiki/Leakage_(machine_learning)),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Data Leakage (Look-Ahead Bias)
+
+In statistics and machine learning, leakage (also known as data leakage or target leakage)
+refers to the use of information during model training that would not be available at
+prediction time. This results in overly optimistic performance estimates, as the model
+appears to perform better during evaluation than it actually would in a production
+environment.
+
+Leakage is often subtle and indirect, making it difficult to detect and eliminate. It can
+lead a statistician or modeler to select a suboptimal model, which may be outperformed by a
+leakage-free alternative.
+
+## Leakage modes
+
+Leakage can occur at multiple stages of the machine learning workflow. Broadly, its sources
+can be divided into two categories: those arising from features and those arising from
+training examples.
+
+### Feature leakage
+
+Feature or column-wise leakage is caused by the inclusion of columns which are one of the
+following: a duplicate label, a proxy for the label, or the label itself. These features,
+known as anachronisms, will not be available when the model is used for predictions, and
+result in leakage if included when the model is trained. For example, including a
+"MonthlySalary" column when predicting "YearlySalary"; or "MinutesLate" when predicting
+"IsLate".
+
+### Training example leakage
+
+Row-wise leakage is caused by improper sharing of information between rows of data. Types of
+row-wise leakage include time leakage (for example, splitting a time-series dataset randomly
+instead of putting newer data in the test set) and group leakage (not including a grouping
+split column, so that related rows appear in both training and test sets).
+
+A 2023 review found data leakage to be "a widespread failure mode in machine-learning
+(ML)-based science", having affected at least 294 academic publications across 17
+disciplines, and causing a potential reproducibility crisis.

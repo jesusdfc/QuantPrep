@@ -1,0 +1,30 @@
+---
+id: sql-join
+title: Joins & Row Multiplication
+topic: sql
+subtopic: joins
+order: 1
+summary: A JOIN combines columns from one or more tables into a new table, matching rows on shared fields — with INNER, LEFT/RIGHT/FULL OUTER, and CROSS variants.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Join (SQL)" (https://en.wikipedia.org/wiki/Join_(SQL)), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Join (SQL)", url: "https://en.wikipedia.org/wiki/Join_(SQL)" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Join (SQL)"](https://en.wikipedia.org/wiki/Join_(SQL)),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Joins & Row Multiplication
+
+A join clause in the Structured Query Language (SQL) combines columns from one or more tables
+into a new table. The operation corresponds to a join operation in relational algebra.
+Informally, a join stitches two tables and puts on the same row records with matching fields.
+There are several variants of `JOIN`: `INNER`, `LEFT OUTER`, `RIGHT OUTER`, `FULL OUTER`,
+`CROSS`, and others.
+
+As a special case, a table (base table, view, or joined table) can `JOIN` to itself in a
+self-join. A programmer writes a `JOIN` predicate to identify the records for joining. If the
+evaluated predicate is true, the combined record is then produced in the expected format, a
+record set or a temporary table.

@@ -1,0 +1,39 @@
+id: pf-performance-0001
+title: The Fundamental Law of Active Management
+topic: portfolio-construction
+subtopic: performance
+difficulty: medium
+tags: [information-ratio, information-coefficient, breadth, active-management, transfer-coefficient]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  State the Fundamental Law of Active Management and define each term. What does it imply
+  about a manager with a weak but very broad signal versus a strong but narrow one? What does
+  the transfer coefficient add?
+hints:
+  - IR ≈ IC × √breadth.
+  - Breadth is the number of independent bets per period.
+solution: |
+  **The law.**
+  $$\text{IR} \approx \text{IC} \times \sqrt{\text{breadth}}.$$
+  - **IR (Information Ratio):** active return per unit of active risk (tracking error) — the
+    key measure of skill delivery.
+  - **IC (Information Coefficient):** the correlation between forecasts and realized returns —
+    how good each individual bet is (skill per bet). Typical equity ICs are small (0.02–0.10).
+  - **Breadth:** the number of **independent** bets made per year.
+
+  **Weak-but-broad vs strong-but-narrow.** Because breadth enters as a **square root**, a tiny
+  IC applied across **many independent** bets can produce a high IR. A manager with IC = 0.03
+  over 1,000 independent bets ($\text{IR} \approx 0.03\sqrt{1000} \approx 0.95$) can beat one
+  with IC = 0.10 over just 20 bets ($0.10\sqrt{20} \approx 0.45$). This is the quantitative
+  case for **systematic breadth** and diversification of independent edges — and why
+  **independence** of bets is crucial (correlated bets reduce effective breadth, echoing the
+  √n diversification result).
+
+  **Transfer coefficient (refined law).**
+  $$\text{IR} \approx \text{TC} \times \text{IC} \times \sqrt{\text{breadth}}.$$
+  The **TC** measures how fully your forecasts are **implemented** as actual positions after
+  constraints, transaction costs, and risk limits (TC = correlation between ideal and actual
+  active weights). Real-world frictions push TC below 1, so even a good signal loses IR if
+  constraints prevent expressing it. It quantifies the gap between "paper" and "live" skill.
+answer: "IR ≈ IC·√breadth: IC = skill per bet (forecast–return correlation), breadth = number of independent bets. Because of the √, a small IC over many independent bets beats a large IC over few. The transfer coefficient (IR ≈ TC·IC·√breadth) captures how much of the signal survives constraints/costs."

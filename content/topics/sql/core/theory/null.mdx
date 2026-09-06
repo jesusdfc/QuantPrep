@@ -1,0 +1,32 @@
+---
+id: sql-null
+title: Core SQL — NULL & Three-Valued Logic
+topic: sql
+subtopic: core
+order: 1
+summary: NULL is a special marker for a missing/unknown value — not zero and not an empty string — and it drives SQL's three-valued logic.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Null (SQL)" (https://en.wikipedia.org/wiki/Null_(SQL)), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Null (SQL)", url: "https://en.wikipedia.org/wiki/Null_(SQL)" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Null (SQL)"](https://en.wikipedia.org/wiki/Null_(SQL)),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Core SQL — NULL & Three-Valued Logic
+
+In the SQL database query language, null or NULL is a special marker used to indicate that a
+data value does not exist in the database. Introduced by the creator of the relational database
+model, E. F. Codd, SQL null serves to fulfill the requirement that all true relational database
+management systems (RDBMS) support a representation of "missing information and inapplicable
+information". In SQL, `NULL` is a reserved word used to identify this marker.
+
+A null should not be confused with a value of 0. A null indicates a lack of a value, which is
+not the same as a zero value. For example, in the question "How many books does Adam own?", the
+answer may be "zero" (the number of books is known to be zero) or "null" (the number of books
+is not known). In a database table, the column reporting this answer would start with no value
+(marked by null), and it would not be updated with the value zero until it is ascertained that
+Adam owns no books.

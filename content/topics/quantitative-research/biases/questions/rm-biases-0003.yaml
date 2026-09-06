@@ -1,0 +1,38 @@
+id: rm-biases-0003
+title: Is Your Sample Representative? Sampling vs Selection Bias
+topic: quantitative-research
+subtopic: biases
+difficulty: medium
+tags: [sampling-bias, selection-bias, representativeness, generalization]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Distinguish sampling bias from selection bias with a concrete quant example of each, and
+  explain how each threatens the conclusion "this signal generalizes."
+hints:
+  - Sampling bias is about how observations enter the sample; selection bias is about
+    conditioning on an outcome-related variable.
+  - 'Contrast the population you want to conclude about vs the one you actually measured.'
+solution: |
+  Both break the link between the sample you measured and the population you want to
+  conclude about, but through different mechanisms.
+
+  **Sampling bias** — the *process that generates the sample* is not representative of the
+  target population.
+  - *Example:* backtesting a US-equities signal only on large-cap, highly liquid names and
+    claiming it works "for equities." Small/illiquid names — where microstructure and costs
+    differ — are systematically under-sampled, so the estimate doesn't generalize.
+
+  **Selection bias** — you **condition on a variable related to the outcome**, distorting the
+  relationship.
+  - *Example:* studying only stocks that *have* a full 10-year history (survivorship is a
+    special case), or analysing only trades that were actually executed (ignoring orders that
+    were cancelled because the market moved away) — you condition on execution, which is
+    correlated with the very returns you measure.
+
+  **Why generalization fails.** In both cases the in-sample estimate is a consistent
+  estimate of the *wrong* quantity: the conditional distribution given how data entered the
+  sample, not the unconditional population effect. Fixes: define the target population first,
+  sample (or reweight) to match it, avoid conditioning on post-treatment/outcome variables,
+  and test explicitly on the under-represented slices (size, liquidity, region, regime).
+answer: "Sampling bias = unrepresentative sampling process (e.g. only liquid large-caps); selection bias = conditioning on an outcome-related variable (e.g. only executed trades or full-history names). Both estimate the wrong population quantity, so define the target population and test on under-represented slices."

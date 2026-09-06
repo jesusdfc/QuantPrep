@@ -1,0 +1,39 @@
+---
+id: qr-robust-statistics
+title: Robust Statistics
+topic: quantitative-research
+subtopic: robustness
+order: 1
+summary: Statistics that keep their properties even when distributional assumptions are wrong — methods that are not unduly affected by outliers or small departures from a model.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Robust statistics" (https://en.wikipedia.org/wiki/Robust_statistics), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Robust statistics", url: "https://en.wikipedia.org/wiki/Robust_statistics" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Robust statistics"](https://en.wikipedia.org/wiki/Robust_statistics),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Robust Statistics
+
+Robust statistics are statistics that maintain their properties even if the underlying
+distributional assumptions are incorrect. Robust statistical methods have been developed for
+many common problems, such as estimating location, scale, and regression parameters. One
+motivation is to produce statistical methods that are not unduly affected by outliers. Another
+motivation is to provide methods with good performance when there are small departures from a
+parametric distribution. For example, robust methods work well for mixtures of two normal
+distributions with different standard deviations; under this model, non-robust methods like a
+t-test work poorly.
+
+## Introduction
+
+Robust statistics seek to provide methods that emulate popular statistical methods, but are
+not unduly affected by outliers or other small departures from model assumptions. In
+statistics, classical estimation methods rely heavily on assumptions that are often not met
+in practice. In particular, it is often assumed that the data errors are normally
+distributed, at least approximately, or that the central limit theorem can be relied on to
+produce normally distributed estimates. Unfortunately, when there are outliers in the data,
+classical estimators often have very poor performance, when judged using the breakdown point
+and the influence function.

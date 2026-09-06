@@ -1,0 +1,50 @@
+id: sql-query-reasoning-0001
+title: Logical Query Processing Order
+topic: sql
+subtopic: query-reasoning
+difficulty: easy
+tags: [logical-processing, where-vs-having, alias-scope, window-functions, order-of-evaluation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Why can't you reference a SELECT alias in the WHERE clause, and why must you use HAVING
+  (not WHERE) to filter on an aggregate? Lay out SQL's logical processing order and explain
+  where window functions and DISTINCT fit.
+hints:
+  - The order you write a query is not the order the database evaluates it.
+  - Aliases and aggregates are produced by SELECT, which runs late.
+solution: |
+  **Logical processing order** (independent of the written order):
+
+  ```text
+  1. FROM / JOIN        -- assemble and combine tables
+  2. WHERE              -- filter rows (no aggregates, no SELECT aliases yet)
+  3. GROUP BY           -- form groups
+  4. HAVING             -- filter groups (can use aggregates)
+  5. SELECT             -- compute expressions, aliases, window functions
+  6. DISTINCT           -- de-duplicate the SELECT output
+  7. ORDER BY           -- sort (may use SELECT aliases)
+  8. LIMIT / OFFSET     -- take the top rows
+  ```
+
+  **Why no SELECT alias in WHERE.** `WHERE` runs at step 2, but aliases are created by
+  `SELECT` at step 5 — the alias doesn't exist yet. Repeat the expression, or wrap the query
+  in a subquery/CTE and filter in the outer query.
+
+  **Why HAVING for aggregates.** Aggregates are computed for groups formed at steps 3–4;
+  `WHERE` (step 2) runs **before** grouping, so it can't see them. Use `WHERE` to filter
+  **rows before** aggregation and `HAVING` to filter **groups after**:
+
+  ```sql
+  SELECT sector, AVG(ret) AS avg_ret
+  FROM returns
+  WHERE dt = DATE '2024-01-02'    -- pre-aggregation row filter
+  GROUP BY sector
+  HAVING AVG(ret) > 0;            -- post-aggregation group filter
+  ```
+
+  **Window functions and DISTINCT.** Window functions are evaluated in **SELECT** (step 5),
+  *after* WHERE/GROUP BY/HAVING — so you cannot filter on a window result in `WHERE`; push the
+  window into a subquery/CTE and filter outside. `DISTINCT` (step 6) runs after SELECT, and
+  `ORDER BY` (step 7) can therefore reference SELECT aliases.
+answer: "SQL evaluates FROM→WHERE→GROUP BY→HAVING→SELECT→DISTINCT→ORDER BY→LIMIT. WHERE runs before SELECT, so it can't see aliases (repeat the expr or use a CTE) or aggregates (use HAVING, which runs after grouping). Window functions compute in SELECT, so filter them in an outer query; ORDER BY (late) can use aliases."

@@ -1,0 +1,39 @@
+id: ml-supervised-basics-0001
+title: Framing a Return Prediction Problem
+topic: machine-learning
+subtopic: supervised-basics
+difficulty: easy
+tags: [supervised-learning, classification, regression, labeling, framing]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You want to "predict stock returns." Contrast framing this as a regression vs a
+  classification problem, and discuss how you would define the label. What are the trade-offs,
+  and why is labeling often the hardest part in finance?
+hints:
+  - Regression predicts a magnitude; classification predicts a category (e.g. up/down).
+  - The label choice encodes horizon, thresholds, and risk adjustment.
+solution: |
+  **Regression** predicts a continuous target (e.g. next-period return). It preserves
+  magnitude information but is sensitive to outliers and to the extremely low signal-to-noise
+  of returns; $R^2$ near zero is normal even for useful signals.
+
+  **Classification** predicts a category — e.g. up/down, or top vs bottom quantile. It is
+  often more robust because it discards noisy magnitude and focuses on **direction/ranking**,
+  which is what many trading rules need. Downsides: you lose sizing information and must choose
+  thresholds.
+
+  **Defining the label — the hard part.**
+  - **Horizon:** next day, week, month? Must match the strategy and cost structure.
+  - **Reference:** raw return, market-excess, or factor-neutral (residual) return? Predicting
+    raw return often just predicts market beta.
+  - **Thresholds:** for classification, fixed bands vs cross-sectional quantiles.
+  - **Risk adjustment / path:** a fixed-horizon label ignores the path; **triple-barrier**
+    labeling (profit-take, stop-loss, time limit) captures realistic exits.
+  - **Point-in-time & alignment:** the label window must start strictly after the feature is
+    known (no look-ahead), and overlapping labels create dependence that must be handled in CV.
+
+  Because the label *defines what you're actually predicting*, a sloppy label silently bakes in
+  look-ahead, factor exposure, or a target no one can trade — which is why labeling deserves
+  more care than model choice.
+answer: "Regression keeps magnitude (but very low SNR); classification (up/down or quantiles) is more robust for direction/ranking but drops sizing. Labeling is hardest: horizon, raw vs excess/factor-neutral reference, thresholds, path-aware (triple-barrier) exits, and point-in-time alignment to avoid look-ahead."

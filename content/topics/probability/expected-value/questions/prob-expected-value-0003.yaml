@@ -1,0 +1,39 @@
+id: prob-expected-value-0003
+title: Expected Flips Until Two Consecutive Heads
+topic: probability
+subtopic: expected-value
+difficulty: medium
+tags: [expected-value, markov, first-step-analysis, recurrence, coins]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You flip a fair coin until you see two consecutive heads (HH). What is the expected number
+  of flips? Solve it with first-step analysis, then state the answer for a biased coin with
+  P(heads) = p.
+hints:
+  - Define states by your current progress toward HH (0 heads, 1 head).
+  - Set up equations for the expected additional flips from each state.
+solution: |
+  Use **first-step analysis** with states by current streak of heads.
+
+  Let $E_0$ = expected flips to reach HH from a fresh start (streak 0), and $E_1$ = expected
+  flips when the last flip was a head (streak 1). Each flip costs 1.
+
+  **From state 0** (fair coin, $p=\tfrac12$): with prob ½ we get H → go to state 1; with prob
+  ½ we get T → stay in state 0:
+  $$E_0 = 1 + \tfrac12 E_1 + \tfrac12 E_0.$$
+
+  **From state 1:** with prob ½ we get H → done; with prob ½ we get T → back to state 0:
+  $$E_1 = 1 + \tfrac12 (0) + \tfrac12 E_0.$$
+
+  Solve: from the first, $\tfrac12 E_0 = 1 + \tfrac12 E_1 \Rightarrow E_0 = 2 + E_1$.
+  Substitute into $E_1 = 1 + \tfrac12 E_0 = 1 + \tfrac12(2 + E_1) = 2 + \tfrac12 E_1$, so
+  $\tfrac12 E_1 = 2 \Rightarrow E_1 = 4$ and $E_0 = 6$.
+
+  **Answer:** **6 flips** for a fair coin.
+
+  **Biased coin, general $p$:** the standard result is
+  $$E_0 = \frac{1+p}{p^2}.$$
+  Check: $p=\tfrac12$ gives $(1.5)/(0.25) = 6$. ✓ (As $p\to0$ it blows up like $1/p^2$, as
+  expected for a rare event.)
+answer: "6 flips for a fair coin (E0 = 2 + E1, E1 = 1 + ½E0 ⇒ E1=4, E0=6). For a biased coin, E = (1+p)/p²."

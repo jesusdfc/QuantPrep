@@ -1,0 +1,46 @@
+id: sql-joins-0001
+title: Join Fan-Out — Watch the Row Count
+topic: sql
+subtopic: joins
+difficulty: medium
+tags: [joins, fan-out, cardinality, double-counting, aggregation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You join a `trades` table to a `dividends` table on `symbol` and suddenly your total traded
+  notional doubles. Explain what happened in terms of join cardinality, and how to compute the
+  correct total. What general habit prevents this class of bug?
+hints:
+  - What is the relationship (one-to-one, one-to-many, many-to-many) on the join key?
+  - Aggregating after a fan-out double-counts the left rows.
+solution: |
+  **What happened: fan-out.** Joining on `symbol` is **many-to-many** if a symbol has multiple
+  trades *and* multiple dividends. Each trade row is duplicated once per matching dividend row,
+  so summing notional afterward **double-counts** (or worse) the trades. The join multiplied
+  rows: `rows_out ≈ rows_left × matches_per_key`.
+
+  **Diagnose.** Check cardinality on the key before trusting an aggregate:
+
+  ```sql
+  SELECT symbol, COUNT(*) FROM dividends GROUP BY symbol HAVING COUNT(*) > 1;
+  ```
+
+  **Fix — aggregate to the right grain before (or without) joining.** Compute the trade total
+  independently of the dividends join:
+
+  ```sql
+  SELECT SUM(quantity * price) AS notional
+  FROM trades;                    -- no join needed for this metric
+
+  -- If you must combine, pre-aggregate each side to one row per symbol first:
+  WITH t AS (SELECT symbol, SUM(quantity*price) AS notional FROM trades GROUP BY symbol),
+       d AS (SELECT symbol, SUM(amount)          AS divs     FROM dividends GROUP BY symbol)
+  SELECT t.symbol, t.notional, d.divs
+  FROM t LEFT JOIN d USING (symbol);
+  ```
+
+  **Preventive habit.** Always know the **grain** (one row per what?) of each table and of the
+  result. Before aggregating across a join, confirm the join is one-to-one at the grain you're
+  summing, or **pre-aggregate** each side to a common grain. When in doubt, `COUNT(*)` before
+  and after the join.
+answer: "A many-to-many join on symbol fans out (each trade duplicated per matching dividend), so post-join SUM double-counts. Compute the trade total without the join, or pre-aggregate each side to one row per symbol before joining. Habit: always track each table's grain and check row counts around joins."

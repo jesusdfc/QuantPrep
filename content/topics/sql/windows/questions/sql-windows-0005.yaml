@@ -1,0 +1,51 @@
+id: sql-windows-0005
+title: Longest Streak of Consecutive Positive Days
+topic: sql
+subtopic: windows
+difficulty: hard
+tags: [gaps-and-islands, window-functions, row-number, streaks, grouping]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `returns(symbol, dt, ret)`, find, for each symbol, the length of its longest run of
+  consecutive trading days with `ret > 0`. Explain the "gaps and islands" technique.
+hints:
+  - Number all rows and number only the positive rows, both ordered by date.
+  - The difference between those two row numbers is constant within a consecutive run.
+solution: |
+  This is the classic **gaps-and-islands** problem: identify maximal consecutive runs
+  ("islands") separated by breaks ("gaps").
+
+  **Key trick.** Within a partition ordered by date, take two row numberings:
+  - `rn_all` = ROW_NUMBER over all rows,
+  - `rn_pos` = ROW_NUMBER over only the positive-return rows.
+
+  For rows inside the *same* consecutive positive run, `rn_all - rn_pos` is **constant** (each
+  step advances both by 1). When a non-positive day interrupts, `rn_all` advances but `rn_pos`
+  does not, so the difference **changes** — giving a stable group id per run.
+
+  ```sql
+  WITH islands AS (
+    SELECT symbol, dt, ret,
+           ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY dt)
+           - ROW_NUMBER() OVER (
+               PARTITION BY symbol, CASE WHEN ret > 0 THEN 1 ELSE 0 END
+               ORDER BY dt
+             ) AS grp
+    FROM returns
+  )
+  SELECT symbol, MAX(run_len) AS longest_positive_streak
+  FROM (
+    SELECT symbol, grp, COUNT(*) AS run_len
+    FROM islands
+    WHERE ret > 0
+    GROUP BY symbol, grp
+  ) t
+  GROUP BY symbol;
+  ```
+
+  Here `grp = rn_all - rn_within_positive` is constant along each positive island (both
+  numberings advance together only while `ret > 0`); grouping by `(symbol, grp)` and counting
+  gives each run's length, and the per-symbol `MAX` is the longest streak. The same
+  difference-of-row-numbers pattern solves consecutive-date and duplicate-detection problems.
+answer: "Gaps-and-islands: within each symbol ordered by date, grp = ROW_NUMBER() over all rows − ROW_NUMBER() over the positive-only sequence is constant along a consecutive positive run. Group by (symbol, grp) filtering ret>0, COUNT each run, then take MAX per symbol for the longest streak."

@@ -1,0 +1,37 @@
+id: ml-linear-models-0001
+title: Logistic Regression, MLE and Gradient Descent
+topic: machine-learning
+subtopic: linear-models
+difficulty: medium
+tags: [logistic-regression, maximum-likelihood, gradient-descent, log-loss, calibration]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  For a binary up/down label, write the logistic regression model and its loss. Explain why
+  it is fit by maximum likelihood rather than least squares, and give the gradient used by
+  gradient descent. Why is logistic regression a sensible baseline in quant research?
+hints:
+  - The model outputs a probability via the sigmoid of a linear score.
+  - MLE of the Bernoulli likelihood is equivalent to minimizing log-loss (cross-entropy).
+solution: |
+  **Model.** With features $x$ and weights $\beta$, the linear score is $z = \beta^\top x$ and
+  $$p = \sigma(z) = \frac{1}{1+e^{-z}}, \qquad y \in \{0,1\}.$$
+
+  **Loss (why MLE, not least squares).** Modeling $y \sim \text{Bernoulli}(p)$, the
+  log-likelihood is $\sum_i [y_i \log p_i + (1-y_i)\log(1-p_i)]$. Maximizing it is equivalent
+  to minimizing the **log-loss / cross-entropy**. Squared error on a 0/1 target is
+  non-convex through the sigmoid and penalizes confident-correct predictions oddly; the MLE
+  log-loss is **convex** in $\beta$, has a probabilistic interpretation, and yields calibrated
+  probabilities.
+
+  **Gradient.** Remarkably clean:
+  $$\nabla_\beta \, \text{loss} = \sum_i (p_i - y_i)\, x_i,$$
+  i.e. the feature-weighted sum of residuals (predicted minus actual). Gradient descent
+  updates $\beta \leftarrow \beta - \eta \sum_i (p_i - y_i)x_i$; add an L2 term $\lambda\beta$
+  for ridge-penalized logistic regression.
+
+  **Why a good baseline.** It is linear, convex, fast, **interpretable** (signs/magnitudes of
+  coefficients), outputs **probabilities** you can size on, and regularizes well. In the
+  low-SNR world of returns, a simple, well-regularized logistic/linear model is often hard to
+  beat and provides an honest benchmark before reaching for complex models.
+answer: "p = σ(β·x); fit by MLE of the Bernoulli likelihood = minimizing convex log-loss (least squares is non-convex/ill-suited for 0/1). Gradient = Σ(p_i − y_i)x_i. It's a strong baseline: convex, fast, interpretable, probabilistic, and regularizable — hard to beat in low-SNR settings."

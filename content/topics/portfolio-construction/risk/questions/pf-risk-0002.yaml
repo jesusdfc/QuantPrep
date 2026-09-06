@@ -1,0 +1,41 @@
+id: pf-risk-0002
+title: Marginal Risk Contributions and Risk Parity
+topic: portfolio-construction
+subtopic: risk
+difficulty: hard
+tags: [risk-contribution, marginal-risk, risk-parity, euler, diversification]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Define the marginal and total contribution to risk of an asset in a portfolio. Show that
+  the contributions sum to total volatility, and state the condition that defines a
+  risk-parity portfolio. Why can an "equal-weight" portfolio be far from risk-balanced?
+hints:
+  - Portfolio variance is w'Σw; differentiate volatility with respect to weights.
+  - Euler's theorem lets homogeneous-degree-1 σ_p be split additively.
+solution: |
+  **Setup.** Portfolio volatility $\sigma_p = \sqrt{w^\top \Sigma w}$.
+
+  **Marginal contribution to risk (MCR).** The sensitivity of portfolio vol to weight $i$:
+  $$\text{MCR}_i = \frac{\partial \sigma_p}{\partial w_i} = \frac{(\Sigma w)_i}{\sigma_p}.$$
+
+  **Total (component) contribution to risk (CTR).** Weight times marginal:
+  $$\text{CTR}_i = w_i \frac{(\Sigma w)_i}{\sigma_p}.$$
+
+  **They sum to total risk.** Since $\sigma_p$ is homogeneous of degree 1 in $w$, **Euler's
+  theorem** gives
+  $$\sum_i \text{CTR}_i = \sum_i w_i \frac{(\Sigma w)_i}{\sigma_p}
+  = \frac{w^\top \Sigma w}{\sigma_p} = \sigma_p.$$
+  So each asset's CTR is its share of total volatility, and the shares add to 100%.
+
+  **Risk parity.** Choose weights so **every asset contributes equally**:
+  $$\text{CTR}_i = \frac{\sigma_p}{N} \quad \text{for all } i.$$
+  Equivalently $w_i (\Sigma w)_i$ is equal across assets. This requires solving for weights
+  (no closed form in general); for uncorrelated assets it reduces to **inverse-volatility**
+  weighting.
+
+  **Why equal-weight ≠ risk-balanced.** Equal *dollar* weights ignore volatility and
+  correlation, so a high-volatility or highly-correlated asset dominates risk. E.g. in a
+  60/40 stock/bond portfolio, equities can drive ~90% of the risk despite 60% of the capital.
+  Risk parity rebalances the **risk budget**, not the dollar budget.
+answer: "MCR_i = (Σw)_i/σ_p, CTR_i = w_i(Σw)_i/σ_p; by Euler's theorem ΣCTR_i = σ_p. Risk parity sets CTR_i = σ_p/N (equal risk shares), reducing to inverse-vol for uncorrelated assets. Equal dollar weights ignore vol/correlation, so risky/correlated assets dominate the risk."

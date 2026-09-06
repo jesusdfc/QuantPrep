@@ -1,0 +1,40 @@
+id: stat-rigor-0002
+title: Are 2,500 Daily Observations 2,500 Data Points?
+topic: statistics
+subtopic: rigor
+difficulty: medium
+tags: [effective-sample-size, independence, autocorrelation, overlapping-data, inference]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You have 10 years of daily returns (~2,500 observations) and want to test a monthly
+  momentum signal. Can you treat these as 2,500 independent observations? Explain the concept
+  of effective sample size.
+hints:
+  - Independence, not row count, determines the information content.
+  - Overlapping windows and autocorrelation reduce independent information.
+solution: |
+  **No — row count is not information content.** Classical inference assumes independent
+  observations; the standard error scales as $1/\sqrt{n}$ **only for independent** data. When
+  observations are correlated, the **effective sample size** $n_{\text{eff}}$ is much smaller
+  than $n$.
+
+  **Why it's smaller here.**
+  - **Overlapping windows.** A monthly signal computed daily uses windows that overlap ~95%
+    day to day, so consecutive observations are highly correlated — nearly the same
+    information repeated.
+  - **Autocorrelation & volatility clustering.** Returns are serially dependent, especially in
+    volatility.
+
+  **Effective sample size.** For an AR(1)-like correlation $\rho$ between adjacent
+  observations, a rough approximation is
+  $$n_{\text{eff}} \approx n \,\frac{1-\rho}{1+\rho}.$$
+  With strong positive autocorrelation, $n_{\text{eff}} \ll n$. Treating 2,500 overlapping
+  daily observations as independent **understates standard errors** and **inflates t-stats**,
+  manufacturing false significance.
+
+  **What to do.**
+  - Use **non-overlapping** monthly observations (~120), or
+  - Keep daily data but use **HAC/Newey–West** or **block-bootstrap** inference that accounts
+    for the dependence, and report the number of **independent** periods, not raw rows.
+answer: "No: overlapping windows and autocorrelation make the effective sample far smaller than 2,500 (≈ n(1−ρ)/(1+ρ)). Treating rows as independent understates SEs and inflates t-stats; use non-overlapping obs or HAC/block-bootstrap inference."

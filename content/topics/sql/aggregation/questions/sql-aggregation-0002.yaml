@@ -1,0 +1,43 @@
+id: sql-aggregation-0002
+title: Top 3 Stocks by Return in Each Month
+topic: sql
+subtopic: aggregation
+difficulty: medium
+tags: [window-functions, ranking, row-number, partition-by, top-n-per-group]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `monthly(symbol, month, ret)`, return the top 3 stocks by return within each month.
+  Show the window-function solution and explain the difference between ROW_NUMBER, RANK, and
+  DENSE_RANK for handling ties.
+hints:
+  - Rank within each month partition, ordered by return descending.
+  - The three ranking functions differ in how they number ties.
+solution: |
+  **Solution.** Rank within each month and keep the top 3:
+
+  ```sql
+  WITH ranked AS (
+    SELECT symbol, month, ret,
+           ROW_NUMBER() OVER (PARTITION BY month ORDER BY ret DESC) AS rn
+    FROM monthly
+  )
+  SELECT symbol, month, ret
+  FROM ranked
+  WHERE rn <= 3
+  ORDER BY month, ret DESC;
+  ```
+
+  **ROW_NUMBER vs RANK vs DENSE_RANK** (all `OVER (PARTITION BY month ORDER BY ret DESC)`):
+  - **ROW_NUMBER** — unique 1,2,3,4,... even for ties; ties broken arbitrarily. Using it with
+    `rn <= 3` returns **exactly 3** rows per month (a specific tie is dropped non-
+    deterministically unless you add tiebreakers to `ORDER BY`).
+  - **RANK** — ties share a rank and it **skips**: 1,1,3,... So `rank <= 3` could return more
+    than 3 rows if there are ties at the top, and would exclude rank-3 if two firms tie at 1.
+  - **DENSE_RANK** — ties share a rank with **no gaps**: 1,1,2,3,... `dense_rank <= 3` returns
+    all stocks in the top 3 distinct return values (possibly more than 3 rows).
+
+  **Which to use.** If you must return exactly 3 rows, use **ROW_NUMBER** (add deterministic
+  tiebreakers, e.g. `ORDER BY ret DESC, symbol`). If you want "all stocks tied for the top 3
+  places," use **RANK**; for "top 3 distinct return levels," use **DENSE_RANK**.
+answer: "Use ROW_NUMBER() OVER (PARTITION BY month ORDER BY ret DESC) and filter rn ≤ 3. ROW_NUMBER gives unique 1,2,3,... (exactly 3 rows, arbitrary tie-break); RANK shares and skips (1,1,3 — may exceed 3 on ties); DENSE_RANK shares without gaps (1,1,2 — top-3 distinct values). Add tiebreakers for determinism."

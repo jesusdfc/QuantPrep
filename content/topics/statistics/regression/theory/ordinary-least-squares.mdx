@@ -1,0 +1,39 @@
+---
+id: stats-ordinary-least-squares
+title: Regression & Ordinary Least Squares
+topic: statistics
+subtopic: regression
+order: 1
+summary: Choosing linear-regression parameters by minimizing the sum of squared residuals, and the Gauss–Markov conditions under which OLS is the best linear unbiased estimator.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Ordinary least squares" (https://en.wikipedia.org/wiki/Ordinary_least_squares), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Ordinary least squares", url: "https://en.wikipedia.org/wiki/Ordinary_least_squares" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Ordinary least squares"](https://en.wikipedia.org/wiki/Ordinary_least_squares),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Regression & Ordinary Least Squares
+
+In statistics, ordinary least squares (OLS) is a type of linear least squares method for
+choosing the unknown parameters in a linear regression model by the principle of least
+squares: minimizing the sum of the squares of the differences between the observed dependent
+variable (values of the variable being observed) in the input dataset and the output of the
+(linear) function of the independent variable. Some sources consider OLS to be linear
+regression.
+
+Geometrically, this is seen as the sum of the squared distances, parallel to the axis of the
+dependent variable, between each data point in the set and the corresponding point on the
+regression surface — the smaller the differences, the better the model fits the data. The
+resulting estimator can be expressed by a simple formula, especially in the case of a simple
+linear regression, in which there is a single regressor on the right side of the regression
+equation.
+
+The OLS estimator is — by the Gauss–Markov theorem — optimal in the class of linear unbiased
+estimators when the errors are homoscedastic and serially uncorrelated. Under these
+conditions, the method of OLS provides minimum-variance mean-unbiased estimation when the
+errors have finite variances. Under the additional assumption that the errors are normally
+distributed with zero mean, OLS is the maximum likelihood estimator.

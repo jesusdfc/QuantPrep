@@ -1,0 +1,38 @@
+id: rm-significance-0001
+title: p = 0.001 Does Not Mean Profitable
+topic: quantitative-research
+subtopic: significance
+difficulty: medium
+tags: [statistical-significance, economic-significance, effect-size, power, costs]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Your factor's return has a p-value of 0.001. A colleague concludes the strategy is
+  profitable. Explain the difference between statistical and economic significance, and what
+  else you need to know before trading it.
+hints:
+  - A tiny p-value can come from a tiny effect measured over a huge sample.
+  - Profitability is about effect size net of costs, not about rejecting a null.
+solution: |
+  **Statistical significance** answers: "is the effect distinguishable from zero?" With a
+  large sample, even an **economically trivial** effect produces a tiny p-value, because the
+  standard error shrinks with $\sqrt{n}$. p = 0.001 says the mean is *probably not exactly
+  zero* — nothing about its size.
+
+  **Economic significance** answers: "is the effect **big enough to matter** after real-world
+  frictions?" What you actually need:
+  - **Effect size:** the magnitude of the spread/return and a **confidence interval**, not
+    just the p-value.
+  - **Net of costs:** does it survive spread, fees, market impact, and turnover?
+  - **Capacity:** can you deploy meaningful capital before impact kills it?
+  - **Risk-adjusted:** Sharpe/IR, drawdown, factor exposures — is the return just compensation
+    for known risks?
+  - **Robustness & multiple testing:** was this the best of many trials? Does it hold
+    out-of-sample and across regimes?
+  - **Independence:** with autocorrelated data the effective sample (and true p-value) is
+    smaller than $n$ suggests.
+
+  A result can be **highly statistically significant yet economically worthless** (tiny edge,
+  eaten by costs) — or economically large but statistically fragile (short sample). You need
+  **both**, plus survival of costs and robustness checks, before trading.
+answer: "A small p-value only says the effect isn't exactly zero; with large n even a trivial effect is 'significant.' Profitability needs economic significance: effect size with a CI, survival of costs/impact, capacity, risk-adjustment, and robustness/multiple-testing controls."

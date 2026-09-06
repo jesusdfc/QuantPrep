@@ -1,0 +1,40 @@
+id: pf-construction-0002
+title: Equal-Weight vs Inverse-Vol vs Min-Variance vs Risk Parity
+topic: portfolio-construction
+subtopic: construction
+difficulty: medium
+tags: [risk-parity, minimum-variance, inverse-volatility, equal-weight, robustness]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Compare equal-weight, inverse-volatility, minimum-variance, and risk-parity portfolios in
+  terms of the inputs they need and their robustness to estimation error. Why do the simpler
+  ones often win out-of-sample?
+hints:
+  - Which schemes need expected returns? Which need the full covariance matrix?
+  - Estimation error grows with the number of parameters you must estimate.
+solution: |
+  Ordered by how much they must estimate (and thus how much estimation error they inherit):
+
+  - **Equal-weight (1/N).** Needs **no** estimates. Maximally robust; implicitly bets that you
+    can't reliably distinguish assets. Surprisingly hard to beat out-of-sample (DeMiguel et
+    al.). Downsides: ignores vol/correlation, so risk can concentrate.
+  - **Inverse-volatility.** Needs only **individual volatilities** (easy to estimate, fairly
+    stable). Balances risk better than 1/N and equals risk parity when correlations are equal.
+    Ignores correlations.
+  - **Risk parity.** Needs the **full covariance matrix** (vols + correlations) to equalize
+    risk contributions, but **not expected returns**. More balanced risk; more sensitive to
+    covariance error than inverse-vol, less than MVO.
+  - **Minimum-variance.** Needs the **full covariance matrix** and inverts it; no expected
+    returns. Can achieve low realized vol but is sensitive to covariance estimation error and
+    can concentrate in low-vol names.
+  - (For reference, **mean-variance** additionally needs **expected returns** — the noisiest
+    input — and is the least robust.)
+
+  **Why simpler often wins.** Estimation error compounds with the number of parameters: a full
+  $N\times N$ covariance has $O(N^2)$ entries, and expected returns are notoriously hard to
+  estimate. Methods that avoid $\mu$ and/or the full $\Sigma$ inherit less noise, so their
+  out-of-sample performance is more reliable — the gain from "optimality" is frequently
+  outweighed by input error. Use shrinkage/factor covariances and constraints when you do need
+  $\Sigma$.
+answer: "1/N needs nothing (most robust); inverse-vol needs only volatilities; risk parity and min-variance need the full covariance (no μ); mean-variance also needs μ (least robust). Simpler schemes inherit less estimation error (fewer, more stable parameters), so they often win out-of-sample."

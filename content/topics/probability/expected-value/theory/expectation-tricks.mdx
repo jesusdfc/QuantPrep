@@ -1,0 +1,72 @@
+---
+id: expectation-tricks
+title: Expectation, Conditioning & Tail-Sum Tricks
+topic: probability
+subtopic: expected-value
+order: 1
+summary: The three tools that solve most interview expectation problems — linearity, conditioning, and the tail-sum formula.
+prerequisites: []
+resources:
+  - { name: "MIT 6.041", url: "https://ocw.mit.edu/courses/6-041-probabilistic-systems-analysis-and-applied-probability-fall-2010/" }
+---
+
+# Expectation, Conditioning & Tail-Sum Tricks
+
+Most probability interview problems are not about knowing an exotic distribution — they
+are about applying a small number of tools quickly and without error.
+
+## 1. Linearity of expectation
+
+For **any** random variables (independent or not):
+
+$$
+\mathbb{E}\left[\sum_i X_i\right] = \sum_i \mathbb{E}[X_i].
+$$
+
+This is the single most useful identity. It lets you compute the expected number of
+"events" by summing indicator probabilities, even when the events are highly dependent.
+
+> **Example.** Expected number of fixed points of a random permutation of $n$ items.
+> Let $X_i = 1$ if item $i$ is fixed. Then $\mathbb{E}[X_i] = 1/n$, so
+> $\mathbb{E}[\sum_i X_i] = n \cdot \tfrac{1}{n} = 1$, regardless of $n$.
+
+## 2. Conditioning (first-step analysis)
+
+The **law of total expectation**:
+
+$$
+\mathbb{E}[X] = \mathbb{E}\big[\,\mathbb{E}[X \mid Y]\,\big].
+$$
+
+For "expected time until..." problems, condition on the first step and set up a
+recurrence. Define states, write one equation per state, and solve the linear system.
+
+> **Pattern.** Let $E$ be the expected number of trials to reach a goal. Condition on the
+> first outcome; the process either finishes or restarts from a known state.
+
+## 3. The tail-sum formula
+
+For a **non-negative integer** random variable:
+
+$$
+\mathbb{E}[X] = \sum_{k=1}^{\infty} \mathbb{P}(X \ge k).
+$$
+
+For a non-negative continuous variable: $\mathbb{E}[X] = \int_0^\infty \mathbb{P}(X > t)\,dt$.
+This converts an awkward expectation into a sum/integral of survival probabilities — ideal
+for "maximum of..." and "time until..." questions.
+
+## 4. Law of total variance
+
+$$
+\operatorname{Var}(X) = \mathbb{E}\big[\operatorname{Var}(X \mid Y)\big] + \operatorname{Var}\big(\mathbb{E}[X \mid Y]\big).
+$$
+
+Read as **within-group** variance plus **between-group** variance. It appears constantly
+in mixture and hierarchical problems.
+
+## Why this matters for quant interviews
+
+Interviewers care less about the final number and more about whether you **set up the
+right decomposition instantly** and reason cleanly out loud. Practice until conditioning
+and linearity are reflexes.

@@ -1,0 +1,38 @@
+id: stat-regression-0002
+title: Spurious Regression and Robust Standard Errors
+topic: statistics
+subtopic: regression
+difficulty: hard
+tags: [spurious-regression, unit-root, heteroskedasticity, autocorrelation, hac]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You regress one non-stationary price series on another and get R² = 0.9 with a huge
+  t-stat. Why is this likely spurious, and what diagnostics and fixes apply? Separately,
+  explain when you need heteroskedasticity- and autocorrelation-robust standard errors.
+hints:
+  - Two independent random walks can appear strongly related.
+  - OLS standard errors assume homoskedastic, uncorrelated errors.
+solution: |
+  **Spurious regression.** Regressing one **non-stationary** (unit-root / I(1)) series on
+  another can produce a high $R^2$ and large t-stat **even when the series are independent** —
+  Granger–Newbold's classic result. The trend in each series drives the fit; the relationship
+  is an artifact of common non-stationarity, not a genuine link.
+
+  **Diagnostics & fixes.**
+  - Test each series for a **unit root** (ADF, KPSS). If both are I(1):
+  - Either **difference** the series (regress returns on returns, restoring stationarity), or
+  - Test for **cointegration** (Engle–Granger, Johansen). If cointegrated, a level regression
+    is meaningful and you can build an **error-correction model**; if not, differencing is the
+    safe route.
+  - Inspect residuals for stationarity and autocorrelation (Durbin–Watson / Ljung–Box).
+
+  **Robust standard errors.** OLS coefficient estimates stay unbiased under
+  heteroskedasticity/autocorrelation, but the **standard errors are wrong**, so t-stats and
+  p-values mislead.
+  - **Heteroskedasticity** (non-constant error variance) → **White/HC** robust SEs.
+  - **Autocorrelation** (serially correlated errors, common in overlapping/time-series data)
+    → **Newey–West (HAC)** SEs.
+  - With panel/clustered data → **clustered** SEs. Using these prevents overstating
+    significance from correlated observations.
+answer: "Two non-stationary series can show high R²/t by chance (spurious). Test unit roots (ADF/KPSS); difference to returns or test cointegration (build an ECM if cointegrated). Use White/HC SEs for heteroskedasticity and Newey–West (HAC) for autocorrelation, since OLS SEs are otherwise wrong."

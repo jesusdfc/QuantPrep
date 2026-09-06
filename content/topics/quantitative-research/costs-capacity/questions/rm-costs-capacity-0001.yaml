@@ -1,0 +1,37 @@
+id: rm-costs-capacity-0001
+title: The Signal That Dies After Costs
+topic: quantitative-research
+subtopic: costs-capacity
+difficulty: medium
+tags: [transaction-costs, turnover, capacity, slippage, market-impact]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A high-frequency reversal signal shows a gross Sharpe of 3.0 in backtest but is barely
+  profitable live. Walk through the cost and capacity effects that explain the gap, and how
+  you would build costs into research from the start.
+hints:
+  - Reversal/short-horizon signals imply high turnover; costs scale with turnover.
+  - Distinguish fixed costs, spread, and market impact — and how impact scales with size.
+solution: |
+  **Why gross ≠ net.**
+  - **Turnover.** Short-horizon reversal signals trade constantly. Net return ≈
+    gross − turnover × cost-per-trade, so even small per-trade costs, multiplied by huge
+    turnover, erase the edge.
+  - **Spread & fees.** You cross the bid-ask spread and pay commissions/taxes on every
+    round trip.
+  - **Market impact (capacity).** Your own trading moves the price; impact grows roughly with
+    the square root of participation. At larger AUM you fill at worse prices, so the strategy
+    has a **capacity limit** beyond which net alpha goes to zero.
+  - **Adverse selection / latency.** Reversal edges often require being fast; slower fills get
+    picked off exactly when the signal is right.
+
+  **Build costs in from the start.**
+  - Model **realistic per-trade costs** (spread + fees + an impact term as a function of size
+    and ADV), not a flat bp.
+  - Optimize on **net-of-cost** returns; penalize turnover directly (e.g. trade only when
+    expected edge exceeds cost) and apply **no-trade bands**.
+  - Estimate **capacity**: at what AUM does net Sharpe halve? Report it alongside Sharpe.
+  - Stress with pessimistic cost/impact assumptions; a signal that survives conservative
+    costs is far more credible than one that needs zero-cost fills.
+answer: "High-turnover reversal edges are eaten by spread, fees, and size-dependent market impact (a capacity limit); research on net-of-cost returns with a realistic impact model, penalize turnover, use no-trade bands, and report a capacity estimate."

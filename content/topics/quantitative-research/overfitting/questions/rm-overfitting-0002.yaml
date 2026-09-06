@@ -1,0 +1,37 @@
+id: rm-overfitting-0002
+title: Reporting the Best of 100 Specifications
+topic: quantitative-research
+subtopic: overfitting
+difficulty: medium
+tags: [overfitting, researcher-degrees-of-freedom, backtest-overfitting, pbo, selection]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You try 100 model specifications (features, windows, thresholds) and report the one with
+  the best backtest Sharpe. How much confidence should you have in that number, and what
+  procedure would give an honest estimate of its future performance?
+hints:
+  - Selecting the maximum over many noisy trials biases the reported statistic upward.
+  - Think about the expected maximum of many noisy estimates.
+solution: |
+  **Why the reported Sharpe is inflated.** Even if all 100 specifications had **true** Sharpe
+  zero, their *estimated* Sharpes scatter around zero, and the **maximum** of 100 noisy draws
+  is substantially positive. Reporting the best is reporting an **order statistic**, not a
+  typical outcome — the selection itself manufactures apparent skill. This is the essence of
+  **backtest overfitting** and "researcher degrees of freedom."
+
+  **An honest procedure.**
+  - **Count every trial** (including informal ones) and correct: **Deflated Sharpe Ratio**
+    discounts the observed Sharpe for the number and variance of trials plus non-normality.
+  - **Probability of Backtest Overfitting (PBO)** via **CSCV**: split the backtest into
+    combinations of in-sample/out-of-sample slices, and estimate how often the in-sample-best
+    configuration underperforms out-of-sample. High PBO ⇒ the selection is likely noise.
+  - **Nested / walk-forward selection:** choose the specification on inner folds, evaluate on
+    strictly later outer folds the choice never saw.
+  - **Untouched holdout + forward/live** as the final arbiter.
+  - **Prefer few, economically-motivated specifications** and pre-registration over a large
+    grid search; regularize and demand parameter **plateaus**, not spikes.
+
+  **Confidence.** With no correction: very little. The right output is the *deflated*,
+  out-of-sample-validated performance, reported alongside the number of trials and PBO.
+answer: "The max over 100 noisy trials is upward-biased even under zero true edge; report the Deflated Sharpe, estimate PBO via CSCV, use nested/walk-forward selection and an untouched holdout/live test, and prefer few economically-motivated specs over a big grid."

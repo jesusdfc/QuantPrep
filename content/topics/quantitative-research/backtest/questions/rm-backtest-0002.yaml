@@ -1,0 +1,42 @@
+id: rm-backtest-0002
+title: Critique This Backtest Pipeline
+topic: quantitative-research
+subtopic: backtest
+difficulty: hard
+tags: [backtest, pipeline, look-ahead, costs, survivorship, case-study]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A candidate describes their process as: "I downloaded current-constituent daily prices,
+  engineered features, standardized everything, ran a random 80/20 split, tuned an XGBoost
+  to maximize test accuracy, and got a Sharpe of 2.4 gross." Identify every methodological
+  red flag and how you would redo it.
+hints:
+  - 'Go step by step through universe, features, scaling, split, tuning, metric, and costs.'
+  - Each stage hides a classic bias.
+solution: |
+  Almost every step contains a well-known trap:
+
+  1. **Universe — survivorship bias.** Current constituents exclude delisted/bankrupt names;
+     rebuild a **point-in-time** universe with delisting returns.
+  2. **Features — look-ahead / point-in-time.** Confirm each feature used only data known at
+     the decision time (no revised fundamentals, no future-aligned labels).
+  3. **Standardization — preprocessing leakage.** Scaling before the split leaks test-set
+     statistics; fit all transforms **inside the training fold** via a pipeline.
+  4. **Random 80/20 split — temporal leakage.** Shuffling trains on the future; use
+     **walk-forward** splits with **purging + embargo**.
+  5. **Tuning to test accuracy — data snooping + wrong metric.** The test set has been used
+     for selection (now in-sample), and **accuracy ≠ P&L**; optimize **net-of-cost risk-
+     adjusted return** on validation folds, keep an untouched holdout.
+  6. **"Sharpe 2.4 gross" — no costs, no capacity.** Report **net of spread, fees, and market
+     impact**, with turnover and a capacity estimate.
+  7. **No multiple-testing control.** How many models/features were tried? Apply **Deflated
+     Sharpe / PBO**.
+  8. **No robustness or economic story.** Check sub-periods, regimes, factor exposures, and a
+     plausible mechanism.
+
+  **Redo:** point-in-time universe → point-in-time features + clean labels → pipeline with
+  fold-internal preprocessing → walk-forward CV with purge/embargo → select on net-of-cost
+  objective → deflate for trials → untouched holdout → forward/paper test, reporting net
+  Sharpe, capacity, drawdown, and factor-neutral alpha.
+answer: "Red flags: survivorship (current constituents), possible look-ahead features, preprocessing leakage (scale before split), temporal leakage (random split), data snooping + wrong metric (tune to test accuracy), gross/no-capacity Sharpe, and no multiple-testing/robustness controls. Redo with point-in-time data, fold-internal preprocessing, walk-forward + purge/embargo, net-of-cost selection, deflation, and an untouched holdout/live test."

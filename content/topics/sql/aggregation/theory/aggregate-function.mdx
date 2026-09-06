@@ -1,0 +1,37 @@
+---
+id: sql-aggregate-function
+title: Aggregation (GROUP BY / HAVING)
+topic: sql
+subtopic: aggregation
+order: 1
+summary: An aggregate function processes multiple values together to form a single summary statistic (SUM, COUNT, MAX, MIN, AVG) — and which aggregates are decomposable.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Aggregate function" (https://en.wikipedia.org/wiki/Aggregate_function), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Aggregate function", url: "https://en.wikipedia.org/wiki/Aggregate_function" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Aggregate function"](https://en.wikipedia.org/wiki/Aggregate_function),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Aggregation (GROUP BY / HAVING)
+
+In database management, an aggregate function or aggregation function is a function where
+multiple values are processed together to form a single summary statistic.
+
+Formally, an aggregate function takes as input a set, a multiset (bag), or a list from some
+input domain I and outputs an element of an output domain O. The input and output domains may
+be the same, such as for `SUM`, or may be different, such as for `COUNT`. Aggregate functions
+occur commonly in numerous programming languages, in spreadsheets, and in relational algebra.
+
+## Decomposable aggregate functions
+
+Some aggregate functions can be computed by computing the aggregate for subsets, and then
+aggregating these aggregates; examples include COUNT, MAX, MIN, and SUM. In other cases the
+aggregate can be computed by computing auxiliary numbers for subsets, aggregating these
+auxiliary numbers, and finally computing the overall number at the end; examples include
+AVERAGE (tracking sum and count, dividing at the end) and RANGE (tracking max and min,
+subtracting at the end). In other cases the aggregate cannot be computed without analyzing the
+entire set at once; examples include DISTINCT COUNT, MEDIAN, and MODE.

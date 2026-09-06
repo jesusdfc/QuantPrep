@@ -1,0 +1,37 @@
+id: stat-sampling-0002
+title: Bootstrapping a Sharpe Ratio Confidence Interval
+topic: statistics
+subtopic: sampling
+difficulty: medium
+tags: [bootstrap, sharpe-ratio, confidence-interval, resampling, autocorrelation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  You have 3 years of daily returns and an annualized Sharpe of 1.2. Explain how to build a
+  confidence interval for the Sharpe using the bootstrap, and what pitfall the naive i.i.d.
+  bootstrap has for financial data.
+hints:
+  - The bootstrap approximates the sampling distribution by resampling the data.
+  - Daily returns are not independent — what does that break?
+solution: |
+  **Idea.** The bootstrap estimates the sampling distribution of a statistic by resampling
+  the observed data many times and recomputing the statistic.
+
+  **Procedure (Sharpe CI).**
+  1. Resample the return series **with replacement** to length $T$; compute the annualized
+     Sharpe on the resample.
+  2. Repeat $B$ times (e.g. 10,000) to get a distribution of Sharpes.
+  3. Take the 2.5th and 97.5th percentiles for a 95% CI (percentile bootstrap; BCa is better
+     for skew/bias).
+
+  **Analytic cross-check.** $\mathrm{SE}(\widehat{SR}) \approx \sqrt{(1 + \tfrac12 SR^2)/T}$;
+  with ~756 daily obs this CI will be wide — SR = 1.2 over 3 years is not sharply distinct
+  from zero.
+
+  **Pitfall — the i.i.d. bootstrap breaks dependence.** Daily returns exhibit
+  autocorrelation and volatility clustering. Resampling individual days **destroys this serial
+  structure**, so the naive bootstrap **understates** the true standard error and gives a CI
+  that is too narrow. *Fix:* use a **block bootstrap** (resample contiguous blocks) or a
+  stationary bootstrap, sizing blocks to capture the dependence, so the resamples preserve
+  autocorrelation and clustering.
+answer: "Resample returns with replacement B times, recompute annualized Sharpe, take percentiles for the CI. The i.i.d. bootstrap destroys autocorrelation/vol-clustering and understates SE — use a block/stationary bootstrap instead."

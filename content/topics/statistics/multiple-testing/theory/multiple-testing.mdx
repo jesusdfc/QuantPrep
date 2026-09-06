@@ -1,0 +1,56 @@
+---
+id: multiple-testing
+title: Multiple Testing & the Deflated t-stat
+topic: statistics
+subtopic: multiple-testing
+order: 1
+summary: Why testing many hypotheses inflates false discoveries, and how to think about significance when you have searched.
+prerequisites: []
+resources:
+  - { name: "The Probability of Backtest Overfitting", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
+---
+
+# Multiple Testing & the Deflated t-stat
+
+## The core problem
+
+A p-value of 0.05 means: *if the null is true, there is a 5% chance of seeing a result at
+least this extreme.* Test **one** hypothesis and that is a reasonable bar. Test **many**
+and false positives become almost guaranteed.
+
+If you run $m$ independent tests, all with true null, the probability of **at least one**
+false rejection at level $\alpha$ is:
+
+$$
+\text{FWER} = 1 - (1-\alpha)^m.
+$$
+
+For $\alpha = 0.05$ and $m = 20$, that is $1 - 0.95^{20} \approx 0.64$. Try 20 strategies
+and you *expect* to "find" one significant at 5% even if none work.
+
+## Two families of correction
+
+- **Family-wise error rate (Bonferroni):** test each hypothesis at $\alpha/m$. Controls the
+  probability of *any* false positive. Conservative; loses power as $m$ grows.
+- **False discovery rate (Benjamini-Hochberg):** control the *expected fraction* of
+  discoveries that are false. Much more powerful when you expect several true effects.
+
+## The quant translation: deflated significance
+
+In research you rarely run one clean test. You try features, universes, windows, and model
+specs — often without counting. Each choice is an implicit test. So a t-stat of 3.0 that
+would be impressive from a single pre-registered test is **unremarkable** if it is the best
+of hundreds of tried specifications.
+
+A useful mental model (Harvey-Liu style): the **required** t-stat rises with the number of
+trials. A "true" discovery from heavy searching may need a t-stat of 3–4+, not 2.
+
+## Practical rules
+
+1. **Count your trials** — including the ones you abandoned.
+2. **Pre-register** the hypothesis and the test before looking.
+3. **Hold out** data you never touch until the very end.
+4. Treat an unusually clean in-sample result as a **red flag**, not a trophy.
+
+This is exactly the mindset behind *"separate skill from luck"* — the discipline that
+quant research interviews probe hardest.

@@ -17,11 +17,12 @@ Live site: **quantprep.me**.
 ```text
 QuantPrep/
 ├─ content/         The course. Curated, version-controlled, legally clean.
-│  ├─ topics/       One folder per topic: topic.yaml + theory/*.mdx + questions/*.yaml
+│  ├─ topics/       One folder per topic: topic.yaml + one folder per subtopic
+│  │                (each with questions/*.yaml + theory/*.mdx)
 │  ├─ resources.yaml  Curated external links (link-only, no copied text)
 │  └─ schema/       JSON Schema for questions / lessons / topics (CI-validated)
 ├─ data/            ⛔ GITIGNORED raw inputs (PDFs, scraped HTML). Never committed.
-├─ tools/           uv project: ingestion + build pipeline (content/ → questions.json)
+├─ backend/         Python application: validation, indexing, and local ingestion
 └─ frontend/        Vite + React + TS PWA (installable on phone/desktop, offline-capable)
 ```
 
@@ -33,13 +34,14 @@ QuantPrep/
 | Statistics & statistical rigor | `content/topics/statistics` |
 | Machine learning / statistical learning | `content/topics/machine-learning` |
 | Portfolio construction & factors | `content/topics/portfolio-construction` |
-| Research methodology (cross-cutting) | `content/topics/research-methodology` |
+| Quantitative research (cross-cutting) | `content/topics/quantitative-research` |
 | SQL | `content/topics/sql` |
 
 ## How it works
 
-1. **Author** questions as one YAML file each under `content/topics/<topic>/questions/`,
-   and theory as MDX under `content/topics/<topic>/theory/`.
+1. **Author** questions as one YAML file each under
+   `content/topics/<topic>/<subtopic>/questions/`, and theory as MDX under
+   `content/topics/<topic>/<subtopic>/theory/`.
 2. **Validate** against JSON Schema: `make validate`.
 3. **Build** a static index the frontend consumes: `make content`
    → emits `frontend/public/questions.json` (+ search index, topic manifests).
@@ -53,7 +55,7 @@ contract does not change.
 ## Quick start
 
 ```bash
-# 1. Content pipeline (Python, via uv)
+# 1. Backend content pipeline (Python, via uv)
 make validate      # schema-check all content
 make content       # build frontend/public/questions.json
 

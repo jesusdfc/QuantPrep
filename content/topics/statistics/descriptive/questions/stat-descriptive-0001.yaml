@@ -1,0 +1,35 @@
+id: stat-descriptive-0001
+title: Why Mean and Volatility Aren't Enough
+topic: statistics
+subtopic: descriptive
+difficulty: easy
+tags: [skewness, kurtosis, moments, fat-tails, returns]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Two strategies have identical mean and volatility. Why might you still strongly prefer one?
+  Define skewness and kurtosis and explain what they tell you about financial returns.
+hints:
+  - The first two moments ignore the shape of the tails.
+  - Think about a strategy that "picks up pennies in front of a steamroller."
+solution: |
+  Mean and variance are only the first two moments; they say nothing about **asymmetry** or
+  **tail thickness**, which dominate risk in finance.
+
+  - **Skewness** (3rd standardized moment) measures asymmetry.
+    $\mathrm{Skew} = \mathbb{E}\big[((X-\mu)/\sigma)^3\big]$.
+    **Negative skew** means occasional large losses with frequent small gains — e.g. selling
+    options. Two strategies with equal mean/vol but opposite skew are very different: you
+    prefer the **positively skewed** one (rare big wins, frequent small losses), all else
+    equal.
+  - **Kurtosis** (4th standardized moment) measures tail heaviness.
+    $\mathrm{Kurt} = \mathbb{E}\big[((X-\mu)/\sigma)^4\big]$; excess kurtosis subtracts 3
+    (the normal's value). **High kurtosis** means fat tails — extreme moves are far more
+    likely than a normal model implies.
+
+  Financial returns are typically **negatively skewed and highly leptokurtic** (fat-tailed),
+  so a normal approximation understates crash risk. A strategy with the same mean/vol but
+  negative skew and high kurtosis can blow up despite an attractive Sharpe — which is exactly
+  why you look beyond the first two moments (and why metrics like max drawdown, VaR/CVaR, and
+  the Deflated Sharpe matter).
+answer: "Mean/vol ignore shape: skewness = asymmetry (prefer positive skew), kurtosis = tail heaviness (fat tails). Returns are usually negatively skewed and leptokurtic, so equal mean/vol strategies differ sharply in crash risk."

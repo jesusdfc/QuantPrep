@@ -1,0 +1,77 @@
+---
+id: window-functions
+title: Window Functions for Quant Data
+topic: sql
+subtopic: windows
+order: 1
+summary: The window-function patterns behind returns, rolling stats, rankings, and streaks — plus SQL's logical processing order.
+prerequisites: []
+resources:
+  - { name: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" }
+---
+
+# Window Functions for Quant Data
+
+Analytical SQL for quant work leans heavily on **window functions**: they compute across a
+set of rows *related to the current row* without collapsing them the way `GROUP BY` does.
+
+## Anatomy
+
+```sql
+func() OVER (
+  PARTITION BY <group>      -- reset the window per group (e.g. per symbol)
+  ORDER BY <sort>           -- ordering within the window (e.g. by date)
+  ROWS BETWEEN ... AND ...  -- optional frame
+)
+```
+
+## The patterns you must know cold
+
+**Daily returns from prices** — `LAG` pulls the previous row:
+
+```sql
+SELECT symbol, dt,
+       close / LAG(close) OVER (PARTITION BY symbol ORDER BY dt) - 1 AS ret
+FROM prices;
+```
+
+**Rolling 20-day average** — a moving frame:
+
+```sql
+SELECT symbol, dt,
+       AVG(close) OVER (PARTITION BY symbol ORDER BY dt
+                        ROWS BETWEEN 19 PRECEDING AND CURRENT ROW) AS ma20
+FROM prices;
+```
+
+**Top-N per group** — rank then filter:
+
+```sql
+SELECT * FROM (
+  SELECT symbol, dt, ret,
+         ROW_NUMBER() OVER (PARTITION BY symbol ORDER BY dt) AS rn
+  FROM returns
+) t
+WHERE rn <= 3;              -- first 3 events per symbol
+```
+
+`ROW_NUMBER` (no ties), `RANK` (gaps on ties), `DENSE_RANK` (no gaps) differ exactly in tie
+handling — a classic gotcha.
+
+## Logical processing order
+
+You **write** SQL as `SELECT ... FROM ... WHERE ...`, but the engine **processes** it as:
+
+```text
+FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → WINDOW → ORDER BY → LIMIT
+```
+
+Two consequences: you cannot filter on a window function in `WHERE` (windows run after
+`WHERE`) — wrap it in a subquery/CTE; and `WHERE` filters rows *before* aggregation while
+`HAVING` filters *after*.
+
+## Joins and row counts
+
+The most common analytical bug: a join that silently multiplies rows. Always ask **"what
+happens to the row count after this join?"** A one-to-many join fans out; a many-to-many
+join can explode. Verify with a `COUNT(*)` before and after.

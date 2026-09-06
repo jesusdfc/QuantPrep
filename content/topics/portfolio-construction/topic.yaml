@@ -10,9 +10,11 @@ description: >
 subtopics:
   - { id: math, name: Portfolio Mathematics }
   - { id: mpt, name: Modern Portfolio Theory }
+  - { id: optimization, name: "Optimization & Estimation Error" }
   - { id: risk, name: Risk Decomposition }
   - { id: factors, name: Factor Models }
   - { id: construction, name: Practical Construction }
+  - { id: performance, name: "Performance & Active Management" }
 resources:
   - { name: "CFA — Portfolio Risk and Return: Part II", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/portfolio-risk-return-part-2", license: "link-only" }
   - { name: "CFA — Using Multifactor Models", url: "https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/using-multifactor-models", license: "link-only" }

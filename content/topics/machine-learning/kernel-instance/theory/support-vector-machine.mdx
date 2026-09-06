@@ -1,0 +1,33 @@
+---
+id: ml-support-vector-machine
+title: SVM & k-NN
+topic: machine-learning
+subtopic: kernel-instance
+order: 1
+summary: Max-margin models that classify data — and, via the kernel trick, efficiently perform non-linear classification in high-dimensional feature spaces.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Support vector machine" (https://en.wikipedia.org/wiki/Support_vector_machine), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Support vector machine", url: "https://en.wikipedia.org/wiki/Support_vector_machine" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Support vector machine"](https://en.wikipedia.org/wiki/Support_vector_machine),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# SVM & k-NN
+
+In machine learning, a support vector machine (SVM) or support vector network is a supervised
+max-margin model with associated learning algorithms that analyze data for classification and
+regression analysis. Developed at AT&T Bell Laboratories, SVMs are one of the most studied
+models, being based on statistical learning frameworks of VC theory proposed by Vapnik (1982,
+1995) and Chervonenkis (1974).
+
+In addition to performing linear classification, SVMs can efficiently perform non-linear
+classification using the kernel trick, representing the data only through a set of pairwise
+similarity comparisons between the original data points using a kernel function, thereby
+transforming them into coordinates in a higher-dimensional feature space. Thus, SVMs use the
+kernel trick to implicitly map their inputs into high-dimensional feature spaces, where linear
+classification can be performed. As members of the max-margin models, SVMs are resilient to
+noisy data (e.g., misclassified examples).

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Question, Topic } from "./types";
 
-// The content pipeline (tools/build_index.py) writes these into public/ at build time.
+// The backend content pipeline writes these into public/ at build time.
 async function fetchJson<T>(path: string): Promise<T> {
   const res = await fetch(path);
   if (!res.ok) {

@@ -5,7 +5,7 @@ export const TOPIC_LABELS: Record<TopicId, string> = {
   statistics: "Statistics",
   "machine-learning": "Machine Learning",
   "portfolio-construction": "Portfolio Construction",
-  "research-methodology": "Research Methodology",
+  "quantitative-research": "Quantitative Research",
   sql: "SQL",
 };
 

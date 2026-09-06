@@ -1,0 +1,40 @@
+id: ml-feature-engineering-0001
+title: Feature Selection Bias and Multicollinearity
+topic: machine-learning
+subtopic: feature-engineering
+difficulty: hard
+tags: [feature-selection, selection-bias, multicollinearity, feature-importance, cross-validation]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A colleague selects the top 20 features by correlation with the target using the *full*
+  dataset, then cross-validates a model on those 20 features and reports strong performance.
+  What bias has been introduced? Separately, explain how multicollinearity corrupts
+  feature-importance conclusions.
+hints:
+  - Which step used the target labels of the validation folds?
+  - Correlated predictors can share or steal each other's apparent importance.
+solution: |
+  **Feature-selection bias (leakage).** Selecting features by their correlation with the
+  target on the **full** dataset uses the labels of the validation/test folds. The subsequent
+  cross-validation is therefore **contaminated**: the features were pre-screened to look good
+  on the very data used to evaluate them, so reported performance is optimistically biased —
+  a subtle but common form of leakage. Over many candidate features, this also becomes a
+  **multiple-testing** problem (some features correlate with the target by chance).
+
+  **Fix.** Put feature selection **inside** the cross-validation loop: within each training
+  fold, select features using only that fold's data, then evaluate on the held-out fold. For
+  time series, use walk-forward selection with purge/embargo. This yields an honest estimate
+  and reveals how *stable* the selected feature set is across folds.
+
+  **Multicollinearity and importance.** When predictors are highly correlated:
+  - Coefficient estimates become **unstable** with large standard errors; signs can flip with
+    small data changes.
+  - Importance is **shared or split** arbitrarily among correlated features — one may absorb
+    the credit while its near-duplicates look useless, or importance is diluted across them.
+  - Tree-based impurity/permutation importance is also distorted: correlated features can
+    mask each other, so "low importance" may not mean irrelevant.
+  *Mitigations:* group/collapse correlated features, use regularization (Ridge/Elastic Net),
+  cluster features and assess group importance, or use permutation importance with correlated
+  groups permuted together.
+answer: "Selecting features on the full dataset uses validation-fold labels → leakage (and multiple testing); do selection inside each CV/walk-forward fold. Multicollinearity destabilizes coefficients and splits/masks importance among correlated predictors — collapse groups, regularize, or assess group-level importance."

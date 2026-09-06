@@ -1,0 +1,41 @@
+[project]
+name = "quantprep-backend"
+version = "0.1.0"
+description = "QuantPrep content validation, indexing, and ingestion backend."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jsonschema>=4.21.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+qp-build = "quantprep_backend.cli.build:main"
+qp-ingest-pdf = "quantprep_backend.cli.ingest_pdf:main"
+qp-scrape = "quantprep_backend.cli.scrape:main"
+qp-validate = "quantprep_backend.cli.validate:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quantprep_backend"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP"]
+ignore = ["E501"]

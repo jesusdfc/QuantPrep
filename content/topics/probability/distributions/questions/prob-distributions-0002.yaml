@@ -1,0 +1,38 @@
+id: prob-distributions-0002
+title: Combining Two Independent Strategies
+topic: probability
+subtopic: distributions
+difficulty: medium
+tags: [sharpe-ratio, diversification, independence, variance, portfolio]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Two strategies have equal expected return and equal volatility, each with Sharpe S, and
+  their returns are independent. If you allocate 50/50, what is the Sharpe of the combined
+  strategy? Generalize to n independent equal strategies, and explain what happens as
+  correlation rises.
+hints:
+  - Combining independent equal-variance streams reduces variance faster than mean.
+  - Compute mean and variance of the equal-weighted sum.
+solution: |
+  Let each strategy have mean $\mu$ and variance $\sigma^2$, so $S = \mu/\sigma$.
+
+  **Two strategies, 50/50, independent.** Combined return $R = \tfrac12 R_1 + \tfrac12 R_2$.
+  - Mean: $\tfrac12\mu + \tfrac12\mu = \mu$.
+  - Variance: $\tfrac14\sigma^2 + \tfrac14\sigma^2 = \tfrac12\sigma^2$ (independence ⇒ no
+    cross term), so std $= \sigma/\sqrt{2}$.
+  - Sharpe: $\dfrac{\mu}{\sigma/\sqrt2} = S\sqrt{2}$.
+
+  **n independent equal strategies, equal-weighted.** Mean stays $\mu$; variance is
+  $\sigma^2/n$; std $\sigma/\sqrt n$, so
+  $$S_{\text{combined}} = S\sqrt{n}.$$
+  Diversification across **independent** edges multiplies Sharpe by $\sqrt n$ — the
+  quantitative core of the **Fundamental Law of Active Management** (IR ≈ IC·√breadth).
+
+  **When correlation rises.** With average pairwise correlation $\rho$, the combined variance
+  of the equal-weighted average is $\sigma^2\big(\tfrac1n + \tfrac{n-1}{n}\rho\big)$, so
+  $$S_{\text{combined}} = S\Big/\sqrt{\tfrac1n + \tfrac{n-1}{n}\rho}.$$
+  As $n\to\infty$ this tends to $S/\sqrt{\rho}$ — a **ceiling** set by correlation. Adding
+  more correlated strategies gives diminishing benefit; the value of breadth comes from
+  **low correlation**, not sheer count.
+answer: "50/50 independent: same mean, half variance ⇒ Sharpe = S√2. n independent: S√n. With average correlation ρ, S/√(1/n + (n−1)/n·ρ) → S/√ρ as n→∞ — correlation caps the diversification benefit."

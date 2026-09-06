@@ -1,0 +1,59 @@
+---
+id: biases-catalogue
+title: A Catalogue of Research Biases
+topic: quantitative-research
+subtopic: biases
+order: 2
+summary: The biases that most often turn a "great" backtest into a live disappointment — what each is, how it sneaks in, and how to neutralize it.
+prerequisites: [signal-vs-noise]
+resources:
+  - { name: "The Probability of Backtest Overfitting", url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2326253" }
+---
+
+# A Catalogue of Research Biases
+
+Most failed strategies do not fail because the maths was wrong; they fail because a bias
+inflated the backtest. Learn to name each one and state its fix in a sentence.
+
+## Data & universe biases
+
+- **Survivorship bias.** Studying only names that survived (e.g. *current* index members)
+  hides the losers, inflating returns and hiding tail risk. *Fix:* point-in-time universe
+  with delisting returns.
+- **Look-ahead bias.** Using information not yet available at the decision timestamp —
+  including **revised** macro/fundamental data. *Fix:* point-in-time / vintage data aligned
+  to release dates.
+- **Sampling bias.** The sampling process is unrepresentative of the target population (e.g.
+  only liquid large-caps). *Fix:* define the population first; sample or reweight to match.
+- **Selection bias.** Conditioning on an outcome-related variable (e.g. only executed
+  trades, only full-history names). *Fix:* avoid conditioning on post-outcome variables.
+
+## Process biases
+
+- **Data leakage.** Future information enters training — often via preprocessing
+  (`scaler.fit` on all data), overlapping labels, or target encoding. *Fix:* fit every
+  transform inside the training fold; purge/embargo.
+- **Multiple testing / data snooping.** Searching many signals and reporting the best. At
+  $\alpha=0.05$, 1,000 null tests give ~50 "hits." *Fix:* Bonferroni/FDR, Deflated Sharpe,
+  PBO; count every trial.
+- **Backtest overfitting.** Reporting the maximum over many configurations — an order
+  statistic, not a typical outcome. *Fix:* nested/walk-forward selection, PBO, prefer few
+  economically-motivated specs.
+- **Reused holdout.** Iterating against the "out-of-sample" set turns it into training data.
+  *Fix:* touch the holdout once; confirm forward/live.
+
+## Interpretation biases
+
+- **Statistical vs economic significance.** A tiny p-value with large $n$ can be an
+  economically worthless effect. *Fix:* report effect size + CI, net-of-cost, capacity.
+- **Non-independence.** Autocorrelated/overlapping observations mean the effective sample is
+  far smaller than the row count. *Fix:* cluster/HAC standard errors; count independent
+  periods.
+- **Non-stationarity.** Regimes change and edges decay/crowd. *Fix:* rolling re-estimation,
+  per-regime analysis, decay/kill rules.
+
+## The one-line test
+
+For any backtest, ask: *"Was every input knowable at the decision time, is the sample the
+population I want, and how many things did I try before this worked?"* Those three questions
+catch the majority of biases above.

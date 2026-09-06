@@ -1,0 +1,47 @@
+id: sql-dates-0001
+title: Rolling 20-Day Average Return
+topic: sql
+subtopic: dates
+difficulty: medium
+tags: [window-functions, rolling-average, frame, rows-vs-range, time-series]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Given `prices(symbol, dt, close)`, write a query for the trailing 20-observation moving
+  average of daily returns per symbol. Explain the difference between `ROWS` and `RANGE` frames
+  and why calendar gaps (weekends/holidays) make the choice matter.
+hints:
+  - First compute daily returns with LAG, then average over a windowed frame.
+  - ROWS counts physical rows; RANGE works on value offsets of the ORDER BY column.
+solution: |
+  **Query.** Compute returns with `LAG`, then a trailing average over 20 rows:
+
+  ```sql
+  WITH r AS (
+    SELECT symbol, dt,
+           close / LAG(close) OVER (PARTITION BY symbol ORDER BY dt) - 1 AS ret
+    FROM prices
+  )
+  SELECT symbol, dt, ret,
+         AVG(ret) OVER (
+           PARTITION BY symbol ORDER BY dt
+           ROWS BETWEEN 19 PRECEDING AND CURRENT ROW
+         ) AS ma20
+  FROM r;
+  ```
+
+  **`ROWS` vs `RANGE`.**
+  - **`ROWS`** counts **physical rows**: "19 preceding and current row" = the last 20
+    *observations*, regardless of the calendar dates. This is what you want for a "20 **trading
+    days**" average.
+  - **`RANGE`** works on **value offsets** of the `ORDER BY` column (or peer groups of equal
+    values). `RANGE BETWEEN INTERVAL '19' DAY PRECEDING AND CURRENT ROW` would span 20
+    **calendar** days, so weekends/holidays shrink the number of observations included, and
+    duplicate dates are treated as peers.
+
+  **Why gaps matter.** Trading data has calendar gaps. If you intend "20 trading days," use
+  `ROWS` so holidays don't silently reduce the window. If you intend "trailing 20 calendar
+  days," use `RANGE` with a date interval — but expect a variable number of observations.
+  Also note the first 19 rows have a partial window (fewer than 20 obs); filter them out if you
+  need a full window.
+answer: "Compute returns via LAG, then AVG(ret) OVER (PARTITION BY symbol ORDER BY dt ROWS BETWEEN 19 PRECEDING AND CURRENT ROW). ROWS counts physical rows (20 trading days); RANGE uses value/date offsets (20 calendar days), so gaps change the count — pick ROWS for 'trading days.'"

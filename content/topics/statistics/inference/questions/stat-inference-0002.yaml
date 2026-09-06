@@ -1,0 +1,36 @@
+id: stat-inference-0002
+title: Is a t-stat of 3.0 Significant?
+topic: statistics
+subtopic: inference
+difficulty: medium
+tags: [t-statistic, hypothesis-testing, multiple-testing, effective-sample, factors]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A factor's average return has a t-statistic of 3.0. A colleague says "t > 2, so it's
+  significant — let's trade it." List the questions you would ask before accepting that
+  conclusion.
+hints:
+  - A t-stat is only interpretable relative to how many factors were tested.
+  - Are the underlying observations independent?
+solution: |
+  A t-stat of 3.0 sounds strong (two-sided p ≈ 0.003 under ideal assumptions), but several
+  things can undermine it:
+
+  1. **How many factors were tested?** In the "factor zoo," Harvey–Liu–Zhu argue the hurdle
+     should be **t ≈ 3, not 2**, precisely because so many candidates are mined. If this is
+     the best of hundreds, a raw t = 3.0 may not survive a multiple-testing correction.
+  2. **Are observations independent?** Overlapping returns and autocorrelation shrink the
+     **effective sample size**, inflating the naive t. Use **Newey–West/HAC** or clustered
+     standard errors; the corrected t is often much lower.
+  3. **In-sample or out-of-sample?** An in-sample t says little about future performance.
+  4. **Stationarity.** Was the t stable across sub-periods, or driven by one regime/episode?
+  5. **Economic significance.** Is the effect large enough net of costs? Statistical ≠
+     profitable.
+  6. **Distributional assumptions.** Fat tails and heteroskedasticity distort the t; check
+     robust/bootstrap inference.
+
+  **Verdict.** "t > 2" is not a green light. Adjust for the number of trials, use robust
+  standard errors on the effective sample, confirm out-of-sample, and require economic
+  significance.
+answer: "Ask: how many factors were tested (multiple testing → hurdle ~3 not 2), are obs independent (HAC/clustered SE, effective sample), in- vs out-of-sample, stability across regimes, and economic significance net of costs. 't>2' alone is insufficient."

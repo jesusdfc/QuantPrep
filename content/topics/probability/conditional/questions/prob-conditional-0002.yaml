@@ -1,0 +1,34 @@
+id: prob-conditional-0002
+title: A 60%-Accurate Signal and Base Rates
+topic: probability
+subtopic: conditional
+difficulty: medium
+tags: [bayes, base-rate, conditional-probability, signals, precision]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  A model flags stocks that will "beat the market next month." It correctly flags 60% of true
+  outperformers (sensitivity) and correctly stays silent for 60% of underperformers
+  (specificity). If only 20% of stocks actually outperform, what fraction of flagged stocks
+  actually outperform? Comment on the result.
+hints:
+  - Use Bayes' theorem; the base rate matters as much as the accuracy.
+  - Compute P(flag) via the law of total probability.
+solution: |
+  Let $O$ = outperforms, $F$ = flagged. Given $P(O)=0.2$, $P(F\mid O)=0.6$,
+  $P(F\mid O^c)=1-0.6=0.4$.
+
+  **Law of total probability:**
+  $$P(F) = P(F\mid O)P(O) + P(F\mid O^c)P(O^c) = 0.6(0.2) + 0.4(0.8) = 0.12 + 0.32 = 0.44.$$
+
+  **Bayes:**
+  $$P(O\mid F) = \frac{P(F\mid O)P(O)}{P(F)} = \frac{0.12}{0.44} \approx 0.273.$$
+
+  **Interpretation.** Even though the model is "60% accurate," only ~**27%** of flagged
+  stocks actually outperform — barely above the 20% base rate. Because outperformers are
+  **rare**, the many false positives from the large underperformer pool swamp the true
+  positives. This is the base-rate fallacy: **precision depends on the base rate**, not just
+  sensitivity/specificity. A modest-accuracy signal on a rare event is far weaker than its
+  headline accuracy suggests — a crucial point when a "good" classifier meets a low
+  signal-to-noise target.
+answer: "P(O|F) = 0.6·0.2 / (0.6·0.2 + 0.4·0.8) = 0.12/0.44 ≈ 27%. Despite '60% accuracy,' the low 20% base rate means most flags are false positives — precision is base-rate dependent."

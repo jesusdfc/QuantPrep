@@ -1,0 +1,40 @@
+id: ml-tree-ensembles-0002
+title: Gradient Boosting vs Random Forest
+topic: machine-learning
+subtopic: tree-ensembles
+difficulty: medium
+tags: [gradient-boosting, xgboost, random-forest, bias-variance, regularization]
+locked: false
+source: { name: original, url: null, license: original }
+prompt: |
+  Contrast how random forests and gradient boosting build their ensembles, and what each
+  primarily reduces (bias vs variance). Which tends to overfit more easily on noisy financial
+  data, and what regularization knobs matter?
+hints:
+  - Forests average independent deep trees; boosting adds shallow trees sequentially.
+  - Boosting fits residuals, so it can chase noise.
+solution: |
+  **Random forest (bagging).** Builds many **deep, low-bias** trees **in parallel** on
+  bootstrap samples with random feature subsets, then **averages** them. The averaging
+  **reduces variance** by decorrelating high-variance trees; bias is roughly that of a single
+  deep tree. It is relatively robust and hard to overfit by adding more trees.
+
+  **Gradient boosting.** Builds **shallow, high-bias** trees **sequentially**, each fitting
+  the **residual/gradient** of the current ensemble, with a learning rate shrinking each
+  step's contribution. It primarily **reduces bias**, gradually turning weak learners into a
+  strong one, and typically achieves higher accuracy when well-tuned.
+
+  **Overfitting on noisy financial data.** **Boosting overfits more easily**: because it fits
+  residuals sequentially, it will happily chase **noise** if you add too many trees or use too
+  high a learning rate — dangerous in low-SNR return data. Random forests degrade more
+  gracefully.
+
+  **Regularization knobs.**
+  - *Boosting (XGBoost/LightGBM):* small **learning rate** + **early stopping** on a
+    validation fold, shallow **max_depth**, **subsample** (rows) and **colsample** (features),
+    **min_child_weight**, and L1/L2 leaf penalties (`reg_alpha`/`reg_lambda`).
+  - *Forest:* number of trees, **max_features**, max_depth/min_samples_leaf.
+
+  In finance, prefer strong regularization and honest **walk-forward** early stopping; a
+  lightly-tuned forest is often a safer baseline than an aggressively-tuned booster.
+answer: "Forests average deep trees in parallel (reduce variance); boosting adds shallow trees sequentially on residuals (reduce bias, usually higher accuracy). Boosting overfits noisy data more easily — control with low learning rate + early stopping, shallow depth, subsampling, and L1/L2 penalties."

@@ -8,10 +8,16 @@ description: >
   finance: data/target leakage, look-ahead bias, temporal splits, non-stationarity,
   and why random k-fold CV is often inappropriate for time series.
 subtopics:
-  - { id: core, name: Core Concepts }
-  - { id: models, name: Model Families }
-  - { id: evaluation, name: Evaluation & Metrics }
-  - { id: leakage, name: Leakage & Temporal Validation }
+  - { id: supervised-basics, name: "Supervised vs Unsupervised & Task Types" }
+  - { id: bias-variance, name: Bias–Variance Tradeoff }
+  - { id: linear-models, name: "Linear & Logistic Regression, MLE & Gradient Descent" }
+  - { id: regularization, name: "Regularization (L1/L2, Elastic Net)" }
+  - { id: tree-ensembles, name: "Trees, Random Forests & Boosting" }
+  - { id: kernel-instance, name: "SVM & k-NN" }
+  - { id: unsupervised, name: "PCA & Clustering" }
+  - { id: feature-engineering, name: "Feature Selection, Importance & Multicollinearity" }
+  - { id: evaluation, name: "Cross-Validation & Metrics" }
+  - { id: leakage-temporal, name: "Leakage & Temporal Validation" }
 resources:
   - { name: "ISLP — An Introduction to Statistical Learning (Python)", url: "https://www.statlearning.com/", license: "link-only" }
   - { name: "Google ML Crash Course", url: "https://developers.google.com/machine-learning/crash-course/", license: "link-only" }

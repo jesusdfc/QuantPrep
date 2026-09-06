@@ -1,0 +1,35 @@
+---
+id: sql-moving-average
+title: Dates & Rolling Windows — Moving Averages
+topic: sql
+subtopic: dates
+order: 1
+summary: A rolling calculation that averages successive selections of a series to smooth short-term fluctuations — the conceptual basis for rolling window queries.
+license: CC-BY-SA-4.0
+attribution: 'Excerpted from Wikipedia "Moving average" (https://en.wikipedia.org/wiki/Moving_average), CC BY-SA 4.0.'
+prerequisites: []
+resources:
+  - { name: "Wikipedia — Moving average", url: "https://en.wikipedia.org/wiki/Moving_average" }
+---
+
+> **Source:** Excerpted from Wikipedia, ["Moving average"](https://en.wikipedia.org/wiki/Moving_average),
+> licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Text may
+> have been lightly trimmed; this lesson is therefore also CC BY-SA 4.0.
+
+# Dates & Rolling Windows — Moving Averages
+
+In statistics, a moving average (rolling average or running average or moving mean or rolling
+mean) is a calculation to analyze data points by creating a series of averages of different
+selections of the full data set. Variations include: simple, cumulative, or weighted forms.
+
+Given a series of numbers and a fixed subset size, the first element of the moving average is
+obtained by taking the average of the initial fixed subset of the number series. Then the
+subset is modified by "shifting forward"; that is, excluding the first number of the series and
+including the next value in the series.
+
+A moving average is commonly used with time series data to smooth out short-term fluctuations
+and highlight longer-term trends or cycles. In financial applications a simple moving average
+(SMA) is the unweighted mean of the previous *k* data-points. In an *n*-day weighted moving
+average (WMA) the latest day has weight *n*, the second latest *n* − 1, etc., down to one. An
+exponential moving average (EMA) applies weighting factors which decrease exponentially, never
+reaching zero.
